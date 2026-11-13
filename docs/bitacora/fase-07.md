@@ -18,7 +18,15 @@ ECharts en `/panel/analytics/`, tarea nocturna y job opcional de PySpark.
 Ver ADR-0017: cero infraestructura nueva, sin datos personales en el lago y modelos explicables.
 
 ## Evidencias
-RESULTADOS_EVIDENCIAS
+| Verificación | Resultado |
+|--------------|-----------|
+| Tests (BD recién creada) | ✅ **713 pasan**, cobertura **93 %** |
+| ruff · black · mypy · bandit · pip-audit (con DuckDB 2.0.0) · check --deploy · cabeceras · vendor (con ECharts) · matriz · auditoría | ✅ |
+| semgrep | ✅ **0 hallazgos** en 152 reglas y 410 archivos |
+| Trivy (imagen reconstruida con DuckDB) | ✅ 0 HIGH/CRITICAL corregibles |
+
+Bandit marcó el SQL de DuckDB armado con f-strings (B608); en vez de silenciarlo se reescribió con
+la API relacional y SQL constante.
 
 Pantallas: [tablero (analista)](../capturas/fase-07/panel-inteligencia-de-negocio-escritorio-oscuro.jpg) ·
 [móvil](../capturas/fase-07/panel-inteligencia-de-negocio-movil-claro.jpg) ·

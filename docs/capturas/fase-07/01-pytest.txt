@@ -1,0 +1,149 @@
+$ python.exe -m pytest --cov --cov-report=term -p no:cacheprovider --color=yes
+
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0
+django: version: 5.2.19, settings: config.settings.test (from ini)
+rootdir: C:\Users\seb83\AppData\Local\Temp\claude\f3338bc0125f3f92\342e98da-2b40-40a0-9f49-b5f4968283a7\scratchpad\wt7
+configfile: pyproject.toml
+testpaths: apps, tests
+plugins: anyio-4.16.0, Faker-40.44.0, platformdirs-4.14.5, cov-7.1.0, django-4.14.0, playwright-0.10.0, xdist-3.8.0
+collected 713 items
+
+apps\accounts\tests\test_addresses.py .......                            [  0%]
+apps\accounts\tests\test_auth_flows.py .........                         [  2%]
+apps\accounts\tests\test_models.py ...........                           [  3%]
+apps\accounts\tests\test_roles.py ....                                   [  4%]
+apps\accounts\tests\test_services.py .............                       [  6%]
+apps\accounts\tests\test_validators.py ......                            [  7%]
+apps\analytics\tests\test_bigdata.py ..                                  [  7%]
+apps\audit\tests\test_audit.py .....                                     [  7%]
+apps\cart\tests\test_services.py .........                               [  9%]
+apps\catalog\tests\test_seed_demo.py .                                   [  9%]
+apps\catalog\tests\test_selectors.py .....................               [ 12%]
+apps\catalog\tests\test_services.py .................                    [ 14%]
+apps\catalog\tests\test_views.py ..........                              [ 16%]
+apps\cms\tests\test_legal.py ..                                          [ 16%]
+apps\core\tests\test_health.py ....                                      [ 16%]
+apps\core\tests\test_middleware.py ....                                  [ 17%]
+apps\core\tests\test_views.py .....                                      [ 18%]
+apps\inventory\tests\test_stock.py ........                              [ 19%]
+apps\orders\tests\test_checkout.py ..........                            [ 20%]
+apps\orders\tests\test_views.py .......                                  [ 21%]
+apps\panel\tests\test_operations.py .................................... [ 26%]
+....................................................                     [ 34%]
+apps\panel\tests\test_operations_views.py ........                       [ 35%]
+apps\payments\tests\test_gateways.py .....                               [ 35%]
+apps\pricing\tests\test_selectors.py ........                            [ 37%]
+apps\pricing\tests\test_services.py ..............                       [ 38%]
+apps\promotions\tests\test_coupons.py ........                           [ 40%]
+apps\services_desk\tests\test_selectors.py .                             [ 40%]
+apps\tradein\tests\test_value_added.py ............                      [ 41%]
+apps\tradein\tests\test_views_flows.py .....                             [ 42%]
+tests\security\test_access.py ........                                   [ 43%]
+tests\security\test_access_control.py .................................. [ 48%]
+.................                                                        [ 50%]
+tests\security\test_catalog_security.py .....                            [ 51%]
+tests\security\test_headers.py .......                                   [ 52%]
+apps\analytics\tests\test_bigdata.py ...                                 [ 53%]
+apps\catalog\tests\test_seed_demo.py ..                                  [ 53%]
+apps\cms\tests\test_selectors.py ...                                     [ 53%]
+apps\core\tests\test_checks.py .....                                     [ 54%]
+apps\core\tests\test_crypto.py ......                                    [ 55%]
+apps\core\tests\test_errors.py .....                                     [ 55%]
+apps\core\tests\test_logging.py ...                                      [ 56%]
+apps\core\tests\test_money.py ................................           [ 60%]
+apps\core\tests\test_templatetags.py ....                                [ 61%]
+apps\payments\tests\test_gateways.py ...                                 [ 61%]
+tests\security\test_settings.py .........                                [ 63%]
+tests\test_celery.py ...                                                 [ 63%]
+tests\test_structure.py ................................................ [ 70%]
+........................................................................ [ 80%]
+........................................................................ [ 90%]
+....................................................................     [100%]
+
+=============================== tests coverage ================================
+______________ coverage: platform win32, python 3.12.10-final-0 _______________
+
+Name                                                             Stmts   Miss Branch BrPart  Cover   Missing
+------------------------------------------------------------------------------------------------------------
+apps\accounts\adapters.py                                            9      1      2      1    82%   12
+apps\accounts\forms.py                                             129      9     16      3    92%   102-104, 107-109, 138, 148, 210
+apps\accounts\management\commands\export_permissions_matrix.py      30      3      6      2    86%   63, 66-67
+apps\accounts\management\commands\seed_demo_users.py                51     30     14      0    32%   36, 40-71, 75-96
+apps\accounts\management\commands\setup_roles.py                    22      2      2      0    92%   16-17
+apps\accounts\middleware.py                                         43      3     10      1    92%   64, 67-68
+apps\accounts\models.py                                            115      3      8      1    97%   84->86, 112, 167, 187
+apps\accounts\permissions.py                                        29      4     12      2    80%   17, 31, 53-54
+apps\accounts\security.py                                           16      1      2      1    89%   29
+apps\accounts\services.py                                          119      5     38      8    92%   30, 90, 92->98, 108, 112->exit, 114->exit, 124, 139
+apps\accounts\views.py                                              99      1      0      0    99%   109
+apps\analytics\bi.py                                                22      0      2      1    96%   37->40
+apps\analytics\management\commands\run_pipeline.py                   7      1      0      0    86%   14
+apps\analytics\management\commands\seed_bigdata.py                  23     12      2      0    44%   18-19, 22-51
+apps\analytics\pipeline.py                                         140      9     24      2    93%   121-141, 212, 317-319
+apps\analytics\tasks.py                                              6      1      0      0    83%   12
+apps\audit\management\commands\verify_audit_chain.py                11      1      2      1    85%   17
+apps\audit\middleware.py                                            25      3      4      0    90%   29-31
+apps\audit\models.py                                                69      2      2      0    97%   59, 108
+apps\audit\services.py                                              57      1     10      1    97%   29
+apps\audit\signals.py                                               21      0      2      1    96%   21->exit
+apps\audit\tasks.py                                                 15      1      4      2    84%   16, 22->35
+apps\cart\context_processors.py                                      9      1      2      1    82%   14
+apps\cart\models.py                                                 29      2      0      0    93%   45, 68
+apps\cart\selectors.py                                              56      1      8      1    97%   67
+apps\cart\services.py                                               98      8     32      2    92%   49-50, 84-86, 126, 136-137
+apps\cart\signals.py                                                 8      0      2      1    90%   13->exit
+apps\cart\views.py                                                  54      7      8      4    82%   36-37, 44-46, 54, 59, 69->74
+apps\catalog\admin.py                                               44      1      0      0    98%   65
+apps\catalog\forms.py                                               36      1      4      1    95%   61
+apps\catalog\management\commands\seed_demo.py                       89      2     36      2    97%   37, 42
+apps\catalog\models.py                                             195      7      0      0    96%   27, 47, 68, 84, 239, 258, 279
+apps\catalog\selectors.py                                          254      6     58      6    96%   131-132, 153, 195->193, 430, 466, 482, 510->512, 588->587
+apps\catalog\views.py                                               88      1     14      1    98%   97
+apps\core\checks.py                                                 41      0     20      1    98%   82->92
+apps\core\crypto.py                                                 36      1      8      1    95%   45
+apps\core\models.py                                                 34      2      0      0    94%   46, 64
+apps\inventory\models.py                                           135      5      2      1    96%   77, 80, 125, 129, 163
+apps\inventory\services.py                                         163      8     56      8    93%   148, 151, 174, 228, 245, 247, 302, 323
+apps\notifications\models.py                                        20      1      0      0    95%   40
+apps\notifications\services.py                                      24      1      4      1    93%   18
+apps\notifications\tasks.py                                         50      6     16      6    82%   39, 47, 67, 90, 95, 102
+apps\orders\forms.py                                                23      1      4      1    93%   41
+apps\orders\invoice_pdf.py                                          71      2      8      1    96%   63-64
+apps\orders\models.py                                              147      6      2      1    95%   23, 156, 179, 183, 202, 284
+apps\orders\returns.py                                             113      9     44      8    89%   80, 87, 129, 163, 171-174, 178->208, 194, 206->208
+apps\orders\services.py                                            135      6     34      6    93%   129, 141, 188, 194, 270, 289
+apps\orders\tasks.py                                                 5      1      0      0    80%   10
+apps\orders\views.py                                                88     10     10      2    88%   57-58, 91-93, 104-108
+apps\panel\bi_views.py                                              11      1      2      1    85%   17
+apps\panel\forms.py                                                 68      2      6      2    95%   143, 177
+apps\panel\operations.py                                           348     29     70     14    90%   134, 151, 158-163, 189, 251-252, 270-271, 299->312, 330-331, 360, 378-379, 412, 425, 444, 451, 499, 524, 639-640, 665, 674, 683
+apps\panel\value_added.py                                          103      4     10      2    95%   124, 195, 212-213
+apps\panel\views.py                                                 65     11      6      0    82%   64-81
+apps\payments\gateways.py                                           98     10     12      0    89%   101-113, 173
+apps\payments\models.py                                             61      2      0      0    97%   66, 104
+apps\payments\services.py                                           96      9     18      5    88%   71, 73, 94-109, 128->133, 176
+apps\pos\models.py                                                  31      1      2      1    94%   59
+apps\pos\services.py                                                93      6     32      6    90%   40, 59, 92, 94, 98, 100
+apps\pricing\admin.py                                               25      3      2      0    81%   37-39
+apps\pricing\models.py                                              58      1      2      0    98%   57
+apps\pricing\selectors.py                                           86      1     20      2    97%   78->85, 107
+apps\pricing\services.py                                            97      3     32      3    95%   42, 52, 90
+apps\promotions\models.py                                           89      4      2      1    95%   89, 97, 121, 125
+apps\promotions\services.py                                        110      5     32      5    93%   71, 145, 148, 157, 173
+apps\purchasing\models.py                                           77      4      0      0    95%   75, 105, 128, 144
+apps\purchasing\services.py                                         78      6     26      6    88%   44, 46, 50, 53, 78, 101
+apps\services_desk\models.py                                        65      2      2      1    96%   105, 109
+apps\services_desk\services.py                                      62      4     18      4    90%   57, 92, 95, 118
+apps\shipping\models.py                                             18      1      0      0    94%   36
+apps\shipping\services.py                                           23      2      4      2    85%   23, 35
+apps\tradein\services.py                                            80     10     26      7    84%   45, 50, 60, 79, 84, 110-113, 115
+apps\tradein\views.py                                              134     10     14      2    92%   68-69, 85-86, 117, 146-147, 177->198, 226-227, 241->247, 256
+------------------------------------------------------------------------------------------------------------
+TOTAL                                                             6138    320    974    147    93%
+
+165 files skipped due to complete coverage.
+Required test coverage of 80.0% reached. Total coverage: 93.10%
+======================= 713 passed in 235.94s (0:03:55) =======================
+
+[OK en 243.6 s]
