@@ -11,11 +11,11 @@
 % =====================================================================
 \documentclass[stu,12pt,floatsintext]{apa7}
 
-% ---------- Datos de la portada (completar) ----------
-\newcommand{\autor}{[Nombre completo del estudiante]}
-\newcommand{\programa}{[Programa académico], [Nombre de la universidad]}
-\newcommand{\curso}{Hacking ético}
-\newcommand{\docente}{[Nombre del docente]}
+% ---------- Datos de la portada ----------
+\newcommand{\autor}{Neyder Sebastian Orozco Villamil}
+\newcommand{\programa}{Ingeniería de Sistemas, Facultad de Ingeniería y Ciencias Básicas, Universidad Central}
+\newcommand{\curso}{43391427: Hacking Ético}
+\newcommand{\docente}{Mg. Carlos Ivan Pinzon Romero}
 \newcommand{\fecha}{13 de noviembre de 2026}
 
 % ---------- Idioma y fuentes ----------
@@ -96,7 +96,7 @@
 \newcommand{\ruta}[1]{{\urlstyle{tt}\nolinkurl{#1}}}
 
 % ---------- Portada (modo estudiante) ----------
-\title{Construcción de una tienda en línea segura con \textit{vibe coding}: tutorial paso a paso del caso Byte}
+\title{Construcción y prueba de penetración de una tienda en línea con \textit{vibe coding}: tutorial del caso Byte}
 \authorsnames{\autor}
 \authorsaffiliations{{\programa}}
 \course{\curso}
@@ -110,13 +110,14 @@ videojuegos, consolas y accesorios para Colombia, construida con Django 5.2, Pos
 módulo de inteligencia de negocio, y desplegada en Render. Toda la construcción partió de un único
 prompt maestro que fijó el rol de la inteligencia artificial, las reglas de trabajo, la arquitectura,
 los requisitos funcionales y de seguridad, el plan de diez fases y los criterios de aceptación. El
-tutorial explica cómo está construido ese prompt y recorre las fases mostrando, para cada una, el
-fragmento del prompt que la gobernó, la forma en que se implementó y las evidencias que se generaron:
-bitácoras, capturas de pantalla y resultados de las verificaciones automáticas. La aplicación terminó
-con 727 pruebas, una cobertura del 93~\%, cero hallazgos de semgrep y cero fallos en OWASP ZAP baseline.
-El documento deja preparada la continuación, dedicada a las pruebas de penetración sobre la aplicación
-construida.}
-\keywords{vibe coding, prompt maestro, desarrollo asistido por inteligencia artificial, Django, seguridad de aplicaciones, OWASP Top 10}
+tutorial explica ese prompt y recorre las fases con el fragmento que gobernó cada una, su implementación
+y sus evidencias. La aplicación terminó con 727 pruebas, una cobertura del 93~\%, cero hallazgos de
+semgrep y cero fallos en OWASP ZAP baseline. La segunda parte es el informe de la prueba de penetración
+hecha desde Kali Linux contra la instancia desplegada: el control de acceso y las defensas contra
+inyección resistieron, y se encontraron dos hallazgos de severidad media en la autenticación, la
+protección contra fuerza bruta inefectiva detrás del \textit{proxy} y un secreto TOTP público en las
+cuentas demo del personal, que las verificaciones automáticas no habían detectado.}
+\keywords{vibe coding, prompt maestro, desarrollo asistido por inteligencia artificial, Django, seguridad de aplicaciones, OWASP Top 10, pruebas de penetración, Kali Linux}
 
 \begin{document}
 \maketitle
@@ -134,20 +135,22 @@ resultados.
 
 El trabajo se hizo para el curso de Hacking ético. Por eso la seguridad no fue un añadido final: fue un
 requisito del prompt maestro desde la primera línea, alineado con el OWASP Top 10:2025
-\parencite{owasp2025}. La aplicación resultante, llamada Byte, será además el objetivo de la segunda
-parte del proyecto, dedicada a las pruebas de penetración.
+\parencite{owasp2025}. La aplicación resultante, llamada Byte, fue después sometida a una prueba de
+penetración desde Kali Linux, que se documenta en la segunda parte.
 
-El documento tiene dos propósitos. El primero es enseñar un método replicable: cómo redactar un prompt
-maestro, qué preparar antes de enviarlo y cómo verificar lo que la IA entrega en cada fase. El segundo
-es dejar constancia de lo que ocurrió en este caso, con los fragmentos del prompt que guiaron cada fase
-y las evidencias que se recogieron, incluidos los errores y su corrección.
+El documento tiene tres propósitos. El primero es enseñar un método replicable: cómo redactar un
+prompt maestro, qué preparar antes de enviarlo y cómo verificar lo que la IA entrega en cada fase. El
+segundo es dejar constancia de lo que ocurrió en este caso, con los fragmentos del prompt que guiaron
+cada fase y las evidencias que se recogieron, incluidos los errores y su corrección. El tercero es
+mostrar qué encontró un atacante en la aplicación terminada.
 
 El tutorial se organiza así. Primero se presentan el marco de referencia y el caso. Luego se describen
 la preparación del entorno, la anatomía del prompt maestro, la aprobación del plan y las reglas
 persistentes del proyecto. Después se recorre la construcción fase por fase y se resumen los
 resultados, las decisiones que tomó la IA donde el prompt dejaba opciones y las lecciones aprendidas.
-Al final se deja planteada la continuación con las pruebas de penetración. El Apéndice~A contiene el
-prompt maestro completo y el Apéndice~B, un índice de las evidencias.
+La segunda parte es el informe de la prueba de penetración, con su alcance, sus fases, los hallazgos y
+el plan de remediación. El Apéndice~A contiene el prompt maestro completo y el Apéndice~B, un índice de
+las evidencias.
 
 % =====================================================================
 \section{Marco de referencia}
@@ -784,7 +787,7 @@ generada por \ruta{scripts/evidencia.py} (\ruta{docs/capturas/fase-08/00-resumen
 
 Conviene precisar el alcance de esta fase: son verificaciones defensivas y automáticas, hechas desde el
 código y con escaneo pasivo. No sustituyen una prueba de penetración, que intenta explotar la aplicación
-desde la perspectiva de un atacante. Esa es la continuación de este trabajo.
+desde la perspectiva de un atacante; esa prueba se documenta en la sección «Pruebas de penetración».
 
 % ---------------------------------------------------------------------
 \subsection{Fase 9: despliegue en Render}
@@ -1011,36 +1014,353 @@ con \textit{vibe coding}:
 Este trabajo también tiene límites. La IA tomó la mayoría de las decisiones técnicas dentro del marco
 fijado; una persona sin conocimientos de desarrollo y de seguridad habría tenido dificultades para
 evaluar sus propuestas o detectar sus errores. Algunos criterios quedaron parciales, como el volumen de
-datos de la analítica. Además, la aplicación no ha sido probada todavía por un atacante, que es
-precisamente el objeto de la segunda parte.
+datos de la analítica. Y, como muestra la sección siguiente, aprobar todas las verificaciones
+automáticas no garantizó que el sistema desplegado estuviera libre de fallas.
 
 % =====================================================================
-\section{Continuación: pruebas de penetración}
+\section{Pruebas de penetración}
 % =====================================================================
 
-Con la aplicación construida y desplegada, el proyecto continúa con una segunda parte dedicada a las
-pruebas de penetración. Su propósito es contrastar los controles descritos en este tutorial con los
-intentos de un atacante, siguiendo las fases habituales de un pentest (Tabla~\ref{tab:pentest}).
+Con la aplicación construida y desplegada, la segunda parte del proyecto la sometió a una prueba de
+penetración. El propósito fue contrastar los controles descritos en las secciones anteriores con los
+intentos de un atacante, en el sistema real expuesto a internet y no en el entorno de desarrollo. Esta
+sección es el informe de esa prueba: alcance, metodología, resultados por fase, hallazgos con su
+evidencia y recomendaciones.
+
+\subsection{Resumen ejecutivo}
+
+La prueba se ejecutó el 13 de noviembre de 2026, entre las 11:13 y las 12:25 UTC, desde Kali Linux
+\parencite{kali}, contra \url{https://byte-web-v9h4.onrender.com}. Combinó pruebas de caja negra, pruebas
+autenticadas con los usuarios de demostración y revisión dirigida del código fuente (caja gris).
+
+El control de acceso resistió todos los intentos: no se logró acceder a datos de otro cliente (IDOR) ni
+escalar de cliente a personal, y el personal no puede entrar sin el segundo factor. Las sondas de
+inyección SQL y de XSS no prosperaron. Los hallazgos se concentran en la autenticación
+(Tabla~\ref{tab:pt-resumen}): la protección contra fuerza bruta del inicio de sesión no funciona en la
+instancia desplegada (PT-01) y las cuentas demo del personal usan un secreto TOTP publicado en el
+repositorio (PT-04), ambos de severidad media. Se registraron además dos observaciones informativas.
+Ningún hallazgo permitió comprometer la aplicación durante la prueba.
 
 \begin{table}[H]
-\caption{Plan de la segunda parte: pruebas de penetración}\label{tab:pentest}
+\caption{Resumen de hallazgos de la prueba de penetración}\label{tab:pt-resumen}
 \small\linespread{1}\selectfont
-\begin{tabularx}{\linewidth}{@{}>{\raggedright}p{4cm}>{\raggedright\arraybackslash}X@{}}
+\begin{tabularx}{\linewidth}{@{}p{1.2cm}>{\raggedright}X>{\raggedright}p{2.6cm}>{\raggedright}p{1.9cm}>{\raggedright\arraybackslash}p{1.7cm}@{}}
 \toprule
-Fase del pentest & Objetivo previsto \\
+ID & Hallazgo & OWASP 2025 (2021) & Severidad & Estado \\
 \midrule
-Alcance y reglas de enfrentamiento & Definir objetivos (la instancia de Render y una copia local con configuración de producción), límites y autorización. \\
-Reconocimiento & Reunir información pública del objetivo: DNS, certificados, tecnologías y archivos expuestos. \\
-Escaneo y enumeración & Identificar servicios, rutas y parámetros de la aplicación. \\
-Análisis de vulnerabilidades & Buscar fallas conocidas con escáneres automáticos y revisión manual. \\
-Explotación & Intentar vulnerar el control de acceso (IDOR, escalamiento de roles), la autenticación, los pagos y las entradas. \\
-Post-explotación & Evaluar el impacto y verificar que la auditoría y las alertas registren los intentos. \\
-Informe & Documentar hallazgos, severidad, evidencias y recomendaciones. \\
+PT-01 & Protección contra fuerza bruta inefectiva en \ruta{/cuenta/login/} & A07 (A07) & Media (CVSS 5,3) & Abierto \\
+PT-04 & Secreto TOTP público en las cuentas demo del personal & A07 (A07) & Media (CVSS 4,8) & Abierto \\
+PT-02 & Panel del personal descubrible en \ruta{/panel/} & A02 (A05) & Informativa & Riesgo aceptable \\
+PT-03 & Filtro \texttt{|safe} sobre \texttt{help\_text} en dos plantillas & A05 (A03) & Informativa & Abierto \\
 \bottomrule
 \end{tabularx}
-\notatabla{Elaboración propia. Los resultados de cada fase se documentarán en la segunda parte, con
-capturas de la terminal como evidencia.}
+\notatabla{Elaboración propia. Las puntuaciones CVSS 3.1 son estimaciones de este informe
+\parencite{first-cvss}; la herramienta de la prueba no las calcula. PT-04 se identificó al revisar el
+código durante la redacción del informe. Se conserva la numeración de la prueba, por eso el orden de la
+tabla es por severidad.}
 \end{table}
+
+\subsection{Alcance y reglas de enfrentamiento}
+
+La prueba se limitó al host \ruta{byte-web-v9h4.onrender.com}, la instancia de producción desplegada en
+la Fase~9, propiedad del autor, que la autorizó para este ejercicio académico. Las reglas fueron:
+
+\begin{enumerate}[leftmargin=0.5in]
+  \item Solo el host anterior; quedan fuera la infraestructura compartida de Render y Cloudflare, otros
+        clientes de esas plataformas y cualquier servicio de terceros (Wompi, Cloudflare Turnstile).
+  \item Sin denegación de servicio: los escaneos se limitaron en concurrencia y las pruebas de fuerza
+        bruta, a 30 intentos.
+  \item Pruebas autenticadas solo con los usuarios de demostración sembrados por \ruta{bootstrap_demo};
+        ningún dato real de clientes.
+  \item Revisión del código fuente permitida, para explicar la causa raíz de lo observado.
+\end{enumerate}
+
+\subsection{Metodología y herramientas}
+
+La prueba siguió las fases clásicas de un pentest y clasificó los resultados según el OWASP Top 10. El
+evaluador usó la edición 2021 \parencite{owasp2021}; como el prompt maestro exige la de 2025
+\parencite{owasp2025}, este informe presenta ambas. Las herramientas fueron las de la Tabla~\ref{tab:pt-herramientas}.
+Cada artefacto quedó guardado con su \textit{hash} SHA-256: 45 evidencias entre peticiones y respuestas
+HTTP, salidas de escáneres, análisis de código y capturas.
+
+\begin{table}[H]
+\caption{Herramientas usadas en la prueba de penetración}\label{tab:pt-herramientas}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}p{4.6cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Herramienta & Uso \\
+\midrule
+Kali Linux & Sistema base del evaluador. \\
+whois, dig y openssl & Reconocimiento pasivo: dominio, DNS, cadena CNAME y certificado TLS. \\
+numasec & Marco de la operación: rastreo web, análisis de JavaScript, búsqueda de directorios, sondas de seguridad de aplicaciones y registro de evidencias por \textit{hash}. \\
+curl y scripts propios & Pruebas manuales: CSRF, inyección, límite de intentos e inicio de sesión autenticado. \\
+Navegador & Capturas de pantalla de las páginas probadas. \\
+pip-audit & Análisis de dependencias contra vulnerabilidades conocidas. \\
+\bottomrule
+\end{tabularx}
+\notatabla{Elaboración propia a partir del paquete de evidencias de la prueba
+(\ruta{pentest-byte-web-v9h4-owasp.zip}).}
+\end{table}
+
+\subsection{Fase 1: reconocimiento}
+
+El reconocimiento pasivo (Figura~\ref{fig:pt-recon}) mostró que la aplicación corre en Render
+(\ruta{gcp-us-west1}) detrás de la red de Cloudflare: el nombre resuelve a 216.24.57.16 y 216.24.57.18,
+que son direcciones del borde de Cloudflare. El nombre de origen
+\ruta{gcp-us-west1-1.origin.onrender.com} también resuelve a Cloudflare, de modo que no hay fuga de la
+IP de origen que permita saltarse el cortafuegos de aplicaciones web (WAF). El certificado es un
+comodín \ruta{*.onrender.com} emitido por Google Trust Services, válido hasta el 20 de diciembre de 2026.
+El subdominio no tiene registros MX ni TXT.
+
+\figura{p01-recon.png}{0.86}{Reconocimiento pasivo desde Kali: WHOIS, DNS y certificado}{Captura de
+la terminal del evaluador (evidencia \ruta{e50beaef…}). Resultados detallados en la evidencia
+\ruta{bddbd12d…}.}{fig:pt-recon}
+
+\subsection{Fase 2: escaneo y enumeración}
+
+El rastreo web encontró 200 URL y el análisis de la superficie identificó 215 rutas y 81 formularios.
+Las entradas más relevantes fueron la búsqueda (\ruta{/buscar/?q=}), las sugerencias, los filtros del
+catálogo, el parámetro \ruta{sku} de la ficha, el carrito y los formularios de cuenta. El análisis de
+los cinco archivos JavaScript encontró 39 rutas y ninguna cadena con forma de secreto.
+
+La búsqueda de directorios (169 peticiones) solo descubrió \ruta{/panel/}, que redirige al inicio de
+sesión (PT-02). El administrador de Django no está en \ruta{/admin/}, que responde con la página 404
+propia y sin trazas de error (Figura~\ref{fig:pt-404}), tal como pedía el prompt maestro. No hay
+\ruta{robots.txt} ni \ruta{sitemap.xml}.
+
+\figura{p08-admin-404.jpg}{0.78}{La ruta \ruta{/admin/} responde con la página 404 propia}{Captura
+del evaluador (evidencia \ruta{2a175426…}), recortada. El panel de Django vive en una ruta oculta
+configurada por variable de entorno.}{fig:pt-404}
+
+\subsection{Fase 3: análisis de vulnerabilidades}
+
+Las sondas automáticas probaron inyección SQL, XSS, autenticación débil, IDOR y CORS. La de IDOR no se
+ejecutó porque ninguna ruta usa identificadores numéricos, y la de CORS no encontró cabeceras
+permisivas. Las otras tres generaron candidatos, que se verificaron a mano y se descartaron
+(Tabla~\ref{tab:pt-candidatos}). La Figura~\ref{fig:pt-probes} resume las comprobaciones manuales y la
+Figura~\ref{fig:pt-xss}, la búsqueda con un \textit{script}, que la aplicación muestra como texto.
+
+\begin{table}[H]
+\caption{Candidatos de las sondas automáticas y verificación manual}\label{tab:pt-candidatos}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}p{3.4cm}>{\raggedright}p{3.6cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Candidato & Señal & Verificación \\
+\midrule
+Inyección SQL en \texttt{/buscar/?q=}\allowbreak\texttt{' OR 1=1-{}-} & HTTP 403 & Bloqueado por el WAF de Cloudflare, sin mensaje de error de base de datos. Con \texttt{?sku=SKU'} y \texttt{?orden=} arbitrario la aplicación responde 200 con su valor por defecto: el ORM no concatena la entrada. Descartado. \\
+XSS reflejado en \texttt{/buscar/?q=}\allowbreak\texttt{<script>} & El marcador aparece en la respuesta & Aparece codificado (\texttt{\&lt;script\&gt;}) por el autoescapado de Django. Descartado. \\
+Autenticación débil en \ruta{/cuenta/login/} & HTTP 403 y señal de \textit{token} & El 403 es la protección CSRF; la aplicación no usa JWT. Descartado. \\
+\bottomrule
+\end{tabularx}
+\notatabla{Elaboración propia a partir de la evidencia \ruta{12409d81…} (sondas) y \ruta{e0a6d465…}
+(controles positivos).}
+\end{table}
+
+\figura{p02-probes.png}{0.86}{Comprobaciones manuales de OWASP desde la terminal de Kali}{Captura de la
+terminal del evaluador (evidencia \ruta{3c128e69…}), recortada.}{fig:pt-probes}
+
+\figura{p07-xss-escapado.jpg}{0.78}{La búsqueda con \ruta{<script>alert(1)</script>} se muestra como
+texto}{Captura del evaluador (evidencia \ruta{4c23d747…}), recortada.}{fig:pt-xss}
+
+En la misma fase, \texttt{pip-audit} sobre \ruta{requirements/prod.txt} no encontró vulnerabilidades
+conocidas en las dependencias, y las librerías JavaScript se sirven localmente con su integridad
+verificada.
+
+\subsection{Fase 4: explotación}
+
+\subsubsection{Fuerza bruta contra el inicio de sesión}
+
+La página de inicio de sesión no muestra Turnstile en el primer intento (Figura~\ref{fig:pt-login}),
+mientras que el registro y el restablecimiento de contraseña sí lo hacen. El evaluador envió 30 intentos
+de inicio de sesión fallidos y rápidos, rotando el usuario, y luego 8 con el mismo usuario. Todos
+respondieron HTTP 200 con el mensaje de error genérico: ninguno recibió el 429 de bloqueo, aunque la
+configuración bloquea a los 5 fallos (Figura~\ref{fig:pt-ratelimit}). El CAPTCHA adaptativo apareció de
+forma intermitente. Estos resultados sustentan el hallazgo PT-01.
+
+\figura{p04-login-sin-turnstile.jpg}{0.78}{Inicio de sesión sin CAPTCHA en el primer intento}{Captura
+del evaluador (evidencia \ruta{fa8bbeb4…}), recortada.}{fig:pt-login}
+
+\figura{p03-ratelimit.png}{0.86}{Intentos de inicio de sesión fallidos sin bloqueo}{Captura de la
+terminal del evaluador (evidencia \ruta{3ca17c0e…}). La ventana muestra los primeros 26 de los 30
+intentos; el registro completo está en la evidencia \ruta{bee2e208…}.}{fig:pt-ratelimit}
+
+\subsubsection{Pruebas autenticadas de control de acceso}
+
+Con los usuarios de demostración, el evaluador comprobó lo siguiente:
+
+\begin{enumerate}[leftmargin=0.5in]
+  \item El cliente inicia sesión sin segundo factor, como corresponde a su rol.
+  \item Un usuario del personal (vendedor) no entra solo con la contraseña: la aplicación lo lleva a
+        \ruta{/cuenta/2fa/authenticate/} y exige el código TOTP.
+  \item Escalamiento vertical: el cliente que pide \ruta{/panel/} recibe 403.
+  \item IDOR: la dirección propia del cliente responde 200; un UUID ajeno o el UUID nulo responden 404,
+        sin revelar si el objeto existe. El código confirma que el \textit{selector} filtra siempre por
+        el usuario.
+  \item La API \ruta{/api/v1/} solo expone el esquema, reservado al personal; no hay datos expuestos.
+  \item Un POST a \ruta{/carrito/agregar/} sin \textit{token} CSRF recibe 403.
+\end{enumerate}
+
+\subsection{Fase 5: post-explotación}
+
+Ningún intento dio un acceso mayor que el de los usuarios de demostración, de modo que no hubo
+persistencia ni movimiento lateral que evaluar. La fase se centró en el impacto. PT-01 permitiría
+automatizar el robo de credenciales por relleno (\textit{credential stuffing}) contra las cuentas de
+clientes, pues no hay CAPTCHA efectivo ni bloqueo. Para el personal el riesgo es menor, porque exige el
+segundo factor, salvo en las cuentas demo, cuyo factor es público (PT-04).
+
+No se verificó, desde el lado del defensor, que la auditoría y las alertas registraran los intentos:
+desde fuera el registro no es observable (A09). Queda como verificación pendiente en la bitácora de
+eventos de seguridad del panel.
+
+\subsection{Hallazgos}
+
+\subsubsection{PT-01. Protección contra fuerza bruta inefectiva en el inicio de sesión}
+
+\textbf{Severidad:} media (CVSS~3.1 estimado 5,3; AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N). \textbf{OWASP:}
+A07:2025 Fallas de autenticación.
+
+\textbf{Descripción.} El bloqueo progresivo de django-axes y el CAPTCHA adaptativo no protegen el
+inicio de sesión en la instancia desplegada. Las Figuras~\ref{fig:pt-login} y \ref{fig:pt-ratelimit}
+muestran la evidencia.
+
+\textbf{Causa raíz.} Se confirmó en el código y en la configuración de despliegue:
+
+\begin{Verbatim}
+AXES_LOCKOUT_PARAMETERS = [["username", "ip_address"]]  # user + IP combination
+AXES_IPWARE_PROXY_COUNT = env.int("AXES_IPWARE_PROXY_COUNT", default=0)  # 1 behind Render's proxy
+AXES_IPWARE_META_PRECEDENCE_ORDER = ("HTTP_X_FORWARDED_FOR", "REMOTE_ADDR")
+BYTE_LOCKOUT_TIERS = ((5, 5), (10, 30), (20, 24 * 60))
+BYTE_LOGIN_CAPTCHA_AFTER_FAILURES = env.int("BYTE_LOGIN_CAPTCHA_AFTER_FAILURES", default=3)
+\end{Verbatim}
+
+\begin{enumerate}[leftmargin=0.5in]
+  \item El comentario indica que el número de \textit{proxies} debe ser 1 detrás de Render, pero el
+        Blueprint (\ruta{render.yaml}) no fija \texttt{AXES\_IPWARE\_PROXY\_COUNT}. Detrás de Cloudflare
+        y Render la aplicación no obtiene la IP real del cliente, por lo que los fallos no se acumulan
+        en el mismo par usuario--IP ni en la misma IP.
+  \item El bloqueo es solo por par usuario--IP: un atacante que rota usuarios nunca llega a 5 fallos
+        por par.
+  \item Turnstile solo se activa tras 3 fallos de la misma IP, cuenta que también depende de la IP mal
+        resuelta.
+  \item Agravante: en producción, Turnstile usa las llaves públicas de prueba de Cloudflare, que siempre
+        aprueban. El widget lo advierte (Figura~\ref{fig:pt-turnstile}) y \texttt{check --deploy} lo
+        avisaba con \texttt{byte.W003}. Las llaves reales quedaron pendientes en la guía de despliegue.
+\end{enumerate}
+
+
+\textbf{Recomendación.}
+\begin{enumerate}[leftmargin=0.5in]
+  \item Resolver la IP del cliente de forma confiable: fijar \texttt{AXES\_IPWARE\_PROXY\_COUNT} según la
+        cadena real de \textit{proxies} o leer \texttt{CF-Connecting-IP}, y comprobarlo en los registros
+        de intentos de axes.
+  \item Agregar un bloqueo por IP además del par usuario--IP, y un límite de tasa en la vista de inicio
+        de sesión.
+  \item Cargar las llaves reales de Turnstile en Render y mostrarlo siempre en el inicio de sesión.
+  \item Agregar una prueba que simule peticiones detrás del \textit{proxy} y repetir la prueba de los
+        30 intentos.
+\end{enumerate}
+
+\figura{p06-reset-turnstile-prueba.jpg}{0.48}{Turnstile en producción con llaves de prueba}{Recorte de la
+captura del evaluador del restablecimiento de contraseña (evidencia \ruta{41cf5489…}). El widget dice
+«Solo para pruebas. Si se ve, informe al propietario del sitio».}{fig:pt-turnstile}
+
+\subsubsection{PT-04. Secreto TOTP público en las cuentas demo del personal}
+
+\textbf{Severidad:} media (CVSS~3.1 estimado 4,8; AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N). \textbf{OWASP:}
+A07:2025 Fallas de autenticación.
+
+\textbf{Descripción.} El comando \ruta{seed_demo_users} configura el segundo factor de todos los
+usuarios del personal con un secreto fijo, declarado en el código como valor público de desarrollo. El
+despliegue lo ejecuta en producción con \texttt{--force} a través de \ruta{bootstrap_demo}. Las cuentas
+demo del vendedor al superadministrador tienen, por tanto, un segundo factor que cualquiera puede
+calcular a partir del repositorio público. El evaluador lo usó en las pruebas autenticadas.
+
+\textbf{Impacto.} El MFA de esas cuentas se reduce a la contraseña demo. Esa contraseña la genera Render
+y no está publicada, por lo que la complejidad de ataque es alta. Pero es la misma para todos los
+usuarios demo: quien la reciba para revisar la tienda obtiene acceso de superadministrador.
+
+\textbf{Recomendación.} No sembrar secretos TOTP fijos fuera de desarrollo. En producción, crear las
+cuentas del personal sin autenticador y dejar que el \textit{middleware} les exija activarlo en el
+primer acceso, o generar un secreto aleatorio por cuenta. Desactivar las cuentas demo con privilegios
+cuando no se estén usando.
+
+\subsubsection{PT-02. Panel del personal descubrible}
+
+\textbf{Severidad:} informativa. \textbf{OWASP:} A02:2025 Configuración de seguridad incorrecta.
+La ruta \ruta{/panel/} se descubre con una búsqueda de directorios básica. Está protegida por
+autenticación, permisos por rol y MFA del personal, y el administrador de Django sí está oculto. Se
+acepta el riesgo; si se quisiera reducir la exposición, se podría restringir el panel por IP o con un
+\textit{proxy} de identidad.
+
+\subsubsection{PT-03. Filtro \texttt{|safe} sobre \texttt{help\_text}}
+
+\textbf{Severidad:} informativa. \textbf{OWASP:} A05:2025 Inyección. Las plantillas
+\ruta{templates/partials/form_fields.html} y \ruta{templates/allauth/elements/fields.html} muestran
+\texttt{\{\{ field.help\_text|safe \}\}}. Hoy los textos de ayuda los escribe el equipo, así que no es
+explotable, pero contradice la regla del proyecto que prohíbe \texttt{|safe} y se convertiría en XSS si
+algún texto de ayuda llegara a incluir datos del usuario. Ni semgrep ni las pruebas lo detectaron.
+Recomendación: quitar \texttt{|safe} y, si un texto necesita HTML, construirlo con
+\texttt{format\_html} en el formulario.
+
+\subsection{Controles confirmados}
+
+La Tabla~\ref{tab:pt-owasp} resume el resultado por categoría del OWASP Top 10:2025, con su equivalencia
+en la edición 2021 que usó el evaluador.
+
+\begin{table}[H]
+\caption{Resultado de la prueba por categoría del OWASP Top 10}\label{tab:pt-owasp}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}p{4.2cm}>{\raggedright}p{2.2cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Categoría 2025 (2021) & Resultado & Evidencia principal \\
+\midrule
+A01 Control de acceso (A01, A10) & Sin hallazgos & Cliente en \ruta{/panel/} → 403; UUID ajeno → 404; CSRF activo; sin funciones que descarguen URL (SSRF). \\
+A02 Configuración incorrecta (A05) & PT-02 & Sin modo de depuración, cabeceras fuertes, CSP con \textit{nonce}, sin CORS permisivo, admin oculto. \\
+A03 Cadena de suministro (A06) & Sin hallazgos & pip-audit sin vulnerabilidades; JavaScript local con integridad verificada. \\
+A04 Criptografía (A02) & Sin hallazgos & HTTPS con HSTS \textit{preload}; cookies \ruta{__Host-} seguras, HttpOnly y SameSite. \\
+A05 Inyección (A03) & PT-03 & SQLi bloqueada por el WAF y el ORM; XSS escapado. \\
+A06 Diseño inseguro (A04) & No evaluado & Requiere pruebas de lógica de negocio; la separación de funciones no se probó. \\
+A07 Autenticación (A07) & PT-01, PT-04 & Positivos: error genérico sin enumeración, MFA del personal, política de contraseñas con verificación de filtraciones. \\
+A08 Integridad (A08) & Sin hallazgos & No se observaron deserialización insegura ni actualizaciones sin firma; los webhooks de pago no se probaron. \\
+A09 Registro y alertas (A09) & No evaluado & No observable desde fuera. \\
+A10 Condiciones excepcionales (—) & Sin hallazgos & Páginas de error propias, sin trazas. \\
+\bottomrule
+\end{tabularx}
+\notatabla{Elaboración propia a partir de la evidencia \ruta{a909ca55…} (clasificación del evaluador,
+OWASP 2021), reorganizada según la edición 2025. Una flecha (→) indica la respuesta obtenida.}
+\end{table}
+
+\subsection{Limitaciones}
+
+\begin{enumerate}[leftmargin=0.5in]
+  \item La prueba de fuerza bruta se detuvo en 30 intentos; no se midió si Cloudflare aplica un límite
+        a volúmenes mayores.
+  \item El inicio de sesión del personal con TOTP desde \textit{scripts} terminó en 403 por la rotación
+        del \textit{token} CSRF, que es un control correcto. Por eso no se probaron la separación de
+        funciones ni las operaciones del panel con sesión de personal.
+  \item No se probaron los pagos ni los webhooks contra la instancia, que usa el simulador.
+  \item La herramienta registró PT-01, PT-02 y PT-03 como observaciones verificadas manualmente, no por
+        su flujo de repetición automática; por eso su reporte cuenta cero hallazgos «verificados».
+  \item El evaluador clasificó primero PT-01 como baja y lo subió a media al encontrar la causa raíz en
+        el código.
+  \item Las correcciones no se han aplicado; falta la re-prueba.
+\end{enumerate}
+
+\subsection{Plan de remediación}
+
+Por prioridad: (1) cargar las llaves reales de Turnstile y corregir la resolución de la IP del cliente
+(PT-01); (2) retirar el secreto TOTP fijo de las cuentas demo en producción (PT-04); (3) quitar
+\texttt{|safe} de las plantillas (PT-03); (4) decidir si se restringe \ruta{/panel/} (PT-02). Después,
+repetir la prueba de fuerza bruta y las pruebas autenticadas, y completar las que quedaron pendientes:
+separación de funciones, webhooks de pago y verificación de la auditoría.
+
+\begin{leccion}
+Las verificaciones automáticas de las fases anteriores (727 pruebas, semgrep sin hallazgos, ZAP sin
+fallos) no detectaron PT-01 ni PT-04, porque ambos dependen de cómo se desplegó la aplicación: un
+\textit{proxy} delante, una variable que el Blueprint no fijó y un comando de demostración ejecutado en
+producción. Pruebe siempre el sistema desplegado, no solo el código, y convierta cada «debe ser 1 en
+producción» en un valor del Blueprint o en un chequeo que falle el despliegue.
+\end{leccion}
 
 % =====================================================================
 \section{Conclusiones}
@@ -1054,8 +1374,16 @@ evidencias; la IA escribió, probó, verificó y documentó.
 El factor que más pesó en el resultado no fue la capacidad del modelo, sino la calidad de la
 especificación y la disciplina de verificación que esa especificación imponía: cada fase cerró con las
 mismas comprobaciones, y los errores, incluidos los de la propia IA, quedaron registrados y corregidos.
-Ese registro es, a la vez, la mejor defensa ante una revisión y el punto de partida de la segunda parte,
-en la que la aplicación será sometida a pruebas de penetración.
+Ese registro es, a la vez, la mejor defensa ante una revisión y lo que permitió explicar con precisión
+los hallazgos de la prueba de penetración.
+
+La prueba de penetración confirmó que los controles exigidos por el prompt funcionan donde dependen del
+código: control de acceso, protección contra inyección, CSRF, cabeceras y MFA del personal. Las fallas
+aparecieron en la frontera entre el código y el despliegue: una variable que el Blueprint no fijó, unas
+llaves de CAPTCHA de prueba y un comando de demostración ejecutado en producción. La conclusión práctica
+para quien construya con \textit{vibe coding} es que la especificación debe exigir también la
+verificación del sistema desplegado, y que la prueba de penetración no es un trámite final, sino la
+última puerta de revisión del método.
 
 Por último, este documento se redactó siguiendo las normas APA en su séptima edición
 \parencite{apa2020}, con apoyo en la guía de citas y referencias de \textcite{menendez2020}.
@@ -1105,5 +1433,12 @@ Fase & Bitácora & Capturas & Commit \\
 \notatabla{Cada carpeta de capturas contiene la salida de texto de cada verificación (\ruta{NN-*.txt}), su
 imagen de terminal (\ruta{NN-*.svg}), el resumen (\ruta{00-resumen.svg}) y las capturas de pantalla.}
 \end{table}
+
+Las evidencias de la prueba de penetración están en el paquete \ruta{pentest-byte-web-v9h4-owasp.zip},
+que se entrega aparte. Contiene el reporte ejecutivo y el reporte en formato JSON (\ruta{reporte/}), los
+45 artefactos de evidencia nombrados por su \textit{hash} SHA-256 (\ruta{evidencia/}) y las capturas de
+navegador y de terminal (\ruta{capturas/}). En el informe, cada evidencia se cita por los primeros
+caracteres de su \textit{hash}. El paquete no se publica en el repositorio porque las notas de las
+pruebas autenticadas incluyen el secreto TOTP de las cuentas demo (PT-04).
 
 \end{document}
