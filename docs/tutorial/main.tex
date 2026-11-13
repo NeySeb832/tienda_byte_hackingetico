@@ -116,7 +116,8 @@ semgrep y cero fallos en OWASP ZAP baseline. La segunda parte es el informe de l
 hecha desde Kali Linux contra la instancia desplegada: el control de acceso y las defensas contra
 inyección resistieron, y se encontraron dos hallazgos de severidad media en la autenticación, la
 protección contra fuerza bruta inefectiva detrás del \textit{proxy} y un secreto TOTP público en las
-cuentas demo del personal, que las verificaciones automáticas no habían detectado.}
+cuentas demo del personal, que las verificaciones automáticas no habían detectado y que se
+corrigieron y re-probaron.}
 \keywords{vibe coding, prompt maestro, desarrollo asistido por inteligencia artificial, Django, seguridad de aplicaciones, OWASP Top 10, pruebas de penetración, Kali Linux}
 
 \begin{document}
@@ -1039,7 +1040,8 @@ inyección SQL y de XSS no prosperaron. Los hallazgos se concentran en la autent
 (Tabla~\ref{tab:pt-resumen}): la protección contra fuerza bruta del inicio de sesión no funciona en la
 instancia desplegada (PT-01) y las cuentas demo del personal usan un secreto TOTP publicado en el
 repositorio (PT-04), ambos de severidad media. Se registraron además dos observaciones informativas.
-Ningún hallazgo permitió comprometer la aplicación durante la prueba.
+Ningún hallazgo permitió comprometer la aplicación durante la prueba. PT-01 y PT-04 se corrigieron y
+PT-01 se re-probó con éxito contra producción (sección «Remediación y re-prueba»).
 
 \begin{table}[H]
 \caption{Resumen de hallazgos de la prueba de penetración}\label{tab:pt-resumen}
@@ -1048,13 +1050,13 @@ Ningún hallazgo permitió comprometer la aplicación durante la prueba.
 \toprule
 ID & Hallazgo & OWASP 2025 (2021) & Severidad & Estado \\
 \midrule
-PT-01 & Protección contra fuerza bruta inefectiva en \ruta{/cuenta/login/} & A07 (A07) & Media (CVSS 5,3) & Abierto \\
-PT-04 & Secreto TOTP público en las cuentas demo del personal & A07 (A07) & Media (CVSS 4,8) & Abierto \\
+PT-01 & Protección contra fuerza bruta inefectiva en \ruta{/cuenta/login/} & A07 (A07) & Media (CVSS 5,3) & Corregido \\
+PT-04 & Secreto TOTP público en las cuentas demo del personal & A07 (A07) & Media (CVSS 4,8) & Corregido \\
 PT-02 & Panel del personal descubrible en \ruta{/panel/} & A02 (A05) & Informativa & Riesgo aceptable \\
 PT-03 & Filtro \texttt{|safe} sobre \texttt{help\_text} en dos plantillas & A05 (A03) & Informativa & Abierto \\
 \bottomrule
 \end{tabularx}
-\notatabla{Elaboración propia. Las puntuaciones CVSS 3.1 son estimaciones de este informe
+\notatabla{Elaboración propia. El estado es posterior a la remediación. Las puntuaciones CVSS 3.1 son estimaciones de este informe
 \parencite{first-cvss}; la herramienta de la prueba no las calcula. PT-04 se identificó al revisar el
 código durante la redacción del informe. Se conserva la numeración de la prueba, por eso el orden de la
 tabla es por severidad.}
@@ -1343,23 +1345,85 @@ OWASP 2021), reorganizada según la edición 2025. Una flecha (→) indica la re
         su flujo de repetición automática; por eso su reporte cuenta cero hallazgos «verificados».
   \item El evaluador clasificó primero PT-01 como baja y lo subió a media al encontrar la causa raíz en
         el código.
-  \item Las correcciones no se han aplicado; falta la re-prueba.
+  \item La re-prueba cubrió PT-01; PT-04 se verificó con pruebas automatizadas, no con un inicio de
+        sesión del personal en producción.
 \end{enumerate}
 
-\subsection{Plan de remediación}
+\subsection{Remediación y re-prueba}
 
-Por prioridad: (1) cargar las llaves reales de Turnstile y corregir la resolución de la IP del cliente
-(PT-01); (2) retirar el secreto TOTP fijo de las cuentas demo en producción (PT-04); (3) quitar
-\texttt{|safe} de las plantillas (PT-03); (4) decidir si se restringe \ruta{/panel/} (PT-02). Después,
-repetir la prueba de fuerza bruta y las pruebas autenticadas, y completar las que quedaron pendientes:
-separación de funciones, webhooks de pago y verificación de la auditoría.
+Los hallazgos de severidad media se corrigieron el mismo 13 de noviembre (commit \ruta{3d010e5}), con
+el mismo método del resto del proyecto: cambio con pruebas, verificaciones automáticas y despliegue.
+
+\subsubsection{PT-01: la causa raíz era más profunda}
+
+Al corregir PT-01 apareció una causa más profunda que la del informe: \textbf{django-ipware no estaba
+instalado}, así que los ajustes \texttt{AXES\_IPWARE\_*} nunca tuvieron efecto. django-axes, el límite
+de tasa (django-ratelimit), los límites de allauth y la auditoría usaban \texttt{REMOTE\_ADDR}, que en
+Render es una IP privada del balanceador (\texttt{10.x}), compartida y cambiante. Fijar el número de
+\textit{proxies}, como recomendaba el informe, no habría servido.
+
+La corrección (ADR-0018) fue una sola función, \ruta{apps.core.net.client_ip}, que usan todos esos
+controles. En Render lee \texttt{CF-Connecting-IP}, que escribe Cloudflare; nunca la primera entrada de
+\texttt{X-Forwarded-For}, que Render no limpia y el cliente puede falsificar. Se agregaron además:
+CAPTCHA en todo inicio de sesión en producción, el chequeo \texttt{byte.W005} en \texttt{check --deploy}
+si la IP sale de \texttt{REMOTE\_ADDR}, y una prueba que simula intentos detrás de \textit{proxies} que
+rotan.
+
+La re-prueba se ejecutó desde Kali contra producción (Figura~\ref{fig:pt-retest}) con cuentas
+inexistentes. El inicio de sesión ya muestra Turnstile en el primer intento y rechaza los envíos sin
+respuesta del CAPTCHA. Con el mismo usuario, cuatro intentos cuentan y el quinto recibe el bloqueo de
+axes (HTTP 429), aunque cada intento falsifique una IP distinta en \texttt{X-Forwarded-For}; el límite de
+allauth por IP rechaza los siguientes. Cloudflare responde 403 si el cliente intenta enviar su propio
+\texttt{CF-Connecting-IP}. Antes de la corrección, 30 intentos no producían ningún bloqueo.
+
+\figura{p09-retest-pt01.png}{0.92}{Re-prueba de PT-01 desde Kali contra producción}{Salida real del
+script \ruta{docs/pentest/scripts/retest_pt01.sh}, ejecutado desde Kali Linux en WSL el 13 de noviembre
+de 2026 a las 13:36 UTC (registro en \ruta{docs/pentest/logs/retest-pt01.txt}), presentada como imagen
+de terminal. En R3, el límite por minuto de allauth seguía activo por una ejecución anterior; R4 muestra
+el comportamiento completo.}{fig:pt-retest}
+
+Queda un pendiente que no se puede resolver desde el código: Turnstile sigue con las llaves públicas de
+prueba. La re-prueba lo confirma, porque los intentos con el token de prueba de Cloudflare superan el
+CAPTCHA y llegan a contar como fallos. Hasta que se carguen las llaves reales en Render (paso~3 de
+\ruta{docs/despliegue.md}), la protección efectiva es el bloqueo y el límite por IP, no el CAPTCHA.
+
+\subsubsection{PT-04}
+
+El secreto TOTP público ahora solo se siembra en desarrollo (\texttt{DEBUG=True}). En cualquier otro
+entorno, el comando retira el secreto que hubiera dejado una carga anterior, con sus códigos de
+recuperación, y lo registra en la auditoría. El \textit{middleware} del personal obliga a cada cuenta a
+activar su propio autenticador en el primer ingreso. Cuatro pruebas nuevas lo cubren, y el
+pre-despliegue lo aplica en cada despliegue de Render.
+
+\subsubsection{Verificaciones de la corrección}
+
+La suite pasó con 746 pruebas y 93~\% de cobertura, y ruff, black, mypy y bandit quedaron sin
+hallazgos. semgrep no reportó nada en 417 archivos, y \texttt{check --deploy} pasó sin advertencias con
+la configuración de producción. La Tabla~\ref{tab:pt-estado} resume el estado final.
+
+\begin{table}[H]
+\caption{Estado de los hallazgos después de la remediación}\label{tab:pt-estado}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}p{1.2cm}>{\raggedright}p{3.2cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+ID & Estado & Evidencia o acción pendiente \\
+\midrule
+PT-01 & Corregido y re-probado & Bloqueo a los 5 intentos y límite por IP, aun falsificando \texttt{X-Forwarded-For}. Pendiente: cargar las llaves reales de Turnstile en Render. \\
+PT-04 & Corregido & Pruebas automatizadas; el pre-despliegue retira el secreto público en cada despliegue. \\
+PT-02 & Riesgo aceptado & Panel protegido por autenticación, permisos y MFA. \\
+PT-03 & Abierto (informativo) & Sin impacto actual; quitar \texttt{|safe} en una próxima iteración. \\
+\bottomrule
+\end{tabularx}
+\notatabla{Elaboración propia a partir de la re-prueba y del commit \ruta{3d010e5}.}
+\end{table}
 
 \begin{leccion}
 Las verificaciones automáticas de las fases anteriores (727 pruebas, semgrep sin hallazgos, ZAP sin
 fallos) no detectaron PT-01 ni PT-04, porque ambos dependen de cómo se desplegó la aplicación: un
-\textit{proxy} delante, una variable que el Blueprint no fijó y un comando de demostración ejecutado en
-producción. Pruebe siempre el sistema desplegado, no solo el código, y convierta cada «debe ser 1 en
-producción» en un valor del Blueprint o en un chequeo que falle el despliegue.
+\textit{proxy} delante, una configuración para una librería que ni siquiera estaba instalada y un
+comando de demostración ejecutado en producción. Pruebe siempre el sistema desplegado, no solo el
+código; agregue pruebas que simulen el entorno real (aquí, los \textit{proxies}), y convierta cada
+supuesto de producción en un chequeo que avise antes de desplegar.
 \end{leccion}
 
 % =====================================================================
@@ -1379,11 +1443,13 @@ los hallazgos de la prueba de penetración.
 
 La prueba de penetración confirmó que los controles exigidos por el prompt funcionan donde dependen del
 código: control de acceso, protección contra inyección, CSRF, cabeceras y MFA del personal. Las fallas
-aparecieron en la frontera entre el código y el despliegue: una variable que el Blueprint no fijó, unas
-llaves de CAPTCHA de prueba y un comando de demostración ejecutado en producción. La conclusión práctica
+aparecieron en la frontera entre el código y el despliegue: una IP del cliente mal resuelta detrás del
+\textit{proxy}, unas llaves de CAPTCHA de prueba y un comando de demostración ejecutado en producción. La conclusión práctica
 para quien construya con \textit{vibe coding} es que la especificación debe exigir también la
 verificación del sistema desplegado, y que la prueba de penetración no es un trámite final, sino la
-última puerta de revisión del método.
+última puerta de revisión del método. Cerrar el ciclo también fue parte del método: los dos hallazgos
+de severidad media se corrigieron con pruebas y se desplegaron el mismo día, y PT-01 se re-probó desde
+Kali contra producción.
 
 Por último, este documento se redactó siguiendo las normas APA en su séptima edición
 \parencite{apa2020}, con apoyo en la guía de citas y referencias de \textcite{menendez2020}.
