@@ -96,8 +96,20 @@ El resumen está en [`00-resumen.svg`](../capturas/fase-02/00-resumen.svg).
 | 12 | Matriz de permisos generada desde el código | ✅ al día |
 | 13 | Integridad de la cadena de auditoría (BD de desarrollo) | ✅ cadena íntegra |
 | 09 | Integridad de las librerías JS y Tailwind | ✅ |
-| 10 | semgrep `p/django` + `p/python` | ✅ 0 hallazgos |
+| 10 | semgrep `p/django` + `p/python` | ✅ 0 hallazgos tras corregir 3 (ver nota) |
 | 11 | Trivy sobre la imagen de producción reconstruida | ✅ 0 HIGH/CRITICAL corregibles |
+
+> **Nota de transparencia sobre semgrep.** El commit `8000d17` registró por error "semgrep sin
+> hallazgos": esa ejecución reportó **3**. Se corrigieron en el commit siguiente (`fix(sec)`):
+> 1. *Open redirect / inyección de parámetros* en `StaffSecurityMiddleware`: la URL de login se
+>    armaba concatenando `?next=`; ahora usa `redirect_to_login()`, que codifica el parámetro. Test de
+>    regresión: `test_idle_timeout_redirect_encodes_next`.
+> 2. y 3. *SHA-1* en el validador HIBP: el comentario `nosemgrep` quedó en otra línea después de
+>    formatear con black. SHA-1 es el que exige la API de k-anonimato de HIBP (no protege nada aquí);
+>    se marca `usedforsecurity=False` y la supresión queda en la línea correcta.
+>
+> La nueva ejecución da **0 hallazgos en 152 reglas y 303 archivos**
+> ([`10-semgrep.txt`](../capturas/fase-02/10-semgrep.txt)).
 
 Tests nuevos de seguridad (marcador `security`) de esta fase:
 - matriz de acceso de **8 roles × 4 vistas del panel** (32 casos) y login obligatorio;

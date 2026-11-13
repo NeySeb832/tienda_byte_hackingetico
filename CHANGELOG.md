@@ -5,6 +5,12 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 
 ## [Sin publicar]
 
+### Seguridad
+- Hallazgos de semgrep de la Fase 2, que el registro anterior omitió por error:
+  - El cierre por inactividad del personal armaba la URL de login concatenando `?next=`, lo que permitía inyectar parámetros. Ahora usa `redirect_to_login()`, que codifica el parámetro, y tiene test de regresión.
+  - En el validador HIBP, el SHA-1 que exige la API de k-anonimato se marca `usedforsecurity=False`.
+  - Resultado: 0 hallazgos en 152 reglas.
+
 ## [0.2.0] — 2026-11-12 — Fase 2: Usuarios y seguridad base
 
 ### Añadido

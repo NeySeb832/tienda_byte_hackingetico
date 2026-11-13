@@ -7,6 +7,7 @@ from allauth.mfa.utils import is_mfa_enabled
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.contrib.auth.views import redirect_to_login
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.urls import Resolver404, resolve, reverse
@@ -46,7 +47,8 @@ class StaffSecurityMiddleware:
         if last and now - float(last) > settings.BYTE_STAFF_IDLE_TIMEOUT_MINUTES * 60:
             logout(request)
             messages.info(request, "Tu sesión se cerró por inactividad. Ingresa de nuevo.")
-            return redirect(f"{reverse('account_login')}?next={request.path}")
+            # redirect_to_login URL-encodes "next" (no parameter injection / open redirect).
+            return redirect_to_login(request.get_full_path(), reverse("account_login"))
         request.session[LAST_ACTIVITY_KEY] = now
         if is_mfa_enabled(request.user) or self._is_exempt(request):
             return None

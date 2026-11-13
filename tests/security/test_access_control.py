@@ -105,3 +105,17 @@ def test_account_pages_render_their_content(client, customer):
     assert "Hola" in client.get(reverse("accounts:dashboard")).content.decode()
     assert "Agregar dirección" in client.get(reverse("accounts:addresses")).content.decode()
     assert "Eliminar mi cuenta" in client.get(reverse("accounts:privacy")).content.decode()
+
+
+def test_idle_timeout_redirect_encodes_next(client, role_user, settings):
+    """Regression (semgrep open-redirect): "next" is URL-encoded, no parameter injection."""
+    client.force_login(role_user(roles.SELLER))
+    session = client.session
+    session[LAST_ACTIVITY_KEY] = time.time() - settings.BYTE_STAFF_IDLE_TIMEOUT_MINUTES * 60 - 5
+    session.save()
+    response = client.get("/panel/?a=1&next=https://evil.example")
+    assert response.status_code == 302
+    location = response["Location"]
+    assert location.startswith(reverse("account_login"))
+    assert "next=/panel/%3Fa%3D1%26next%3Dhttps%3A//evil.example" in location
+    assert location.count("next=") == 1  # the injected parameter stays inside the encoded value

@@ -37,10 +37,10 @@ def pwned_count(password: str) -> int:
     required by the Have I Been Pwned range API. If the API is unreachable the
     check is skipped and logged (fail open): the other validators still apply.
     """
-    # The HIBP protocol mandates SHA-1; it is not used to protect any data here.
-    digest = (
-        hashlib.sha1(password.encode(), usedforsecurity=False).hexdigest().upper()
-    )  # nosemgrep: python.lang.security.insecure-hash-algorithms.insecure-hash-algorithm-sha1
+    # The HIBP range API is defined over SHA-1 (k-anonymity prefix); it protects nothing here.
+    data = password.encode()
+    sha1 = hashlib.sha1(data, usedforsecurity=False)  # nosemgrep
+    digest = sha1.hexdigest().upper()
     prefix, suffix = digest[:5], digest[5:]
     try:
         response = httpx.get(
