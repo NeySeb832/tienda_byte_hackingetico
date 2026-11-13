@@ -1,0 +1,30 @@
+{% extends "panel/base.html" %}
+{% load static money %}
+{% block title %}Inteligencia de negocio{% endblock %}
+{% block extra_head %}{% if ready %}<script nonce="{{ request.csp_nonce }}" src="{% static 'vendor/echarts/echarts.min.js' %}" defer></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/analytics.js' %}" defer></script>{% endif %}{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black">Inteligencia de negocio</h1>
+{% if not ready %}
+<p class="alert alert-info mt-6">El data lake aún no tiene la capa oro. Ejecuta <code>seed_bigdata</code> (histórico de demostración) o <code>run_pipeline</code>; también corre cada noche.</p>
+{% else %}
+<p class="mt-1 text-sm text-slate-500">Modelo estrella sobre Parquet (capa oro). Indicadores de los últimos 12 meses; gráficas con el histórico completo.</p>
+<div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="stat-card"><p class="stat-label">Ventas (12 meses)</p><p class="stat-value">{{ data.kpis.revenue|floatformat:0|cop }}</p></div>
+  <div class="stat-card"><p class="stat-label">Pedidos</p><p class="stat-value">{{ data.kpis.orders }}</p></div>
+  <div class="stat-card"><p class="stat-label">Unidades</p><p class="stat-value">{{ data.kpis.units }}</p></div>
+  <div class="stat-card"><p class="stat-label">Ticket promedio</p><p class="stat-value">{{ data.kpis.ticket|floatformat:0|cop }}</p></div>
+</div>
+<section class="stat-card mt-6"><h2 class="stat-label">Ventas mensuales y pronóstico (3 meses)</h2><div class="h-80" data-chart="monthly" role="img" aria-label="Ventas mensuales y pronóstico"></div></section>
+<div class="mt-6 grid gap-6 lg:grid-cols-2">
+  <section class="stat-card"><h2 class="stat-label">Ventas por categoría</h2><div class="h-72" data-chart="categories" role="img" aria-label="Ventas por categoría"></div></section>
+  <section class="stat-card"><h2 class="stat-label">Ventas por sede</h2><div class="h-72" data-chart="stores" role="img" aria-label="Ventas por sede"></div></section>
+  <section class="stat-card"><h2 class="stat-label">Canales</h2><div class="h-72" data-chart="channels" role="img" aria-label="Participación por canal"></div></section>
+  <section class="stat-card"><h2 class="stat-label">Segmentos de clientes (RFM)</h2><div class="h-72" data-chart="segments" role="img" aria-label="Clientes por segmento RFM"></div></section>
+  <section class="stat-card"><h2 class="stat-label">Venta promedio por día de la semana</h2><div class="h-72" data-chart="weekdays" role="img" aria-label="Venta promedio por día"></div></section>
+  <section class="stat-card"><h2 class="stat-label">Productos más vendidos</h2>
+    <table class="mt-3 w-full text-sm">{% for p in data.top_products %}<tr><td class="py-1">{{ p.name }}</td><td class="py-1 text-right">{{ p.units }}</td><td class="py-1 text-right">{{ p.revenue|cop }}</td></tr>{% endfor %}</table></section>
+</div>
+{{ data|json_script:"bi-data" }}
+{% endif %}
+{% endblock %}

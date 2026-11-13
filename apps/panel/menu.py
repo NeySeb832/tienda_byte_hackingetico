@@ -26,6 +26,7 @@ MENU = (
     MenuItem("Precios", "panel:prices", "pricing.change_price"),
     MenuItem("Cupones", "panel:coupons", "promotions.view_coupon"),
     MenuItem("Reportes", "panel:reports", "orders.view_sales_report"),
+    MenuItem("Inteligencia de negocio", "panel:bi", "orders.view_sales_report"),
     MenuItem("Personal y roles", "panel:staff", "accounts.manage_staff"),
     MenuItem("Auditoría", "panel:audit", "audit.view_auditlog"),
     MenuItem("Eventos de seguridad", "panel:security", "audit.view_securityevent"),

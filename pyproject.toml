@@ -33,6 +33,7 @@ dependencies = [
     "cryptography>=45,<51",
     "httpx>=0.28,<0.29",
     "reportlab>=5.1,<6",
+    "duckdb>=2.0,<2.1",
 ]
 
 [dependency-groups]
@@ -101,6 +102,7 @@ ignore = [
 "config/settings/*.py" = ["F403", "F405"]
 "scripts/**" = ["T201", "S603", "S607"]
 "conftest.py" = ["S101"]
+"apps/analytics/tests/**" = ["S101", "S608"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["apps", "config"]

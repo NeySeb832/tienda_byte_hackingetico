@@ -47,7 +47,7 @@ primer nivel, no un añadido.
 | 4 | Carrito, checkout y pagos (cupones, envíos, Wompi sandbox, webhooks, facturas PDF, correos) | ✅ en revisión (`fase/04-checkout`) |
 | 5 | Panel administrativo (dashboard, inventario multi-sede, compras, pedidos, POS, CRM, reportes) | ✅ en revisión (`fase/05-panel`) |
 | 6 | Valor agregado (retomas, servicio técnico, fidelidad, preventas, alertas, devoluciones) | ✅ en revisión (`fase/06-valor-agregado`) |
-| 7 | Big Data / BI (seed masivo, pipeline medallón, modelo estrella, modelos, dashboards, PySpark) | ⏳ |
+| 7 | Big Data / BI (seed masivo, pipeline medallón, modelo estrella, modelos, dashboards, PySpark) | ✅ en revisión (`fase/07-bigdata`) |
 | 8 | Endurecimiento de seguridad (matriz OWASP, STRIDE, suite de seguridad, ZAP, SBOM) | ⏳ |
 | 9 | Despliegue (Render Blueprint, CI/CD, datos demo, verificación end-to-end) | ⏳ |
 | 10 | Documentación final (README, manuales por rol, manual técnico, guion de sustentación) | ⏳ |
@@ -227,8 +227,8 @@ uv run python manage.py seed_demo_users              # un usuario demo por rol (
 uv run python manage.py seed_demo                    # catálogo demo, sedes y stock (idempotente)
 ```
 
-Comandos que se crearán en sus fases: `seed_bigdata` (F7) y los scripts de
-backup y restauración (F9).
+Fase 7: `seed_bigdata` (histórico sintético + lago) y `run_pipeline` (reconstruye plata y oro).
+Los scripts de backup y restauración llegan en la F9.
 
 ## Dependencias
 

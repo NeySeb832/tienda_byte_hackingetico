@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 import environ
+from celery.schedules import crontab
 from csp.constants import NONCE, NONE, SELF
 from django.utils.translation import gettext_lazy as _
 
@@ -292,6 +293,10 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 CELERY_BEAT_SCHEDULE = {
     # Scheduled price changes (apps.pricing): applied within 5 minutes of their start.
+    "analytics-nightly-pipeline": {
+        "task": "analytics.run_pipeline",
+        "schedule": crontab(hour=3, minute=0),
+    },
     "orders-expire-unpaid": {
         "task": "orders.expire_unpaid_orders",
         "schedule": 300.0,
@@ -443,3 +448,8 @@ WOMPI_INTEGRITY_SECRET = env.str("WOMPI_INTEGRITY_SECRET", default="")
 WOMPI_EVENTS_SECRET = env.str("WOMPI_EVENTS_SECRET", default="")
 WOMPI_API_URL = env.str("WOMPI_API_URL", default="https://sandbox.wompi.co/v1")
 WOMPI_CHECKOUT_URL = env.str("WOMPI_CHECKOUT_URL", default="https://checkout.wompi.co/p/")
+
+# ---------------------------------------------------------------------------
+# BI / data lake (Phase 7, ADR-0017)
+# ---------------------------------------------------------------------------
+BYTE_DATA_LAKE_DIR = env.path("BYTE_DATA_LAKE_DIR", default=str(BASE_DIR / "data" / "lake"))

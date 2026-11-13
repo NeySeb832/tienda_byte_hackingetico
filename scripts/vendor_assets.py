@@ -63,6 +63,14 @@ NPM_ASSETS = (
         member="package/dist/cdn.min.js",
         dest="static/vendor/alpine/alpine-csp.min.js",
     ),
+    NpmAsset(
+        package="echarts",
+        version="6.1.0",
+        tarball="https://registry.npmjs.org/echarts/-/echarts-6.1.0.tgz",
+        integrity="sha512-q0yaFPggC9FUdsWH4blavRWFmxdrIodbkoKNAjJudAI6CA9gNPxHtV2RcZNEepZVlk4yvBYkOkbk6HIVpIyHZA==",
+        member="package/dist/echarts.min.js",
+        dest="static/vendor/echarts/echarts.min.js",
+    ),
 )
 
 TAILWIND_VERSION = "4.3.5"

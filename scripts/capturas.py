@@ -138,6 +138,11 @@ PAGES: dict[int, list[tuple[str, ...] | tuple[str, str, bool] | tuple[str, str, 
         ),
         ("panel-devoluciones-gerente", "/panel/devoluciones/", False, "gerente@byte.test"),
     ],
+    7: [
+        ("panel-inteligencia-de-negocio", "/panel/analytics/", True, "analista@byte.test"),
+        ("panel-bi-gerente", "/panel/analytics/", False, "gerente@byte.test"),
+        ("403-bodega-en-bi", "/panel/analytics/", False, "bodega@byte.test"),
+    ],
 }
 
 
@@ -284,6 +289,7 @@ def prepare_value_added_demo() -> dict[str, str]:
             orders.transition(paid, status, actor=seller)
     if not paid.returns.exists():
         line = paid.lines.order_by("pk").last()
+        assert line is not None  # noqa: S101
         rma = returns.request_return(
             paid,
             user=customer,

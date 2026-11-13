@@ -23,4 +23,6 @@ consecuencias trae. Son cortos a propósito. Si una decisión cambia, se crea un
 | [0015](0015-panel-operativo-sod-y-alcance-por-sede.md) | Panel operativo con separación de funciones y alcance por sede | Aceptada |
 | [0016](0016-valor-agregado-libros-de-saldo-y-devoluciones.md) | Puntos y saldo en libros append-only; devoluciones con reembolso aprobado por otra persona | Aceptada |
 
+| [0017](0017-bi-duckdb-medallon.md) | BI con DuckDB sobre Parquet (medallón) y PySpark opcional | Aceptada |
+
 Plantilla: [`template.md`](template.md).

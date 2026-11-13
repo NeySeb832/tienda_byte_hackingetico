@@ -5,6 +5,16 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 
 ## [Sin publicar]
 
+## [0.7.0] — 2026-11-13 — Fase 7: Big Data / BI
+
+### Añadido
+- `seed_bigdata`: 2 años de histórico sintético determinista (~70 000 líneas) con estacionalidad, Black Friday y crecimiento.
+- Pipeline medallón con **DuckDB 2.0** sobre Parquet: bronce (CSV y extracción seudonimizada de PostgreSQL), plata (validado) y oro (**modelo estrella**).
+- Segmentación **RFM** y **pronóstico** mensual a 3 meses con banda de confianza.
+- Tablero **Inteligencia de negocio** (`/panel/analytics/`) con ECharts 6.1 servido localmente; tarea nocturna de Celery Beat y job opcional de PySpark.
+- ADR-0017.
+
+
 ## [0.6.0] — 2026-11-13 — Fase 6: Valor agregado
 
 ### Añadido

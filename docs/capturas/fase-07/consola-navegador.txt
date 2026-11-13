@@ -1,0 +1,4 @@
+Violaciones de CSP: 0
+Mensajes totales: 1 (esperados: 1, el propio 404 de error-404)
+
+[403-bodega-en-bi-escritorio-oscuro] error: Failed to load resource: the server responded with a status of 403 (Forbidden)

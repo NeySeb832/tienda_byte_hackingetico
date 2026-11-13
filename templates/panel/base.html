@@ -4,6 +4,7 @@
   <title>{% block title %}Panel{% endblock %} · {{ site_name }}</title>
   <meta name="robots" content="noindex, nofollow">
   {% include "partials/head.html" %}
+  {% block extra_head %}{% endblock %}
 </head>
 <body class="min-h-full bg-slate-100 text-slate-900 antialiased dark:bg-ink-950 dark:text-slate-100" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
   <div class="lg:grid lg:min-h-screen lg:grid-cols-[15rem_1fr]">
