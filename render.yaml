@@ -24,9 +24,10 @@ services:
     plan: starter
     dockerfilePath: ./Dockerfile
     dockerContext: .
-    dockerCommand: gunicorn config.wsgi:application --config gunicorn.conf.py
+    # The BI lake lives on this service's disk: build it at start-up when missing.
+    dockerCommand: sh -c "python manage.py ensure_lake && exec gunicorn config.wsgi:application --config gunicorn.conf.py"
     healthCheckPath: /healthz
-    preDeployCommand: python manage.py migrate --noinput && python manage.py setup_roles
+    preDeployCommand: python manage.py migrate --noinput && python manage.py bootstrap_demo --sin-bi
     autoDeploy: false # despliega el job "deploy" de CI cuando todo pasa
     disk:
       name: byte-lake
@@ -37,12 +38,6 @@ services:
         value: config.settings.prod
       - key: DJANGO_SECRET_KEY
         generateValue: true
-      - key: DJANGO_ALLOWED_HOSTS
-        sync: false # p. ej. byte-web.onrender.com
-      - key: DJANGO_CSRF_TRUSTED_ORIGINS
-        sync: false # p. ej. https://byte-web.onrender.com
-      - key: DJANGO_ADMIN_URL
-        sync: false # ruta aleatoria, nunca "admin/"
       - key: DATABASE_URL
         fromDatabase:
           name: byte-db
@@ -53,35 +48,19 @@ services:
           name: byte-valkey
           property: connectionString
       - key: BYTE_FIELD_ENCRYPTION_KEYS
-        sync: false # Fernet: python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+        generateValue: true # se deriva una clave Fernet (apps/core/crypto.py)
       - key: BYTE_BLIND_INDEX_KEY
         generateValue: true
-      - key: BYTE_SITE_URL
-        sync: false
       - key: BYTE_PAYMENT_GATEWAY
-        value: wompi
-      - key: WOMPI_PUBLIC_KEY
-        sync: false
-      - key: WOMPI_INTEGRITY_SECRET
-        sync: false
-      - key: WOMPI_EVENTS_SECRET
-        sync: false
-      - key: TURNSTILE_SITE_KEY
-        sync: false
-      - key: TURNSTILE_SECRET_KEY
-        sync: false
+        value: fake # cambiar a wompi al cargar las llaves del sandbox
       - key: DJANGO_EMAIL_BACKEND
-        value: anymail.backends.brevo.EmailBackend
-      - key: DJANGO_ANYMAIL # JSON: {"BREVO_API_KEY": "..."}
-        sync: false
+        value: django.core.mail.backends.console.EmailBackend # correos al log hasta configurar Brevo
       - key: DJANGO_USE_S3
         value: "false"
       - key: BYTE_DATA_LAKE_DIR
         value: /var/data/lake
       - key: BYTE_DEMO_PASSWORD
-        sync: false # contraseña de los usuarios demo (solo si se cargan datos demo)
-      - key: SENTRY_DSN
-        sync: false
+        generateValue: true # visible en el panel de Render (usuarios demo)
 
   - type: worker
     name: byte-worker

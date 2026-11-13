@@ -63,3 +63,17 @@ def test_deploy_check_requires_wompi_keys(settings):
     assert "byte.E004" in {m.id for m in check_production_secrets(None)}
     settings.BYTE_PAYMENT_GATEWAY = "otra"
     assert "byte.E004" in {m.id for m in check_production_secrets(None)}
+
+
+def test_platform_generated_secrets_become_valid_fernet_keys(settings):
+    from apps.core import crypto
+
+    settings.BYTE_FIELD_ENCRYPTION_KEYS = ["dGhpcy1pcy1hLXJhbmRvbS1yZW5kZXItdmFsdWU+/=="]
+    crypto.reset_key_cache()
+    try:
+        assert crypto.decrypt(crypto.encrypt("3001234567")) == "3001234567"
+        derived = crypto._as_fernet_key("cualquier-secreto")
+        assert derived == crypto._as_fernet_key("cualquier-secreto")
+        assert len(derived) == 44
+    finally:
+        crypto.reset_key_cache()

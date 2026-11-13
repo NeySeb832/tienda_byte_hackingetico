@@ -3,8 +3,17 @@
 import copy
 
 from .base import *
+from .base import ALLOWED_HOSTS, BYTE_SITE_URL, CSRF_TRUSTED_ORIGINS
 
 DEBUG = False
+
+# --- Render: the platform injects the public hostname ---
+RENDER_HOST = env.str("RENDER_EXTERNAL_HOSTNAME", default="")
+if RENDER_HOST:
+    ALLOWED_HOSTS = [*ALLOWED_HOSTS, RENDER_HOST]
+    CSRF_TRUSTED_ORIGINS = [*CSRF_TRUSTED_ORIGINS, f"https://{RENDER_HOST}"]
+    if BYTE_SITE_URL.startswith("http://localhost"):
+        BYTE_SITE_URL = f"https://{RENDER_HOST}"
 
 # --- HTTPS / HSTS (A02, A04) ---
 SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
