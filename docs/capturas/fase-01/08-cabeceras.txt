@@ -1,0 +1,15 @@
+$ python.exe -c import os, django;os.environ['DJANGO_SETTINGS_MODULE']='config.settings.test';django.setup();from django.test import Client;r = Client().get('/');print('GET / ->', r.status_code);[print(f'{h}: {r[h]}') for h in ('Content-Security-Policy','X-Frame-Options','X-Content-Type-Options','Referrer-Policy','Cross-Origin-Opener-Policy','Cross-Origin-Resource-Policy','Permissions-Policy','X-Request-ID')]
+
+GET / -> 200
+Content-Security-Policy: font-src 'self'; img-src 'self' data:; script-src 'self' 'nonce-ieMkNVn3WCTQOOCCcV8DtQ=='; connect-src 'self'; form-action 'self'; base-uri 'self'; worker-src 'self'; style-src 'self'; manifest-src 'self'; frame-ancestors 'none'; frame-src 'none'; default-src 'self'; object-src 'none'
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Resource-Policy: same-origin
+Permissions-Policy: accelerometer=(), autoplay=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(self), usb=(), browsing-topics=()
+X-Request-ID: 6d5f14e922924a669f195ace0ced7eac
+C:\Users\seb83\Documentos\Universidad\Hacking etico\Tienda Videojuegos IA\.venv\Lib\site-packages\django\core\handlers\base.py:61: UserWarning: No directory at: C:\Users\seb83\Documentos\Universidad\Hacking etico\Tienda Videojuegos IA\staticfiles\
+  mw_instance = middleware(adapted_handler)
+
+[OK en 2.8 s]

@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.python-version.local
+
+# Secrets: never commit real environment files
+.env
+.env.*
+!.env.example
+
+# Django / build artifacts
+staticfiles/
+media/
+static/css/tailwind.css
+.django_tailwind_cli/
+.bin/
+
+# Data lake (Phase 7) and notebooks checkpoints
+data/
+.ipynb_checkpoints/
+
+# Tooling caches and reports
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+test-results/
+playwright-report/
+sbom*.json
+*.log
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local Claude Code tooling
+.claude/

@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load static money %}
+{% block title %}{{ site_name }} · Consolas, videojuegos y accesorios en Colombia{% endblock %}
+{% block extra_head %}<script nonce="{{ request.csp_nonce }}" src="{% static 'js/carousel.js' %}" defer></script>{% endblock %}
+{% block content %}
+<h1 class="sr-only">{{ site_name }}: consolas, videojuegos, accesorios y servicio técnico en Colombia</h1>
+
+<section class="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8" aria-label="Destacados">
+  <div class="carousel" data-carousel data-interval="6500" aria-roledescription="carrusel">
+    <div class="carousel-track" data-carousel-track tabindex="0" aria-label="Diapositivas destacadas">
+      {% for slide in slides %}
+      <article class="carousel-slide" aria-roledescription="diapositiva" aria-label="{{ forloop.counter }} de {{ slides|length }}: {{ slide.title }}">
+        <div class="slide-panel slide-{{ slide.theme }}">
+          <div class="relative z-10">
+            <p class="slide-eyebrow">{{ slide.eyebrow }}</p>
+            <h2 class="mt-4 font-display text-3xl font-black leading-tight text-white sm:text-5xl">{{ slide.title }}</h2>
+            <p class="mt-4 max-w-lg text-base text-slate-200 sm:text-lg">{{ slide.text }}</p>
+            {% if slide.price_from %}<p class="mt-6 text-sm uppercase tracking-widest text-slate-300">Desde <span class="ml-1 font-display text-3xl font-black normal-case tracking-normal text-white">{{ slide.price_from|cop }}</span></p>{% endif %}
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="{{ slide.cta_href }}" class="btn-primary">{{ slide.cta_label }}</a>
+              {% if slide.secondary_label %}<a href="{{ slide.secondary_href }}" class="btn-on-dark">{{ slide.secondary_label }}</a>{% endif %}
+            </div>
+          </div>
+          <div class="slide-media">
+            <img src="{% static slide.image.file %}" width="{{ slide.image.width }}" height="{{ slide.image.height }}" alt="{{ slide.image.alt }}" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    <div class="carousel-ui">
+      <button type="button" class="carousel-arrow left-3" data-carousel-prev aria-label="Diapositiva anterior"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg></button>
+      <button type="button" class="carousel-arrow right-3" data-carousel-next aria-label="Diapositiva siguiente"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg></button>
+      <div class="carousel-dots">
+        {% for slide in slides %}<button type="button" class="carousel-dot" data-carousel-dot="{{ forloop.counter0 }}" aria-label="Ir a la diapositiva {{ forloop.counter }}: {{ slide.title }}"></button>{% endfor %}
+        <button type="button" class="carousel-toggle" data-carousel-toggle aria-label="Pausar el carrusel">
+          <span data-carousel-pause-icon><svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5"/></svg></span>
+          <span data-carousel-play-icon hidden><svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"/></svg></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="beneficios" class="mx-auto mt-8 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="beneficios-titulo">
+  <h2 id="beneficios-titulo" class="sr-only">Por qué comprar en {{ site_name }}</h2>
+  <ul class="benefits">
+      <li class="benefit">
+        <span class="benefit-icon"><svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg></span>
+        <div>
+          <p class="font-semibold text-slate-900 dark:text-white">Envíos a todo el país</p>
+          <p class="mt-0.5 text-sm text-slate-600 dark:text-slate-400">Gratis en compras desde {{ free_shipping_from|cop }}.</p>
+        </div>
+      </li>
+      <li class="benefit">
+        <span class="benefit-icon"><svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"/></svg></span>
+        <div>
+          <p class="font-semibold text-slate-900 dark:text-white">Paga como prefieras</p>
+          <p class="mt-0.5 text-sm text-slate-600 dark:text-slate-400">Tarjetas, PSE y Nequi. Hasta 12 cuotas con tarjeta de crédito.</p>
+        </div>
+      </li>
+      <li class="benefit">
+        <span class="benefit-icon"><svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg></span>
+        <div>
+          <p class="font-semibold text-slate-900 dark:text-white">Garantía Byte</p>
+          <p class="mt-0.5 text-sm text-slate-600 dark:text-slate-400">En consolas nuevas, usadas y reacondicionadas.</p>
+        </div>
+      </li>
+      <li class="benefit">
+        <span class="benefit-icon"><svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"/></svg></span>
+        <div>
+          <p class="font-semibold text-slate-900 dark:text-white">Recoge en tienda</p>
+          <p class="mt-0.5 text-sm text-slate-600 dark:text-slate-400">Compra en línea y recoge sin costo en nuestras sedes.</p>
+        </div>
+      </li>
+  </ul>
+</section>
+
+<section id="categorias" class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="categorias-titulo">
+  <div class="section-head">
+    <h2 id="categorias-titulo" class="section-title">Compra por categoría</h2>
+  </div>
+  <div class="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+    {% for category in categories %}
+    <a id="cat-{{ category.key }}" href="#destacados" class="category-tile group tile-{{ category.theme }}">
+      <img src="{% static category.image.file %}" width="{{ category.image.width }}" height="{{ category.image.height }}" alt="" loading="lazy" decoding="async">
+      <span class="relative">
+        <span class="block font-display text-lg font-black text-slate-900 dark:text-white">{{ category.name }}</span>
+        <span class="block text-xs text-slate-600 dark:text-slate-300">{{ category.description }}</span>
+      </span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section id="destacados" class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="destacados-titulo">
+  <div class="section-head">
+    <h2 id="destacados-titulo" class="section-title">Consolas destacadas</h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400">Precios con IVA incluido</p>
+  </div>
+  <div class="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+    {% for product in featured %}{% include "components/product_card.html" %}{% endfor %}
+  </div>
+</section>
+
+<section id="retoma" class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="retoma-titulo">
+  <div class="promo-banner">
+    <img class="promo-photo" src="{% static 'img/productos/coleccion-playstation.webp' %}" width="1200" height="792" alt="" loading="lazy" decoding="async">
+    <div class="relative max-w-xl">
+      <p class="slide-eyebrow">Retoma</p>
+      <h2 id="retoma-titulo" class="mt-4 font-display text-3xl font-black text-white sm:text-4xl">Tu consola usada vale</h2>
+      <p class="mt-4 text-slate-200">Recibimos tu PlayStation, Xbox o Nintendo como parte de pago. La revisamos en tienda y te damos una oferta en crédito o en efectivo.</p>
+      <ul class="mt-6 space-y-2 text-sm text-slate-100">
+        <li class="flex items-center gap-2"><svg class="size-4 text-neon-lime" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Cotización sin costo</li>
+        <li class="flex items-center gap-2"><svg class="size-4 text-neon-lime" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Evaluación técnica el mismo día</li>
+        <li class="flex items-center gap-2"><svg class="size-4 text-neon-lime" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Crédito para tu próxima compra</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="controles" class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="controles-titulo">
+  <div class="section-head">
+    <h2 id="controles-titulo" class="section-title">Controles y accesorios</h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400">Originales y usados revisados</p>
+  </div>
+  <div class="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+    {% for product in controllers %}{% include "components/product_card.html" %}{% endfor %}
+  </div>
+</section>
+
+<section id="servicios" class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="servicios-titulo">
+  <div class="service-panel">
+    <div>
+      <p class="slide-eyebrow">Servicio técnico</p>
+      <h2 id="servicios-titulo" class="mt-4 font-display text-3xl font-black text-slate-900 sm:text-4xl dark:text-white">Reparamos y mantenemos tus equipos</h2>
+      <p class="mt-4 max-w-xl text-slate-600 dark:text-slate-300">Técnicos especializados en consolas y controles. Diagnóstico con presupuesto previo, repuestos de calidad y garantía en cada reparación.</p>
+      <img class="mt-8 hidden w-72 drop-shadow-2xl lg:block" src="{% static 'img/productos/placa-playstation-5.webp' %}" width="900" height="774" alt="" loading="lazy" decoding="async">
+    </div>
+    <ul class="divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white dark:divide-white/10 dark:border-white/10 dark:bg-ink-900">
+      {% for service in services %}
+      <li class="flex items-start justify-between gap-4 p-5">
+        <div class="flex gap-4">
+          <span class="benefit-icon"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75a4.5 4.5 0 0 1-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 1 1-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 0 1 6.336-4.486l-3.276 3.276a3.004 3.004 0 0 0 2.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852Z"/></svg></span>
+          <div>
+            <p class="font-semibold text-slate-900 dark:text-white">{{ service.name }}</p>
+            <p class="text-sm text-slate-600 dark:text-slate-400">{{ service.detail }}</p>
+          </div>
+        </div>
+        <p class="whitespace-nowrap font-display text-lg font-black text-slate-900 dark:text-white">{{ service.price|cop }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="marcas-titulo">
+  <h2 id="marcas-titulo" class="text-center text-xs font-bold uppercase tracking-[0.3em] text-slate-500">Marcas que encuentras en {{ site_name }}</h2>
+  <ul class="brand-strip">
+    <li>PlayStation</li><li>Xbox</li><li>Nintendo</li><li>Steam Deck</li><li>ASUS ROG</li><li>Lenovo Legion</li><li>Sega</li>
+  </ul>
+</section>
+{% endblock %}

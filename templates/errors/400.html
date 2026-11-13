@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Solicitud inválida · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="mx-auto flex max-w-2xl flex-col items-center px-4 py-24 text-center">
+  <p class="neon-text font-display text-7xl font-black">400</p>
+  <h1 class="mt-6 font-display text-3xl font-black uppercase text-slate-900 dark:text-white">Solicitud inválida</h1>
+  <p class="mt-4 text-slate-600 dark:text-slate-300">No pudimos procesar la solicitud. Revisa los datos e inténtalo de nuevo.</p>
+  <a href="{% url 'core:home' %}" class="btn-primary mt-8">Volver al inicio</a>
+  {% if request_id %}<p class="mt-8 text-xs text-slate-500">ID de referencia: <code>{{ request_id }}</code></p>{% endif %}
+</section>
+{% endblock %}

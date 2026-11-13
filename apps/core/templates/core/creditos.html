@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Créditos de imágenes · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+  <h1 class="font-display text-3xl font-black text-slate-900 dark:text-white">Créditos de imágenes</h1>
+  <p class="mt-3 max-w-3xl text-slate-600 dark:text-slate-300">Las fotografías de productos provienen de Wikimedia Commons y se usan bajo licencias libres (dominio público, CC0 o Creative Commons). Fueron recortadas y optimizadas para la web. Las marcas pertenecen a sus respectivos dueños.</p>
+  <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+    {% for credit in credits %}
+    <li class="card flex gap-4">
+      <span class="flex size-20 shrink-0 items-center justify-center rounded-xl bg-slate-100 p-2 dark:bg-ink-800">
+        <img class="max-h-full max-w-full object-contain" src="{% static credit.file %}" width="{{ credit.width }}" height="{{ credit.height }}" alt="" loading="lazy" decoding="async">
+      </span>
+      <div class="min-w-0 text-sm">
+        <p class="font-semibold text-slate-900 dark:text-white">{{ credit.alt }}</p>
+        <p class="mt-1 text-slate-600 dark:text-slate-400">Autor: {{ credit.author }}</p>
+        <p class="text-slate-600 dark:text-slate-400">Licencia:
+          {% if credit.license_url %}<a class="text-cyan-700 underline-offset-2 hover:underline dark:text-neon-cyan" href="{{ credit.license_url }}" rel="license noopener noreferrer">{{ credit.license }}</a>{% else %}{{ credit.license }}{% endif %}
+        </p>
+        <a class="mt-1 inline-block truncate text-cyan-700 underline-offset-2 hover:underline dark:text-neon-cyan" href="{{ credit.source }}" rel="noopener noreferrer">Ver original en Wikimedia Commons</a>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

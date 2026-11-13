@@ -1,0 +1,7 @@
+$ python.exe scripts/vendor_assets.py --check
+
+OK static/vendor/htmx/htmx.min.js
+OK static/vendor/alpine/alpine-csp.min.js
+OK .bin\tailwindcss.exe
+
+[OK en 0.5 s]

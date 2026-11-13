@@ -1,0 +1,46 @@
+$ python.exe -m pytest --cov --cov-report=term -p no:cacheprovider --color=yes
+
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0
+django: version: 5.2.19, settings: config.settings.test (from ini)
+rootdir: C:\Users\seb83\Documentos\Universidad\Hacking etico\Tienda Videojuegos IA
+configfile: pyproject.toml
+testpaths: apps, tests
+plugins: Faker-40.44.0, platformdirs-4.14.5, cov-7.1.0, django-4.14.0, playwright-0.10.0, xdist-3.8.0
+collected 323 items
+
+apps\accounts\tests\test_models.py ...........                           [  3%]
+apps\core\tests\test_health.py ....                                      [  4%]
+tests\security\test_access.py .......                                    [  6%]
+apps\catalog\tests\test_selectors.py ..............                      [ 11%]
+apps\cms\tests\test_selectors.py ....                                    [ 12%]
+apps\core\tests\test_checks.py .....                                     [ 13%]
+apps\core\tests\test_errors.py .....                                     [ 15%]
+apps\core\tests\test_logging.py ...                                      [ 16%]
+apps\core\tests\test_middleware.py ....                                  [ 17%]
+apps\core\tests\test_money.py ................................           [ 27%]
+apps\core\tests\test_templatetags.py ....                                [ 28%]
+apps\core\tests\test_views.py .....                                      [ 30%]
+apps\services_desk\tests\test_selectors.py .                             [ 30%]
+tests\security\test_headers.py .......                                   [ 32%]
+tests\security\test_settings.py .........                                [ 35%]
+tests\test_celery.py ...                                                 [ 36%]
+tests\test_structure.py ................................................ [ 51%]
+........................................................................ [ 73%]
+........................................................................ [ 95%]
+.............                                                            [100%]
+
+=============================== tests coverage ================================
+______________ coverage: platform win32, python 3.12.10-final-0 _______________
+
+Name                      Stmts   Miss Branch BrPart  Cover   Missing
+---------------------------------------------------------------------
+apps\accounts\models.py      51      0      8      1    98%   77->79
+---------------------------------------------------------------------
+TOTAL                       559      0     40      1    99%
+
+182 files skipped due to complete coverage.
+Required test coverage of 80.0% reached. Total coverage: 99.83%
+============================ 323 passed in 20.12s =============================
+
+[OK en 26.1 s]

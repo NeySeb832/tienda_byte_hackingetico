@@ -1,0 +1,26 @@
+{% load static tailwind_cli %}<!doctype html>
+<html lang="es-CO" class="h-full scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site_name }} · Videojuegos, consolas y accesorios{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}Tienda de videojuegos, consolas y accesorios en Colombia: nuevos, usados y reacondicionados, con retoma y servicio técnico.{% endblock %}">
+  <meta name="color-scheme" content="dark light">
+  <meta name="htmx-config" content='{"includeIndicatorStyles":false,"allowEval":false,"allowScriptTags":false,"selfRequestsOnly":true}'>
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+  <script nonce="{{ request.csp_nonce }}" src="{% static 'js/theme.js' %}"></script>
+  {% tailwind_css %}
+  <script nonce="{{ request.csp_nonce }}" src="{% static 'js/app.js' %}" defer></script>
+  <script nonce="{{ request.csp_nonce }}" src="{% static 'vendor/htmx/htmx.min.js' %}" defer></script>
+  <script nonce="{{ request.csp_nonce }}" src="{% static 'vendor/alpine/alpine-csp.min.js' %}" defer></script>
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="page-bg min-h-full" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  <a href="#contenido" class="skip-link">Saltar al contenido</a>
+  {% include "components/header.html" %}
+  <main id="contenido" class="relative">
+    {% block content %}{% endblock %}
+  </main>
+  {% include "components/footer.html" %}
+</body>
+</html>

@@ -1,0 +1,11 @@
+"""Suppliers, purchase orders and goods receipts."""
+
+from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
+
+
+class PurchasingConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "apps.purchasing"
+    label = "purchasing"
+    verbose_name = _("Compras")

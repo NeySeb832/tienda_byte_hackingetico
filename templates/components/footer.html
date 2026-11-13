@@ -1,0 +1,52 @@
+{% load money %}<footer class="mt-24 border-t border-slate-200 bg-white/60 dark:border-white/10 dark:bg-ink-900/40">
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-5 lg:px-8">
+    <div class="lg:col-span-2">
+      <p class="brand-wordmark text-xl">BYTE</p>
+      <p class="mt-3 max-w-sm text-sm text-slate-600 dark:text-slate-400">Consolas, videojuegos y accesorios nuevos, usados y retro. Servicio técnico especializado y retoma de tus equipos. Envíos a toda Colombia.</p>
+      <p class="mt-6 text-xs font-semibold uppercase tracking-widest text-slate-500">Medios de pago</p>
+      <ul class="mt-3 flex flex-wrap gap-2" aria-label="Medios de pago">
+        <li class="pay-pill">Tarjeta crédito</li>
+        <li class="pay-pill">Tarjeta débito</li>
+        <li class="pay-pill">PSE</li>
+        <li class="pay-pill">Nequi</li>
+        <li class="pay-pill">Bancolombia</li>
+        <li class="pay-pill">Efectivo en tienda</li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-title">Tienda</p>
+      <ul class="footer-list">
+        <li><a href="{% url 'core:home' %}#cat-playstation">PlayStation</a></li>
+        <li><a href="{% url 'core:home' %}#cat-xbox">Xbox</a></li>
+        <li><a href="{% url 'core:home' %}#cat-nintendo">Nintendo</a></li>
+        <li><a href="{% url 'core:home' %}#cat-pc-portatiles">PC portátiles</a></li>
+        <li><a href="{% url 'core:home' %}#controles">Controles</a></li>
+        <li><a href="{% url 'core:home' %}#cat-retro">Retro</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-title">Servicios</p>
+      <ul class="footer-list">
+        <li><a href="{% url 'core:home' %}#retoma">Retoma de consolas</a></li>
+        <li><a href="{% url 'core:home' %}#servicios">Servicio técnico</a></li>
+        <li><a href="{% url 'core:home' %}#servicios">Mantenimiento preventivo</a></li>
+        <li><a href="{% url 'core:home' %}#beneficios">Envíos y recogida en tienda</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-title">Compra segura</p>
+      <ul class="footer-list">
+        <li>Precios en COP con IVA incluido</li>
+        <li>Envío gratis desde {{ free_shipping_from|cop }}</li>
+        <li>Derecho de retracto: 5 días hábiles (Ley 1480 de 2011)</li>
+        <li>Tratamiento de datos personales (Ley 1581 de 2012)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-slate-200 dark:border-white/10">
+    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-5 text-xs text-slate-500 sm:flex-row sm:px-6 lg:px-8">
+      <p>© 2026 {{ site_name }} · Todos los derechos reservados.</p>
+      <p>Las marcas mencionadas pertenecen a sus respectivos dueños · <a class="underline-offset-2 hover:underline" href="{% url 'core:image_credits' %}">Créditos de imágenes</a></p>
+    </div>
+  </div>
+</footer>

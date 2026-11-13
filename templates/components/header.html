@@ -1,0 +1,53 @@
+{% load money %}<div class="announcement">
+  <div class="mx-auto flex max-w-7xl items-center justify-center gap-x-8 px-4 py-2 sm:justify-between sm:px-6 lg:px-8">
+    <p>Envío gratis en compras desde {{ free_shipping_from|cop }}</p>
+    <p class="hidden sm:block">Paga con tarjeta, PSE o Nequi · hasta 12 cuotas</p>
+    <p class="hidden md:block">Recoge gratis en tienda</p>
+  </div>
+</div>
+<header class="site-header" x-data="mobileMenu">
+  <div class="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
+    <a href="{% url 'core:home' %}" class="flex shrink-0 items-center gap-2" aria-label="{{ site_name }}, ir al inicio">
+      <svg class="size-8" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="byte-logo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/></linearGradient></defs><rect x="2" y="7" width="28" height="18" rx="9" fill="none" stroke="url(#byte-logo)" stroke-width="2.4"/><path d="M9 13v6M6 16h6" stroke="url(#byte-logo)" stroke-width="2.4" stroke-linecap="round"/><circle cx="21" cy="14" r="1.8" fill="#f472b6"/><circle cx="25" cy="18" r="1.8" fill="#22d3ee"/></svg>
+      <span class="brand-wordmark">BYTE</span>
+    </a>
+    <form class="relative ml-4 hidden flex-1 md:block lg:max-w-md" role="search" action="{% url 'core:home' %}" method="get">
+      <label for="busqueda" class="sr-only">Buscar productos</label>
+      <span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg></span>
+      <input id="busqueda" name="q" type="search" maxlength="100" autocomplete="off" placeholder="Busca consolas, juegos y accesorios" class="search-input">
+    </form>
+    <div class="ml-auto flex items-center gap-1">
+      <button type="button" class="icon-btn" x-data="themeToggle" x-on:click="toggle" x-bind:aria-label="label" x-bind:aria-pressed="pressed" aria-label="Cambiar tema">
+        <span x-show="dark"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/></svg></span>
+        <span x-show="light" x-cloak><svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/></svg></span>
+      </button>
+      <span class="icon-btn" title="Mi cuenta" aria-label="Mi cuenta" role="img"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg></span>
+      <span class="icon-btn relative" title="Carrito" aria-label="Carrito: 0 productos" role="img"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/></svg><span class="cart-badge">0</span></span>
+      <button type="button" class="icon-btn lg:hidden" x-on:click="toggle" x-bind:aria-expanded="expanded" aria-controls="menu-movil" aria-label="Abrir menú"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg></button>
+    </div>
+  </div>
+  <form class="relative px-4 pb-3 md:hidden" role="search" action="{% url 'core:home' %}" method="get">
+    <label for="busqueda-movil" class="sr-only">Buscar productos</label>
+    <input id="busqueda-movil" name="q" type="search" maxlength="100" autocomplete="off" placeholder="Busca consolas, juegos y accesorios" class="search-input pl-3">
+  </form>
+  <nav aria-label="Categorías" class="hidden border-t border-slate-200/70 lg:block dark:border-white/10">
+    <div class="mx-auto flex max-w-7xl items-center gap-1 px-4 py-1.5 sm:px-6 lg:px-8">
+      <a href="{% url 'core:home' %}#cat-playstation" class="nav-link">PlayStation</a>
+      <a href="{% url 'core:home' %}#cat-xbox" class="nav-link">Xbox</a>
+      <a href="{% url 'core:home' %}#cat-nintendo" class="nav-link">Nintendo</a>
+      <a href="{% url 'core:home' %}#cat-pc-portatiles" class="nav-link">PC portátiles</a>
+      <a href="{% url 'core:home' %}#controles" class="nav-link">Controles</a>
+      <a href="{% url 'core:home' %}#cat-retro" class="nav-link">Retro</a>
+      <a href="{% url 'core:home' %}#servicios" class="nav-link">Servicio técnico</a>
+    </div>
+  </nav>
+  <nav id="menu-movil" aria-label="Categorías (móvil)" class="border-t border-slate-200/70 px-4 pb-4 pt-2 lg:hidden dark:border-white/10" x-show="open" x-cloak>
+      <a href="{% url 'core:home' %}#cat-playstation" class="nav-link block">PlayStation</a>
+      <a href="{% url 'core:home' %}#cat-xbox" class="nav-link block">Xbox</a>
+      <a href="{% url 'core:home' %}#cat-nintendo" class="nav-link block">Nintendo</a>
+      <a href="{% url 'core:home' %}#cat-pc-portatiles" class="nav-link block">PC portátiles</a>
+      <a href="{% url 'core:home' %}#controles" class="nav-link block">Controles</a>
+      <a href="{% url 'core:home' %}#cat-retro" class="nav-link block">Retro</a>
+      <a href="{% url 'core:home' %}#servicios" class="nav-link block">Servicio técnico</a>
+  </nav>
+</header>

@@ -1,0 +1,161 @@
+[project]
+name = "byte"
+version = "0.1.0"
+description = "Byte — tienda de videojuegos, consolas y accesorios (Colombia)"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+# Runtime dependencies. New ones are added in the phase that needs them (see CLAUDE.md / ADR-0005).
+dependencies = [
+    "django>=5.2.19,<5.3",
+    "djangorestframework>=3.16,<3.19",
+    "drf-spectacular>=0.28,<0.31",
+    "django-environ>=0.12,<0.15",
+    "psycopg[binary]>=3.2,<4",
+    "redis>=6,<9",
+    "hiredis>=3,<4",
+    "django-redis>=6,<8",
+    "celery>=5.5,<5.8",
+    "django-celery-beat>=2.8,<3",
+    "django-csp>=4.0,<4.1",
+    "django-htmx>=1.23,<2",
+    "django-tailwind-cli>=4.2,<5",
+    "django-storages[s3]>=1.14.6,<1.15",
+    "whitenoise>=6.9,<7",
+    "gunicorn>=23,<28",
+    "django-anymail>=13,<16",
+    "argon2-cffi>=25.1,<26",
+    "python-json-logger>=3.3,<5",
+    "sentry-sdk>=2.30,<3",
+    "pillow>=11.3,<14",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4,<10",
+    "pytest-django>=4.11,<5",
+    "pytest-cov>=6,<8",
+    "pytest-xdist>=3.6,<4",
+    "factory-boy>=3.3,<4",
+    "pytest-playwright>=0.7,<0.11",
+    "rich>=14,<16",
+    "django-debug-toolbar>=5,<9",
+    "pre-commit>=4.2,<5",
+    "ruff>=0.12,<0.18",
+    "black>=25,<27",
+    "mypy>=1.16,<3",
+    "django-stubs>=5.2,<5.3",
+    "djangorestframework-stubs>=3.16,<3.19",
+]
+security = [
+    "bandit>=1.8,<2",
+    "pip-audit>=2.9,<3",
+    "cyclonedx-bom>=7,<9",
+    # Semgrep only ships Linux/macOS wheels reliably; it runs in CI (Linux) and containers.
+    "semgrep>=1.130,<2; sys_platform != 'win32'",
+]
+
+[tool.uv]
+# Application, not a library: do not build/install the project itself.
+package = false
+default-groups = ["dev", "security"]
+# Supply-chain quarantine (ADR-0005): ignore artifacts uploaded less than 7 days ago.
+exclude-newer = "7 days"
+
+# ---------------------------------------------------------------------------
+# Linters / formatters
+# ---------------------------------------------------------------------------
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["**/migrations/*", "staticfiles", "data", "notebooks", "media"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W", "F",   # pycodestyle / pyflakes
+    "I",             # isort
+    "B",             # bugbear
+    "UP",            # pyupgrade
+    "S",             # bandit rules
+    "DJ",            # django
+    "N",             # naming
+    "SIM", "C4", "PIE", "RET",
+    "DTZ",           # naive datetimes
+    "PT",            # pytest style
+    "T20",           # no print()
+    "RUF",
+]
+ignore = [
+    "E501",    # line length is handled by black
+    "RUF012",  # Django Meta/class attributes are intentionally mutable lists
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S101", "S105", "S106", "S311", "S603"]
+"tests/**" = ["S101", "S105", "S106", "S311", "S603"]
+"config/settings/*.py" = ["F403", "F405"]
+"scripts/**" = ["T201", "S603", "S607"]
+"conftest.py" = ["S101"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["apps", "config"]
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+extend-exclude = "(migrations|staticfiles|data|notebooks|media)/"
+
+[tool.mypy]
+python_version = "3.12"
+plugins = ["mypy_django_plugin.main", "mypy_drf_plugin.main"]
+ignore_missing_imports = true
+check_untyped_defs = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+strict_equality = true
+exclude = ["migrations/", "staticfiles/", "data/", "notebooks/", "\\.venv/"]
+
+# Gradual typing: the transversal core is fully typed from day one.
+[[tool.mypy.overrides]]
+module = ["apps.core.*", "apps.accounts.*"]
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["apps.core.tests.*", "apps.accounts.tests.*"]
+disallow_untyped_defs = false
+
+[tool.django-stubs]
+django_settings_module = "config.settings.test"
+
+# ---------------------------------------------------------------------------
+# Tests / coverage
+# ---------------------------------------------------------------------------
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.test"
+python_files = ["test_*.py"]
+testpaths = ["apps", "tests"]
+addopts = "-ra --strict-markers --strict-config --reuse-db"
+filterwarnings = [
+    # WhiteNoise warns that STATIC_ROOT does not exist until collectstatic runs.
+    "ignore:No directory at:UserWarning",
+]
+markers = [
+    "security: pruebas de seguridad (OWASP)",
+    "e2e: pruebas end-to-end con Playwright",
+]
+
+[tool.coverage.run]
+source = ["apps"]
+branch = true
+omit = ["*/migrations/*", "*/tests/*"]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+skip_covered = true
+exclude_also = ["if TYPE_CHECKING:", "raise NotImplementedError", "\\.\\.\\."]
+
+# ---------------------------------------------------------------------------
+# Security
+# ---------------------------------------------------------------------------
+[tool.bandit]
+exclude_dirs = ["tests", ".venv", "staticfiles", "node_modules"]

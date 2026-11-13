@@ -1,0 +1,84 @@
+# Byte — local development stack (Docker Desktop). Production runs on Render (Phase 9).
+# Usage: docker compose up --build      (requires a .env, see .env.example)
+name: byte
+
+x-app: &app
+  build:
+    context: .
+    target: dev
+  image: byte-dev:local
+  env_file: .env
+  environment:
+    DATABASE_URL: postgres://${POSTGRES_USER:-byte}:${POSTGRES_PASSWORD:?Define POSTGRES_PASSWORD en .env}@db:5432/${POSTGRES_DB:-byte}
+    REDIS_URL: redis://redis:6379/0
+    DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,web
+  volumes:
+    - .:/app
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+  restart: unless-stopped
+
+services:
+  db:
+    image: postgres:17-alpine@sha256:d3244e8ce3f165ee3c93d9c4a4b1d0fe48b3a89e2287b717fdcbbde92d405065
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-byte}
+      POSTGRES_USER: ${POSTGRES_USER:-byte}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Define POSTGRES_PASSWORD en .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"   # only reachable from this machine
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: valkey/valkey:8-alpine@sha256:2602ace2be6569bc2bbb06f873776516ab9089821525be34f4305c67eb9db02a
+    command: ["valkey-server", "--save", "", "--appendonly", "no"]
+    ports:
+      - "127.0.0.1:6379:6379"
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  web:
+    <<: *app
+    command: sh -c "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "127.0.0.1:8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys, urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=3).status == 200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+
+  worker:
+    <<: *app
+    command: celery -A config worker -l INFO --concurrency 2
+
+  beat:
+    <<: *app
+    command: celery -A config beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    depends_on:
+      web:
+        condition: service_healthy   # migrations (django_celery_beat tables) must exist
+
+  tailwind:
+    <<: *app
+    command: python manage.py tailwind watch
+    tty: true
+    restart: "no"
+
+volumes:
+  pgdata:

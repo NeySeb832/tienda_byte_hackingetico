@@ -1,0 +1,144 @@
+# CI: lint -> tests -> seguridad -> imagen. Acciones fijadas por SHA, permisos mínimos.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  UV_VERSION: "0.13.7"
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  lint:
+    name: Lint, formato y tipos
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: ${{ env.PYTHON_VERSION }}
+          enable-cache: true
+      - name: Instalar dependencias (lock congelado)
+        run: uv sync --frozen
+      - name: uv.lock al día
+        run: uv lock --check
+      - name: requirements/*.txt sincronizados con uv.lock
+        run: |
+          uv export --frozen --no-default-groups --no-emit-project --format requirements-txt -q -o /tmp/prod.txt
+          uv export --frozen --no-default-groups --group dev --no-emit-project --format requirements-txt -q -o /tmp/dev.txt
+          diff -u requirements/prod.txt /tmp/prod.txt
+          diff -u requirements/dev.txt /tmp/dev.txt
+      - run: uv run ruff check .
+      - run: uv run black --check .
+      - run: uv run mypy .
+      - name: Integridad de librerías JS servidas localmente
+        run: uv run python scripts/vendor_assets.py --check
+
+  test:
+    name: Tests y cobertura
+    needs: lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:17-alpine@sha256:d3244e8ce3f165ee3c93d9c4a4b1d0fe48b3a89e2287b717fdcbbde92d405065
+        env:
+          POSTGRES_DB: byte
+          POSTGRES_USER: byte
+          POSTGRES_PASSWORD: ci-only-password
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U byte -d byte"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      DATABASE_URL: postgres://byte:ci-only-password@localhost:5432/byte
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: ${{ env.PYTHON_VERSION }}
+          enable-cache: true
+      - name: Instalar dependencias (lock congelado)
+        run: uv sync --frozen
+      - name: pytest (cobertura mínima 80 %)
+        run: uv run pytest --cov --cov-report=term --cov-report=xml
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: coverage
+          path: coverage.xml
+          retention-days: 14
+
+  security:
+    name: Seguridad (SAST, dependencias, deploy check, SBOM)
+    needs: lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: ${{ env.PYTHON_VERSION }}
+          enable-cache: true
+      - name: Instalar dependencias (lock congelado)
+        run: uv sync --frozen
+      - name: Bandit (falla con severidad media o alta)
+        run: uv run bandit -c pyproject.toml -r apps config scripts -ll
+      - name: Semgrep (p/django + p/python)
+        run: uv run semgrep scan --config p/django --config p/python --error --metrics=off --exclude tests --exclude "**/tests/**"
+      - name: pip-audit (vulnerabilidades conocidas)
+        run: |
+          uv run pip-audit --strict --disable-pip --require-hashes -r requirements/prod.txt
+          uv run pip-audit --strict --disable-pip --require-hashes -r requirements/dev.txt
+      - name: manage.py check --deploy (configuración de producción, sin advertencias)
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings.prod
+          DJANGO_ALLOWED_HOSTS: byte.example.com
+          DJANGO_ADMIN_URL: ci-hidden-admin-0f9a2c/
+          DATABASE_URL: postgres://byte:unused@localhost:5432/byte
+          REDIS_URL: redis://localhost:6379/0
+        run: |
+          DJANGO_SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_urlsafe(64))')" \
+            uv run python manage.py check --deploy --fail-level WARNING
+      - name: SBOM CycloneDX
+        run: uv run cyclonedx-py requirements requirements/prod.txt --of JSON -o sbom.cdx.json
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: sbom
+          path: sbom.cdx.json
+          retention-days: 90
+
+  image:
+    name: Imagen Docker + Trivy
+    needs: [test, security]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build (target runtime)
+        run: docker build --target runtime -t byte:ci .
+      - name: Trivy (falla con vulnerabilidades HIGH/CRITICAL corregibles)
+        run: >-
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock
+          aquasec/trivy:0.76.2@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb
+          image --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 --no-progress byte:ci

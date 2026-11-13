@@ -1,0 +1,7 @@
+Violaciones de CSP: 0
+Mensajes totales: 4 (esperados: 4, el propio 404 de error-404)
+
+[error-404-escritorio-oscuro] error: Failed to load resource: the server responded with a status of 404 (Not Found)
+[error-404-escritorio-claro] error: Failed to load resource: the server responded with a status of 404 (Not Found)
+[error-404-movil-oscuro] error: Failed to load resource: the server responded with a status of 404 (Not Found)
+[error-404-movil-claro] error: Failed to load resource: the server responded with a status of 404 (Not Found)
