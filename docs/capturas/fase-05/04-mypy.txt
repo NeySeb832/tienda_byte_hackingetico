@@ -1,6 +1,5 @@
 $ python.exe -m mypy .
 
-apps\panel\tests\test_operations_views.py:154: error: Module "django.utils.timezone" does not explicitly export attribute "timedelta"  [attr-defined]
-Found 1 error in 1 file (checked 309 source files)
+Success: no issues found in 309 source files
 
-[FALLÓ (código 1) en 4.0 s]
+[OK en 36.8 s]
