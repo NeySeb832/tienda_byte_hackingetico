@@ -1,0 +1,61 @@
+$ docker run --rm -v C:\Users\seb83\Documentos\Universidad\Hacking etico\Tienda Videojuegos IA:/src -w /src semgrep/semgrep:1.184.0@sha256:cc1b68266f267878b39739373ea9985b9a78e5d64497dd875c8de100b22695ed semgrep scan --config p/django --config p/python --error --metrics=off --exclude tests
+
+                   
+                   
+┌─────────────────┐
+│ 3 Code Findings │
+└─────────────────┘
+                               
+    apps/accounts/middleware.py
+    ❯❱ python.django.security.injection.open-redirect.open-redirect
+          ❰❰ Blocking ❱❱
+          Data from request ($DATA) is passed to redirect(). This is an open redirect and could be exploited.
+          Ensure you are redirecting to safe URLs by using django.utils.http.is_safe_url(). See              
+          https://cwe.mitre.org/data/definitions/601.html for more information.                              
+          Details: https://sg.run/Ave2                                                                       
+                                                                                                             
+           49┆ return redirect(f"{reverse('account_login')}?next={request.path}")
+            ⋮┆----------------------------------------
+           49┆ return redirect(f"{reverse('account_login')}?next={request.path}")
+                               
+    apps/accounts/validators.py
+    ❯❱ python.lang.security.insecure-hash-algorithms.insecure-hash-algorithm-sha1
+          ❰❰ Blocking ❱❱
+          Detected SHA1 hash algorithm which is considered insecure. SHA1 is not collision resistant and is
+          therefore not suitable as a cryptographic signature. Use SHA256 or SHA3 instead.                 
+          Details: https://sg.run/ydYx                                                                     
+                                                                                                           
+           ▶▶┆ Autofix ▶ hashlib.sha256(password.encode(), usedforsecurity=False)
+           42┆ hashlib.sha1(password.encode(), usedforsecurity=False).hexdigest().upper()
+
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 393 files tracked by git with 152 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  python          151     255          Community     152                                                                
+  <multilang>       1      48                                                                                           
+                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 3 (3 blocking)
+ • Rules run: 152
+ • Targets scanned: 303
+ • Parsed lines: ~100.0%
+ • Scan skipped: 
+   ◦ Matching --exclude patterns: 51
+   ◦ Files larger than  files 1.0 MB: 2
+   ◦ Files matching .semgrepignore patterns: 3
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 152 rules on 303 files: 3 findings.
+
+[FALLÓ (código 1) en 518.3 s]

@@ -96,8 +96,8 @@ El resumen está en [`00-resumen.svg`](../capturas/fase-02/00-resumen.svg).
 | 12 | Matriz de permisos generada desde el código | ✅ al día |
 | 13 | Integridad de la cadena de auditoría (BD de desarrollo) | ✅ cadena íntegra |
 | 09 | Integridad de las librerías JS y Tailwind | ✅ |
-| 10 | semgrep `p/django` + `p/python` | RESULTADO_10 |
-| 11 | Trivy sobre la imagen de producción reconstruida | RESULTADO_11 |
+| 10 | semgrep `p/django` + `p/python` | ✅ 0 hallazgos |
+| 11 | Trivy sobre la imagen de producción reconstruida | ✅ 0 HIGH/CRITICAL corregibles |
 
 Tests nuevos de seguridad (marcador `security`) de esta fase:
 - matriz de acceso de **8 roles × 4 vistas del panel** (32 casos) y login obligatorio;
