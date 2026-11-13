@@ -24,3 +24,7 @@ forwarded_allow_ips = os.environ.get("FORWARDED_ALLOW_IPS", "127.0.0.1")
 limit_request_line = 4094
 limit_request_fields = 100
 limit_request_field_size = 8190
+
+# No runtime control socket (gunicornc): nothing uses it and the app dir is read-only for the
+# unprivileged user; one less local attack surface.
+control_socket_disable = True

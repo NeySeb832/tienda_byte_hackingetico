@@ -5,6 +5,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 
 ## [Sin publicar]
 
+### Corregido
+- Render: el pre-deploy y el arranque web van en `deploy/*.sh` (Render no interpreta `&&` ni comillas).
+- gunicorn sin socket de control (fallaba al escribir en `/app` y no se usa).
+
+### Añadido
+- Despliegue en vivo en https://byte-web-v9h4.onrender.com con secretos generados por Render.
+
 ## [1.0.0] — 2026-11-13 — Fase 10: Documentación final
 
 ### Añadido
