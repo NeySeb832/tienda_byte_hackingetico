@@ -58,7 +58,16 @@
 
 El resumen está en [`00-resumen.svg`](../capturas/fase-05/00-resumen.svg).
 
-RESULTADOS_EVIDENCIAS
+| # | Verificación | Resultado |
+|---|--------------|-----------|
+| 01 | Tests (BD recién creada, clon limpio) | ✅ **679 pasan**, cobertura **94 %** |
+| 02–04 | ruff · black · mypy | ✅ (mypy falló en la 1.ª corrida por un import en un test; corregido) |
+| 05–09, 12–13 | bandit, pip-audit, check --deploy, cabeceras, vendor, matriz, auditoría | ✅ |
+| 10 | semgrep | ✅ **0 hallazgos** en 152 reglas (la 1.ª corrida dio 2: un `redirect` con `request.path`; corregido) |
+| 11 | Trivy | ✅ 0 HIGH/CRITICAL corregibles |
+
+Al repetir las pruebas en un clon limpio apareció que `apps/cms/data/imagenes.json` estaba
+excluido por la regla `data/` del `.gitignore`: se corrigió (`/data/`) y se versionó el archivo.
 
 Tests nuevos: ajustes con separación de funciones (servicio y `CHECK`), traslados con kardex,
 órdenes de compra con recepción parcial, POS con cambio y arqueo, CSV sin fórmulas, **matriz de

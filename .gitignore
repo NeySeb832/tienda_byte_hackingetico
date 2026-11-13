@@ -17,7 +17,8 @@ static/css/tailwind.css
 .bin/
 
 # Data lake (Phase 7) and notebooks checkpoints
-data/
+# Root-level only: apps/*/data/ holds versioned app data (e.g. image credits).
+/data/
 .ipynb_checkpoints/
 
 # Tooling caches and reports

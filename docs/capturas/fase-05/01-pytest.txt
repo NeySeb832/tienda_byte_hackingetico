@@ -3,7 +3,7 @@ $ python.exe -m pytest --cov --cov-report=term -p no:cacheprovider --color=yes
 ============================= test session starts =============================
 platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0
 django: version: 5.2.19, settings: config.settings.test (from ini)
-rootdir: C:\Users\seb83\Documentos\Universidad\Hacking etico\Tienda Videojuegos IA
+rootdir: C:\Users\seb83\AppData\Local\Temp\claude\f3338bc0125f3f92\342e98da-2b40-40a0-9f49-b5f4968283a7\scratchpad\wt5
 configfile: pyproject.toml
 testpaths: apps, tests
 plugins: anyio-4.16.0, Faker-40.44.0, platformdirs-4.14.5, cov-7.1.0, django-4.14.0, playwright-0.10.0, xdist-3.8.0
@@ -104,7 +104,7 @@ apps\orders\services.py                                            135      6   
 apps\orders\tasks.py                                                 5      1      0      0    80%   10
 apps\orders\views.py                                                88     10     10      2    88%   57-58, 91-93, 104-108
 apps\panel\forms.py                                                 68      2      6      2    95%   143, 177
-apps\panel\operations.py                                           346     29     70     14    90%   132, 149, 156-161, 187, 249-250, 268-269, 297->310, 328-329, 358, 376-377, 410, 423, 442, 449, 497, 522, 637-638, 662, 671, 680
+apps\panel\operations.py                                           348     29     70     14    90%   134, 151, 158-163, 189, 251-252, 270-271, 299->312, 330-331, 360, 378-379, 412, 425, 444, 451, 499, 524, 639-640, 665, 674, 683
 apps\panel\views.py                                                 65     11      6      0    82%   64-81
 apps\payments\gateways.py                                           98     10     12      0    89%   101-113, 173
 apps\payments\models.py                                             43      1      0      0    98%   65
@@ -122,10 +122,10 @@ apps\purchasing\services.py                                         78      6   
 apps\shipping\models.py                                             18      1      0      0    94%   36
 apps\shipping\services.py                                           23      2      4      2    85%   23, 35
 ------------------------------------------------------------------------------------------------------------
-TOTAL                                                             4997    242    772    109    94%
+TOTAL                                                             4999    242    772    109    94%
 
 167 files skipped due to complete coverage.
-Required test coverage of 80.0% reached. Total coverage: 93.53%
-======================= 679 passed in 234.50s (0:03:54) =======================
+Required test coverage of 80.0% reached. Total coverage: 93.54%
+======================= 679 passed in 150.41s (0:02:30) =======================
 
-[OK en 253.6 s]
+[OK en 159.1 s]
