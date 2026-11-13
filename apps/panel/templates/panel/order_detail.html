@@ -1,0 +1,24 @@
+{% extends "panel/base.html" %}
+{% load money %}
+{% block title %}Pedido {{ order.number }}{% endblock %}
+{% block content %}
+<a href="{% url 'panel:orders' %}" class="text-sm underline">← Pedidos</a>
+<div class="mt-2 flex flex-wrap items-center gap-3"><h1 class="font-display text-2xl font-black">Pedido {{ order.number }}</h1><span class="badge">{{ order.get_status_display }}</span></div>
+<p class="mt-1 text-sm text-slate-500">{{ order.get_channel_display }} · {{ order.get_fulfillment_display }} · {{ order.email|default:"Cliente de mostrador" }}</p>
+<div class="mt-6 grid gap-6 lg:grid-cols-2">
+  <section class="stat-card"><h2 class="stat-label">Productos</h2>
+    <table class="mt-3 w-full text-sm">{% for line in order.lines.all %}<tr><td class="py-1">{{ line.quantity }} × {{ line.name }} <span class="text-xs text-slate-500">{{ line.sku }}</span></td><td class="py-1 text-right">{{ line.line_total|cop }}</td></tr>{% endfor %}
+      <tr class="border-t"><td class="pt-2">Envío</td><td class="pt-2 text-right">{{ order.shipping_total|cop }}</td></tr>
+      {% if order.discount_total %}<tr><td>Descuento {{ order.coupon_code }}</td><td class="text-right">-{{ order.discount_total|cop }}</td></tr>{% endif %}
+      <tr class="font-bold"><td>Total</td><td class="text-right">{{ order.total|cop }}</td></tr></table>
+  </section>
+  <section class="space-y-4">
+    <div class="stat-card"><h2 class="stat-label">Entrega</h2>{% if address %}<p class="mt-2 text-sm">{{ address.recipient }} · {{ address.line1 }}{% if address.line2 %}, {{ address.line2 }}{% endif %}, {{ address.city }} ({{ address.department }})</p>{% else %}<p class="mt-2 text-sm">{{ order.pickup_store.name }}</p>{% endif %}</div>
+    <div class="stat-card"><h2 class="stat-label">Seguimiento</h2><ol class="mt-2 space-y-1 text-sm">{% for event in timeline %}<li>{{ event.created_at|date:"Y-m-d H:i" }} · {{ event.label }}{% if event.note %} <span class="text-slate-500">({{ event.note }})</span>{% endif %}</li>{% endfor %}</ol></div>
+    {% if actions %}<form method="post" class="stat-card space-y-3">{% csrf_token %}<h2 class="stat-label">Siguiente paso</h2>
+      <input class="form-input" name="nota" maxlength="200" placeholder="Nota (opcional, p. ej. guía de envío)">
+      <div class="flex flex-wrap gap-2">{% for value, label in actions %}<button class="btn-primary" type="submit" name="estado" value="{{ value }}">{{ label }}</button>{% endfor %}</div>
+    </form>{% endif %}
+  </section>
+</div>
+{% endblock %}

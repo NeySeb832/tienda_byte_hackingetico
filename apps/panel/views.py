@@ -15,6 +15,7 @@ from apps.accounts import services as account_services
 from apps.accounts.forms import RoleAssignmentForm
 from apps.accounts.models import User
 from apps.accounts.permissions import StaffRequiredMixin, authenticated_user
+from apps.analytics import selectors as reports
 from apps.audit import selectors as audit_selectors
 
 
@@ -30,6 +31,7 @@ class DashboardView(StaffRequiredMixin, TemplateView):
             stores=account_selectors.stores_for(user),
             staff_count=account_selectors.staff_members().count(),
             customer_count=User.objects.filter(is_staff=False, is_active=True).count(),
+            kpis=reports.kpis(account_selectors.stores_for(user)),
         )
         if user.has_perm("audit.view_auditlog"):
             context["recent_audit"] = audit_selectors.audit_entries()[:8]

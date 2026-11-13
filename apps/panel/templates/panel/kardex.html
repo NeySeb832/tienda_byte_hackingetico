@@ -1,0 +1,12 @@
+{% extends "panel/base.html" %}
+{% block title %}Kardex {{ variant.sku }}{% endblock %}
+{% block content %}
+<a href="{% url 'panel:stock' %}?q={{ variant.sku }}" class="text-sm underline">← Inventario</a>
+<h1 class="mt-2 font-display text-2xl font-black">Kardex · {{ variant.product.name }}</h1>
+<p class="mt-1 text-sm text-slate-500">SKU {{ variant.sku }}. Los movimientos no se pueden editar ni borrar; las correcciones son movimientos nuevos.</p>
+<div class="mt-6 overflow-x-auto"><table class="data-table">
+  <thead><tr><th>Fecha</th><th>Sede</th><th>Motivo</th><th class="text-right">Unidades</th><th class="text-right">Saldo</th><th>Referencia</th><th>Usuario</th></tr></thead>
+  <tbody>{% for m in page %}<tr><td>{{ m.created_at|date:"Y-m-d H:i" }}</td><td>{{ m.store.name }}</td><td>{{ m.get_reason_display }}</td><td class="text-right {% if m.delta < 0 %}text-rose-600{% else %}text-emerald-600{% endif %}">{% if m.delta > 0 %}+{% endif %}{{ m.delta }}</td><td class="text-right">{{ m.balance }}</td><td><code>{{ m.reference|default:"—" }}</code></td><td>{{ m.created_by.email|default:"Sistema" }}</td></tr>{% empty %}<tr><td colspan="7">Sin movimientos.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% include "panel/_pagination.html" %}
+{% endblock %}

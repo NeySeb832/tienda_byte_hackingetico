@@ -16,10 +16,18 @@ from typing import Any
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.db.models import F
+from django.utils import timezone
 
 from apps.audit.services import record_event
 from apps.catalog.models import ProductVariant
-from apps.inventory.models import StockItem, StockMovement, StockReservation, Store
+from apps.inventory.models import (
+    InventoryAdjustment,
+    StockItem,
+    StockMovement,
+    StockReservation,
+    StockTransfer,
+    Store,
+)
 
 
 class OutOfStockError(ValidationError):
@@ -196,3 +204,150 @@ def consume_reservations(order: Any, *, actor: Any = None) -> int:
 def release_reservations(order: Any) -> int:
     """Payment failed or expired: units become available again."""
     return _settle(order, consume=False)
+
+
+# --- Back office: generic movements, adjustments (SoD) and transfers --------------------------
+
+
+@transaction.atomic
+def move_stock(
+    variant: ProductVariant,
+    store: Store,
+    delta: int,
+    reason: str,
+    *,
+    actor: Any = None,
+    reference: str = "",
+    note: str = "",
+) -> StockItem:
+    """Add (or remove) physical units, keeping ``quantity >= reserved`` and writing the kardex."""
+    if delta == 0:
+        raise ValidationError("La cantidad debe ser distinta de cero.")
+    StockItem.objects.get_or_create(variant=variant, store=store)
+    item = StockItem.objects.select_for_update().get(variant=variant, store=store)
+    if item.quantity + delta < item.reserved:
+        raise OutOfStockError(variant, max(item.available, 0))
+    item.quantity += delta
+    item.save(update_fields=["quantity", "updated_at"])
+    _movement(item, delta, reason, actor=actor, reference=reference, note=note)
+    return item
+
+
+def request_adjustment(
+    variant: ProductVariant, store: Store, counted: int, *, reason: str, actor: Any
+) -> InventoryAdjustment:
+    if isinstance(counted, bool) or not isinstance(counted, int) or counted < 0:
+        raise ValidationError("La cantidad contada debe ser un entero mayor o igual a cero.")
+    if not reason.strip():
+        raise ValidationError("Indica el motivo del ajuste.")
+    adjustment = InventoryAdjustment.objects.create(
+        variant=variant,
+        store=store,
+        counted_quantity=counted,
+        reason=reason.strip()[:200],
+        requested_by=actor,
+    )
+    record_event(
+        "inventory.adjustment_requested",
+        actor=actor,
+        target=adjustment,
+        changes={"sku": variant.sku, "counted": counted},
+    )
+    return adjustment
+
+
+@transaction.atomic
+def decide_adjustment(
+    adjustment: InventoryAdjustment, *, approver: Any, approve: bool
+) -> InventoryAdjustment:
+    locked = InventoryAdjustment.objects.select_for_update().get(pk=adjustment.pk)
+    if locked.status != InventoryAdjustment.Status.PENDING:
+        raise ValidationError("Este ajuste ya fue decidido.")
+    if locked.requested_by_id == getattr(approver, "pk", None):
+        raise ValidationError("Quien solicita un ajuste no puede aprobarlo.")
+    locked.status = (
+        InventoryAdjustment.Status.APPROVED if approve else InventoryAdjustment.Status.REJECTED
+    )
+    locked.decided_by = approver
+    locked.decided_at = timezone.now()
+    locked.save(update_fields=["status", "decided_by", "decided_at", "updated_at"])
+    if approve:
+        set_stock(
+            locked.variant,
+            locked.store,
+            locked.counted_quantity,
+            actor=approver,
+            note=f"Ajuste {locked.public_id}: {locked.reason}"[:200],
+        )
+    record_event(
+        "inventory.adjustment_approved" if approve else "inventory.adjustment_rejected",
+        actor=approver,
+        target=locked,
+    )
+    adjustment.status = locked.status
+    return locked
+
+
+def request_transfer(
+    variant: ProductVariant, from_store: Store, to_store: Store, quantity: int, *, actor: Any
+) -> StockTransfer:
+    if from_store.pk == to_store.pk:
+        raise ValidationError("El origen y el destino deben ser distintos.")
+    if isinstance(quantity, bool) or not isinstance(quantity, int) or quantity < 1:
+        raise ValidationError("La cantidad debe ser al menos 1.")
+    transfer = StockTransfer.objects.create(
+        variant=variant,
+        from_store=from_store,
+        to_store=to_store,
+        quantity=quantity,
+        requested_by=actor,
+    )
+    record_event(
+        "inventory.transfer_requested",
+        actor=actor,
+        target=transfer,
+        changes={"sku": variant.sku, "quantity": quantity},
+    )
+    return transfer
+
+
+@transaction.atomic
+def ship_transfer(transfer: StockTransfer, *, actor: Any) -> StockTransfer:
+    locked = StockTransfer.objects.select_for_update().get(pk=transfer.pk)
+    if locked.status != StockTransfer.Status.REQUESTED:
+        raise ValidationError("El traslado no está pendiente de despacho.")
+    move_stock(
+        locked.variant,
+        locked.from_store,
+        -locked.quantity,
+        StockMovement.Reason.TRANSFER_OUT,
+        actor=actor,
+        reference=str(locked.public_id),
+    )
+    locked.status = StockTransfer.Status.SHIPPED
+    locked.shipped_at = timezone.now()
+    locked.save(update_fields=["status", "shipped_at", "updated_at"])
+    record_event("inventory.transfer_shipped", actor=actor, target=locked)
+    transfer.status = locked.status
+    return locked
+
+
+@transaction.atomic
+def receive_transfer(transfer: StockTransfer, *, actor: Any) -> StockTransfer:
+    locked = StockTransfer.objects.select_for_update().get(pk=transfer.pk)
+    if locked.status != StockTransfer.Status.SHIPPED:
+        raise ValidationError("El traslado no está en tránsito.")
+    move_stock(
+        locked.variant,
+        locked.to_store,
+        locked.quantity,
+        StockMovement.Reason.TRANSFER_IN,
+        actor=actor,
+        reference=str(locked.public_id),
+    )
+    locked.status = StockTransfer.Status.RECEIVED
+    locked.received_at = timezone.now()
+    locked.save(update_fields=["status", "received_at", "updated_at"])
+    record_event("inventory.transfer_received", actor=actor, target=locked)
+    transfer.status = locked.status
+    return locked

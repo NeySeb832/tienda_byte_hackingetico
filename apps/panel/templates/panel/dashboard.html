@@ -1,9 +1,14 @@
 {% extends "panel/base.html" %}
+{% load money %}
 {% block title %}Resumen{% endblock %}
 {% block content %}
 <h1 class="font-display text-2xl font-black">Hola, {{ user.first_name|default:user.email }}</h1>
 <p class="mt-1 text-sm text-slate-500">Rol: <strong>{{ role|default:"sin rol" }}</strong></p>
 <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  {% if perms.orders.view_order %}<a class="stat-card" href="{% url 'panel:orders' %}"><p class="stat-label">Ventas de hoy</p><p class="stat-value">{{ kpis.sales_today|cop }}</p><p class="text-xs text-slate-500">{{ kpis.orders_today }} pedido{{ kpis.orders_today|pluralize }} · 30 días: {{ kpis.sales_30d|cop }}</p></a>
+  <a class="stat-card" href="{% url 'panel:orders' %}?estado=paid"><p class="stat-label">Por preparar</p><p class="stat-value">{{ kpis.to_prepare }}</p></a>{% endif %}
+  {% if perms.inventory.view_stockitem %}<a class="stat-card" href="{% url 'panel:stock' %}?bajo=1"><p class="stat-label">Productos con stock bajo</p><p class="stat-value">{{ kpis.low_stock }}</p></a>{% endif %}
+  {% if perms.inventory.approve_adjustment %}<a class="stat-card" href="{% url 'panel:adjustments' %}"><p class="stat-label">Aprobaciones pendientes</p><p class="stat-value">{{ kpis.pending_approvals }}</p></a>{% endif %}
   <div class="stat-card"><p class="stat-label">Personal activo</p><p class="stat-value">{{ staff_count }}</p></div>
   <div class="stat-card"><p class="stat-label">Clientes registrados</p><p class="stat-value">{{ customer_count }}</p></div>
   <div class="stat-card"><p class="stat-label">Sedes a tu cargo</p><p class="stat-value">{{ stores.count }}</p></div>

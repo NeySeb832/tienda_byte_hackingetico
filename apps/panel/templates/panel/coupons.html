@@ -1,0 +1,12 @@
+{% extends "panel/base.html" %}
+{% block title %}Cupones{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black">Cupones</h1>
+<p class="mt-1 text-sm text-slate-500">Un descuento mayor al 15 % solo se puede usar cuando lo aprueba otra persona.</p>
+{% if can_add %}<form method="post" class="stat-card mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{% csrf_token %}{% include "panel/_form.html" %}<div class="self-end"><button class="btn-primary" type="submit">Crear cupón</button></div></form>{% endif %}
+<div class="mt-6 overflow-x-auto"><table class="data-table">
+  <thead><tr><th>Código</th><th>Tipo</th><th class="text-right">Valor</th><th>Vigencia</th><th>Creó</th><th>Aprobación</th></tr></thead>
+  <tbody>{% for c in coupons %}<tr><td><code>{{ c.code }}</code></td><td>{{ c.get_kind_display }}</td><td class="text-right">{{ c.value }}</td><td>{{ c.starts_at|date:"Y-m-d" }} – {{ c.ends_at|date:"Y-m-d"|default:"sin fin" }}</td><td>{{ c.created_by.email|default:"Sistema" }}</td>
+  <td>{% if c.approved_by %}Aprobó {{ c.approved_by.email }}{% elif c.kind == "percent" and c.value > 15 %}{% if can_approve and c.created_by_id != user.pk %}<form method="post">{% csrf_token %}<input type="hidden" name="cupon" value="{{ c.public_id }}"><button class="btn-secondary" name="accion" value="aprobar">Aprobar</button></form>{% else %}Pendiente{% endif %}{% else %}No requiere{% endif %}</td></tr>{% empty %}<tr><td colspan="6">Sin cupones.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% endblock %}

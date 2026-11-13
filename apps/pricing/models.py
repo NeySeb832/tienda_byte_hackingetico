@@ -48,6 +48,7 @@ class PriceHistory(models.Model):
         ordering = ["variant", "changed_at", "pk"]
         verbose_name = _("historial de precio")
         verbose_name_plural = _("historial de precios")
+        permissions = [("change_price", "Puede cambiar y programar precios")]
         constraints = [
             models.CheckConstraint(condition=models.Q(price__gt=0), name="pricing_history_positive")
         ]

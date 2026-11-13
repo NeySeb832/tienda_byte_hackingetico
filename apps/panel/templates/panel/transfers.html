@@ -1,0 +1,11 @@
+{% extends "panel/base.html" %}
+{% block title %}Traslados{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black">Traslados entre sedes</h1>
+<form method="post" class="stat-card mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">{% csrf_token %}{% include "panel/_form.html" %}<div class="self-end"><button class="btn-primary" type="submit">Solicitar</button></div></form>
+<div class="mt-6 overflow-x-auto"><table class="data-table">
+  <thead><tr><th>Fecha</th><th>Producto</th><th>Desde</th><th>Hacia</th><th class="text-right">Unidades</th><th>Estado</th><th></th></tr></thead>
+  <tbody>{% for t in transfers %}<tr><td>{{ t.created_at|date:"Y-m-d H:i" }}</td><td>{{ t.variant.product.name }} <code>{{ t.variant.sku }}</code></td><td>{{ t.from_store.name }}</td><td>{{ t.to_store.name }}</td><td class="text-right">{{ t.quantity }}</td><td>{{ t.get_status_display }}</td>
+  <td>{% if t.status == "requested" and t.from_store_id in my_stores %}<form method="post" action="{% url 'panel:transfer_action' t.public_id %}">{% csrf_token %}<button class="btn-secondary" name="accion" value="despachar">Despachar</button></form>{% elif t.status == "shipped" and t.to_store_id in my_stores %}<form method="post" action="{% url 'panel:transfer_action' t.public_id %}">{% csrf_token %}<button class="btn-secondary" name="accion" value="recibir">Recibir</button></form>{% endif %}</td></tr>{% empty %}<tr><td colspan="7">Sin traslados.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% endblock %}

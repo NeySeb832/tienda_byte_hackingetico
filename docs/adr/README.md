@@ -20,5 +20,6 @@ consecuencias trae. Son cortos a propósito. Si una decisión cambia, se crea un
 | [0012](0012-autenticacion-allauth-axes-turnstile.md) | Autenticación con allauth + MFA, axes, Turnstile y HIBP | Aceptada |
 | [0013](0013-catalogo-busqueda-y-precios-con-historial.md) | Búsqueda en PostgreSQL y precios con historial inmutable | Aceptada |
 | [0014](0014-checkout-reservas-y-pagos.md) | Checkout con reserva de stock, máquina de estados y pagos que fallan cerrado | Aceptada |
+| [0015](0015-panel-operativo-sod-y-alcance-por-sede.md) | Panel operativo con separación de funciones y alcance por sede | Aceptada |
 
 Plantilla: [`template.md`](template.md).

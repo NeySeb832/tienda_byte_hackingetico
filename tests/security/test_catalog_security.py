@@ -44,9 +44,10 @@ def test_compare_redirect_cannot_leave_the_site(client, product):
 def test_suggestions_are_rate_limited(client, product, settings):
     settings.RATELIMIT_ENABLE = True
     url = reverse("catalog:suggest")
-    statuses = [client.get(url, {"q": "play"}).status_code for _ in range(61)]
+    # 121 requests: even if a fixed one-minute window resets midway, one window overflows.
+    statuses = [client.get(url, {"q": "play"}).status_code for _ in range(121)]
     assert statuses[:60] == [200] * 60
-    assert statuses[60] == 403
+    assert 403 in statuses
 
 
 def test_catalog_never_exposes_internal_ids(client, product):

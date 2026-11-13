@@ -1,0 +1,5 @@
+$ python.exe manage.py verify_audit_chain
+
+Cadena íntegra: 786 registros.
+
+[OK en 11.5 s]

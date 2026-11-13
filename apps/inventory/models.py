@@ -88,6 +88,9 @@ class StockMovement(models.Model):
         ADJUSTMENT = "adjustment", _("Ajuste por conteo")
         SALE = "sale", _("Venta")
         RETURN = "return", _("Devolución")
+        PURCHASE = "purchase", _("Compra a proveedor")
+        TRANSFER_IN = "transfer_in", _("Traslado recibido")
+        TRANSFER_OUT = "transfer_out", _("Traslado enviado")
 
     variant = models.ForeignKey(
         "catalog.ProductVariant", on_delete=models.PROTECT, related_name="stock_movements"
@@ -158,3 +161,91 @@ class StockReservation(BaseModel):
 
     def __str__(self) -> str:
         return f"{self.quantity} x {self.variant_id} ({self.status})"
+
+
+class InventoryAdjustment(BaseModel):
+    """A stock count correction. Whoever requests it cannot approve it (segregation of duties)."""
+
+    class Status(models.TextChoices):
+        PENDING = "pending", _("Pendiente")
+        APPROVED = "approved", _("Aprobado")
+        REJECTED = "rejected", _("Rechazado")
+
+    variant = models.ForeignKey(
+        "catalog.ProductVariant", on_delete=models.PROTECT, related_name="adjustments"
+    )
+    store = models.ForeignKey(Store, on_delete=models.PROTECT, related_name="adjustments")
+    counted_quantity = models.PositiveIntegerField(_("unidades contadas"))
+    reason = models.CharField(_("motivo"), max_length=200)
+    status = models.CharField(
+        _("estado"), max_length=10, choices=Status.choices, default=Status.PENDING
+    )
+    requested_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="+"
+    )
+    decided_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
+    )
+    decided_at = models.DateTimeField(_("decidido"), null=True, blank=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = _("ajuste de inventario")
+        verbose_name_plural = _("ajustes de inventario")
+        permissions = [
+            ("request_adjustment", "Puede solicitar ajustes de inventario"),
+            ("approve_adjustment", "Puede aprobar ajustes de inventario"),
+        ]
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(decided_by__isnull=True)
+                | ~models.Q(decided_by=models.F("requested_by")),
+                name="inventory_adjustment_sod",
+            ),
+        ]
+
+    def __str__(self) -> str:
+        return f"Ajuste {self.variant_id} @ {self.store_id} → {self.counted_quantity}"
+
+
+class StockTransfer(BaseModel):
+    """Units moved between two stores: requested → shipped (leave origin) → received."""
+
+    class Status(models.TextChoices):
+        REQUESTED = "requested", _("Solicitado")
+        SHIPPED = "shipped", _("En tránsito")
+        RECEIVED = "received", _("Recibido")
+        CANCELLED = "cancelled", _("Cancelado")
+
+    variant = models.ForeignKey(
+        "catalog.ProductVariant", on_delete=models.PROTECT, related_name="transfers"
+    )
+    from_store = models.ForeignKey(Store, on_delete=models.PROTECT, related_name="transfers_out")
+    to_store = models.ForeignKey(Store, on_delete=models.PROTECT, related_name="transfers_in")
+    quantity = models.PositiveIntegerField(_("unidades"))
+    status = models.CharField(
+        _("estado"), max_length=10, choices=Status.choices, default=Status.REQUESTED
+    )
+    requested_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="+"
+    )
+    shipped_at = models.DateTimeField(null=True, blank=True)
+    received_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = _("traslado")
+        verbose_name_plural = _("traslados")
+        permissions = [("manage_transfers", "Puede gestionar traslados entre sedes")]
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(quantity__gte=1), name="inventory_transfer_qty_gte_1"
+            ),
+            models.CheckConstraint(
+                condition=~models.Q(from_store=models.F("to_store")),
+                name="inventory_transfer_distinct_stores",
+            ),
+        ]
+
+    def __str__(self) -> str:
+        return f"Traslado {self.quantity} x {self.variant_id}"

@@ -1,0 +1,17 @@
+{% extends "panel/base.html" %}
+{% load money %}
+{% block title %}Pedidos{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black">Pedidos</h1>
+<form method="get" class="mt-4 flex flex-wrap items-end gap-3">
+  <label class="text-sm">Buscar<input class="form-input mt-1" name="q" value="{{ q }}" placeholder="Número o correo"></label>
+  <label class="text-sm">Estado<select class="form-select mt-1 w-auto" name="estado"><option value="">Todos</option>{% for value, label in statuses %}<option value="{{ value }}"{% if value == status %} selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+  <label class="text-sm">Canal<select class="form-select mt-1 w-auto" name="canal"><option value="">Todos</option>{% for value, label in channels %}<option value="{{ value }}"{% if value == channel %} selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+  <button class="btn-secondary" type="submit">Filtrar</button>
+</form>
+<div class="mt-6 overflow-x-auto"><table class="data-table">
+  <thead><tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th>Canal</th><th>Entrega</th><th>Estado</th><th class="text-right">Total</th></tr></thead>
+  <tbody>{% for order in page %}<tr><td><a class="font-semibold underline" href="{% url 'panel:order_detail' order.public_id %}">{{ order.number }}</a></td><td>{{ order.created_at|date:"Y-m-d H:i" }}</td><td>{{ order.email|default:"Mostrador" }}</td><td>{{ order.get_channel_display }}</td><td>{{ order.get_fulfillment_display }}{% if order.pickup_store %} · {{ order.pickup_store.name }}{% endif %}</td><td><span class="badge">{{ order.get_status_display }}</span></td><td class="text-right">{{ order.total|cop }}</td></tr>{% empty %}<tr><td colspan="7">No hay pedidos con esos filtros.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% include "panel/_pagination.html" %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "panel/base.html" %}
+{% block title %}Inventario{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black">Inventario por sede</h1>
+<form method="get" class="mt-4 flex flex-wrap items-end gap-3">
+  <label class="text-sm">Buscar<input class="form-input mt-1" name="q" value="{{ q }}" placeholder="SKU o producto"></label>
+  <label class="text-sm">Sede<select class="form-select mt-1 w-auto" name="sede"><option value="">Todas</option>{% for s in stores %}<option value="{{ s.code }}"{% if s.code == store %} selected{% endif %}>{{ s.name }}</option>{% endfor %}</select></label>
+  <label class="form-check self-center"><input type="checkbox" name="bajo" value="1"{% if low %} checked{% endif %}> Solo stock bajo (≤ 2)</label>
+  <button class="btn-secondary" type="submit">Filtrar</button>
+</form>
+<div class="mt-6 overflow-x-auto"><table class="data-table">
+  <thead><tr><th>Producto</th><th>SKU</th><th>Sede</th><th class="text-right">Físico</th><th class="text-right">Reservado</th><th class="text-right">Disponible</th><th></th></tr></thead>
+  <tbody>{% for item in page %}<tr><td>{{ item.variant.product.name }}</td><td><code>{{ item.variant.sku }}</code></td><td>{{ item.store.name }}</td><td class="text-right">{{ item.quantity }}</td><td class="text-right">{{ item.reserved }}</td><td class="text-right {% if item.free <= 2 %}font-bold text-rose-600{% endif %}">{{ item.free }}</td><td><a class="underline" href="{% url 'panel:kardex' item.variant.sku %}">Kardex</a></td></tr>{% empty %}<tr><td colspan="7">Sin resultados.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% include "panel/_pagination.html" %}
+{% endblock %}

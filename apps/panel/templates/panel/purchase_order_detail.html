@@ -1,0 +1,19 @@
+{% extends "panel/base.html" %}
+{% load money %}
+{% block title %}{{ order.number }}{% endblock %}
+{% block content %}
+<a href="{% url 'panel:purchase_orders' %}" class="text-sm underline">← Compras</a>
+<div class="mt-2 flex flex-wrap items-center gap-3"><h1 class="font-display text-2xl font-black">{{ order.number }}</h1><span class="badge">{{ order.get_status_display }}</span></div>
+<p class="mt-1 text-sm text-slate-500">{{ order.supplier.name }} (NIT {{ order.supplier.tax_id }}) → {{ order.store.name }} · Creó {{ order.created_by.email }}{% if order.approved_by %} · Aprobó {{ order.approved_by.email }}{% endif %}</p>
+<form method="post" class="mt-6">{% csrf_token %}
+<div class="overflow-x-auto"><table class="data-table">
+  <thead><tr><th>Producto</th><th class="text-right">Pedido</th><th class="text-right">Recibido</th><th class="text-right">Costo unitario</th>{% if order.status == "approved" or order.status == "partial" %}<th>Recibir ahora</th>{% endif %}</tr></thead>
+  <tbody>{% for line in order.lines.all %}<tr><td>{{ line.variant.product.name }} <code>{{ line.variant.sku }}</code></td><td class="text-right">{{ line.quantity }}</td><td class="text-right">{{ line.received_quantity }}</td><td class="text-right">{{ line.unit_cost|cop }}</td>{% if order.status == "approved" or order.status == "partial" %}<td><input class="form-input w-24" type="number" min="0" max="{{ line.pending }}" name="linea-{{ line.pk }}" value="0"></td>{% endif %}</tr>{% endfor %}</tbody>
+</table></div>
+<p class="mt-3 text-sm">Costo total: <strong>{{ total|cop }}</strong></p>
+<div class="mt-4 flex flex-wrap gap-3">
+  {% if order.status == "draft" and perms.purchasing.approve_purchaseorder and order.created_by_id != user.pk %}<button class="btn-primary" name="accion" value="aprobar">Aprobar orden</button>{% elif order.status == "draft" %}<p class="text-sm text-slate-500">Pendiente de aprobación por otra persona.</p>{% endif %}
+  {% if order.status == "approved" or order.status == "partial" %}{% if perms.purchasing.receive_purchaseorder %}<input class="form-input w-72" name="nota" maxlength="200" placeholder="Nota (factura del proveedor, etc.)"><button class="btn-primary" name="accion" value="recibir">Registrar recepción</button>{% endif %}{% endif %}
+</div>
+</form>
+{% endblock %}

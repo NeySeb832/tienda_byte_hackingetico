@@ -26,8 +26,27 @@
 | Can view registro de auditoría (`audit.view_auditlog`) | — | — | — | — | ✅ | — | ✅ | ✅ |
 | Can view evento de seguridad (`audit.view_securityevent`) | — | — | — | — | — | — | — | ✅ |
 | Can add sede (`inventory.add_store`) | — | — | — | — | — | — | ✅ | ✅ |
+| Puede aprobar ajustes de inventario (`inventory.approve_adjustment`) | — | — | — | — | ✅ | — | ✅ | ✅ |
 | Can change sede (`inventory.change_store`) | — | — | — | — | — | — | ✅ | ✅ |
+| Puede gestionar traslados entre sedes (`inventory.manage_transfers`) | — | — | ✅ | — | ✅ | — | ✅ | ✅ |
+| Puede solicitar ajustes de inventario (`inventory.request_adjustment`) | — | — | ✅ | — | ✅ | — | ✅ | ✅ |
+| Can view existencia (`inventory.view_stockitem`) | — | ✅ | ✅ | — | ✅ | — | ✅ | ✅ |
+| Can view movimiento de inventario (`inventory.view_stockmovement`) | — | ✅ | ✅ | — | ✅ | — | ✅ | ✅ |
 | Can view sede (`inventory.view_store`) | — | ✅ | ✅ | — | ✅ | — | ✅ | ✅ |
+| Puede preparar, despachar y entregar pedidos (`orders.manage_fulfillment`) | — | ✅ | — | — | ✅ | — | ✅ | ✅ |
+| Can view pedido (`orders.view_order`) | — | ✅ | ✅ | — | ✅ | — | ✅ | ✅ |
+| Puede ver los reportes de ventas (`orders.view_sales_report`) | — | — | — | — | ✅ | ✅ | ✅ | ✅ |
+| Puede vender en el punto de venta (`pos.use_pos`) | — | ✅ | — | — | ✅ | — | ✅ | ✅ |
+| Puede cambiar y programar precios (`pricing.change_price`) | — | — | — | — | ✅ | — | ✅ | ✅ |
+| Can add cupón (`promotions.add_coupon`) | — | — | — | — | ✅ | — | ✅ | ✅ |
+| Puede aprobar cupones con descuento alto (`promotions.approve_coupon`) | — | — | — | — | ✅ | — | ✅ | ✅ |
+| Can view cupón (`promotions.view_coupon`) | — | — | — | — | ✅ | — | ✅ | ✅ |
+| Can add orden de compra (`purchasing.add_purchaseorder`) | — | — | — | — | ✅ | — | ✅ | ✅ |
+| Can add proveedor (`purchasing.add_supplier`) | — | — | — | — | ✅ | — | ✅ | ✅ |
+| Puede aprobar órdenes de compra (`purchasing.approve_purchaseorder`) | — | — | — | — | ✅ | — | ✅ | ✅ |
+| Puede recibir mercancía (`purchasing.receive_purchaseorder`) | — | — | ✅ | — | ✅ | — | ✅ | ✅ |
+| Can view orden de compra (`purchasing.view_purchaseorder`) | — | — | ✅ | — | ✅ | — | ✅ | ✅ |
+| Can view proveedor (`purchasing.view_supplier`) | — | — | ✅ | — | ✅ | — | ✅ | ✅ |
 
 Además de los permisos, el código aplica estas reglas:
 - **Alcance por sede:** el personal solo ve sus sedes asignadas; administradores y superadmins ven todas.

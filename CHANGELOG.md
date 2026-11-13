@@ -5,6 +5,26 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 
 ## [Sin publicar]
 
+## [0.5.0] — 2026-11-13 — Fase 5: Panel administrativo
+
+### Añadido
+- **Resumen** con indicadores según el rol: ventas de hoy y de 30 días, pedidos por preparar, productos con stock bajo y aprobaciones pendientes.
+- **Pedidos**: listado con filtros (estado, canal, búsqueda) y detalle con seguimiento; preparar, despachar, marcar listo para recoger y entregado, según el tipo de entrega.
+- **Inventario multi-sede**: existencias por sede (físico, reservado, disponible), **kardex** por producto, **ajustes** que aprueba otra persona y **traslados** entre sedes (solicitar, despachar, recibir).
+- **Compras**: proveedores, órdenes de compra con aprobación por otra persona y **recepciones parciales** que ingresan al inventario y al kardex.
+- **Punto de venta**: turnos de caja por sede y cajero, ventas en efectivo (con cambio) o datáfono, factura de prueba y cierre de turno con arqueo (esperado vs. contado).
+- **Clientes (CRM)**: listado con compras y total comprado, y ficha del cliente; cada consulta queda en la auditoría.
+- **Precios**: cambio inmediato o programado desde el panel (con historial).
+- **Cupones**: creación y aprobación por otra persona de los descuentos mayores al 15 %.
+- **Reportes**: ventas por día (gráfica SVG, compatible con la CSP), por canal, por sede y productos más vendidos; exportación CSV protegida contra la inyección de fórmulas.
+- Permisos nuevos y matriz de roles actualizada (vendedor, bodega, gerente, analista, administrador).
+- ADR-0015.
+
+### Corregido
+- El campo de fecha de los cupones no usaba el formato de `datetime-local` (aviso del navegador detectado en las capturas).
+- El test del límite de tasa del autocompletado podía fallar si las peticiones cruzaban el cambio de minuto.
+
+
 ## [0.4.0] — 2026-11-13 — Fase 4: Carrito, checkout y pagos
 
 ### Añadido

@@ -1,0 +1,12 @@
+{% extends "panel/base.html" %}
+{% block title %}Ajustes de inventario{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black">Ajustes de inventario</h1>
+<p class="mt-1 text-sm text-slate-500">Quien solicita un ajuste no puede aprobarlo.</p>
+<form method="post" class="stat-card mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{% csrf_token %}{% include "panel/_form.html" %}<div class="self-end"><button class="btn-primary" type="submit">Solicitar ajuste</button></div></form>
+<div class="mt-6 overflow-x-auto"><table class="data-table">
+  <thead><tr><th>Fecha</th><th>Producto</th><th>Sede</th><th class="text-right">Contado</th><th>Motivo</th><th>Solicita</th><th>Estado</th><th></th></tr></thead>
+  <tbody>{% for a in adjustments %}<tr><td>{{ a.created_at|date:"Y-m-d H:i" }}</td><td>{{ a.variant.product.name }} <code>{{ a.variant.sku }}</code></td><td>{{ a.store.name }}</td><td class="text-right">{{ a.counted_quantity }}</td><td>{{ a.reason }}</td><td>{{ a.requested_by.email }}</td><td>{{ a.get_status_display }}{% if a.decided_by %} · {{ a.decided_by.email }}{% endif %}</td>
+  <td>{% if can_approve and a.status == "pending" and a.requested_by_id != user.pk %}<form method="post" action="{% url 'panel:adjustment_decision' a.public_id %}" class="flex gap-2">{% csrf_token %}<button class="btn-secondary" name="decision" value="aprobar">Aprobar</button><button class="btn-secondary" name="decision" value="rechazar">Rechazar</button></form>{% endif %}</td></tr>{% empty %}<tr><td colspan="8">Sin ajustes.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% endblock %}

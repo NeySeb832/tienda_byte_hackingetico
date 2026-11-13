@@ -1,0 +1,18 @@
+{% extends "panel/base.html" %}
+{% load money %}
+{% block title %}Punto de venta{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black">Punto de venta</h1>
+{% if not session %}
+<form method="post" class="stat-card mt-6 grid max-w-xl gap-3">{% csrf_token %}<input type="hidden" name="accion" value="abrir">{% with form=open_form %}{% include "panel/_form.html" %}{% endwith %}<button class="btn-primary" type="submit">Abrir turno</button></form>
+{% else %}
+<p class="mt-1 text-sm text-slate-500">Turno abierto en <strong>{{ session.store.name }}</strong> desde {{ session.opened_at|date:"H:i" }} · Base {{ session.opening_float|cop }} · Ventas en efectivo {{ cash_sales|cop }}</p>
+<div class="mt-6 grid gap-6 lg:grid-cols-2">
+  <form method="post" class="stat-card space-y-3">{% csrf_token %}<input type="hidden" name="accion" value="vender"><h2 class="stat-label">Nueva venta</h2>{% with form=sale_form %}{% include "panel/_form.html" %}{% endwith %}<button class="btn-primary" type="submit">Cobrar</button></form>
+  <div class="space-y-6">
+    <div class="stat-card"><h2 class="stat-label">Ventas del turno</h2><ul class="mt-2 space-y-1 text-sm">{% for order in recent %}<li><a class="underline" href="{% url 'panel:order_detail' order.public_id %}">{{ order.number }}</a> · {{ order.total|cop }}</li>{% empty %}<li>Aún no hay ventas.</li>{% endfor %}</ul></div>
+    <form method="post" class="stat-card space-y-3">{% csrf_token %}<input type="hidden" name="accion" value="cerrar"><h2 class="stat-label">Cerrar turno</h2>{% with form=close_form %}{% include "panel/_form.html" %}{% endwith %}<button class="btn-secondary" type="submit">Cerrar turno</button></form>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -47,6 +47,7 @@ class Coupon(BaseModel):
         ordering = ["-created_at"]
         verbose_name = _("cupón")
         verbose_name_plural = _("cupones")
+        permissions = [("approve_coupon", "Puede aprobar cupones con descuento alto")]
         constraints = [
             models.CheckConstraint(
                 condition=models.Q(code=Upper("code")), name="promotions_code_upper"

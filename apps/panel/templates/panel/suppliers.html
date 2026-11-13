@@ -1,0 +1,9 @@
+{% extends "panel/base.html" %}
+{% block title %}Proveedores{% endblock %}
+{% block content %}
+<a href="{% url 'panel:purchase_orders' %}" class="text-sm underline">← Compras</a>
+<h1 class="mt-2 font-display text-2xl font-black">Proveedores</h1>
+{% if perms.purchasing.add_supplier %}<form method="post" class="stat-card mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">{% csrf_token %}{% include "panel/_form.html" %}<div class="self-end"><button class="btn-primary" type="submit">Agregar</button></div></form>{% endif %}
+<div class="mt-6 overflow-x-auto"><table class="data-table"><thead><tr><th>Razón social</th><th>NIT</th><th>Correo</th><th>Teléfono</th></tr></thead>
+<tbody>{% for s in suppliers %}<tr><td>{{ s.name }}</td><td>{{ s.tax_id }}</td><td>{{ s.email|default:"—" }}</td><td>{{ s.phone|default:"—" }}</td></tr>{% empty %}<tr><td colspan="4">Sin proveedores.</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}

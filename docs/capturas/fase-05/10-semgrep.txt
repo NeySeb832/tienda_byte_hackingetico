@@ -1,0 +1,51 @@
+$ docker run --rm -v C:\Users\seb83\Documentos\Universidad\Hacking etico\Tienda Videojuegos IA:/src -w /src semgrep/semgrep:1.184.0@sha256:cc1b68266f267878b39739373ea9985b9a78e5d64497dd875c8de100b22695ed semgrep scan --config p/django --config p/python --error --metrics=off --exclude tests
+
+                   
+                   
+┌─────────────────┐
+│ 2 Code Findings │
+└─────────────────┘
+                            
+    apps/panel/operations.py
+    ❯❱ python.django.security.injection.open-redirect.open-redirect
+          ❰❰ Blocking ❱❱
+          Data from request ($DATA) is passed to redirect(). This is an open redirect and could be exploited.
+          Ensure you are redirecting to safe URLs by using django.utils.http.is_safe_url(). See              
+          https://cwe.mitre.org/data/definitions/601.html for more information.                              
+          Details: https://sg.run/Ave2                                                                       
+                                                                                                             
+          639┆ return redirect(f"{request.path}?q={variant.sku}")
+            ⋮┆----------------------------------------
+          639┆ return redirect(f"{request.path}?q={variant.sku}")
+
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 556 files tracked by git with 152 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  python          151     296          Community     152                                                                
+  <multilang>       1      79                                                                                           
+                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 2 (2 blocking)
+ • Rules run: 152
+ • Targets scanned: 375
+ • Parsed lines: ~100.0%
+ • Scan skipped: 
+   ◦ Matching --exclude patterns: 65
+   ◦ Files larger than  files 1.0 MB: 6
+   ◦ Files matching .semgrepignore patterns: 3
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 152 rules on 375 files: 2 findings.
+
+[FALLÓ (código 1) en 725.9 s]

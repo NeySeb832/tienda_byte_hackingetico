@@ -91,7 +91,103 @@ PAGES: dict[int, list[tuple[str, ...] | tuple[str, str, bool] | tuple[str, str, 
         ("mis-pedidos", "/cuenta/pedidos/", False, "cliente@byte.test"),
         ("detalle-pedido", "/cuenta/pedidos/{pedido}/", True, "cliente@byte.test"),
     ],
+    5: [
+        ("panel-resumen-gerente", "/panel/", True, "gerente@byte.test"),
+        ("panel-pedidos", "/panel/pedidos/", False, "gerente@byte.test"),
+        ("panel-detalle-pedido", "/panel/pedidos/{pedido_web}/", False, "gerente@byte.test"),
+        ("panel-inventario", "/panel/inventario/?sede=BOG-CEN", False, "gerente@byte.test"),
+        ("panel-kardex", "/panel/inventario/kardex/DS-WHT-N/", False, "gerente@byte.test"),
+        ("panel-ajustes-gerente-aprueba", "/panel/inventario/ajustes/", False, "gerente@byte.test"),
+        (
+            "panel-ajustes-bodega-no-aprueba",
+            "/panel/inventario/ajustes/",
+            False,
+            "bodega@byte.test",
+        ),
+        ("panel-traslados", "/panel/inventario/traslados/", False, "bodega@byte.test"),
+        ("panel-compras", "/panel/compras/", False, "gerente@byte.test"),
+        ("panel-orden-de-compra", "/panel/compras/{oc}/", False, "admin@byte.test"),
+        ("panel-pos", "/panel/pos/", True, "vendedor@byte.test"),
+        ("panel-clientes", "/panel/clientes/", False, "gerente@byte.test"),
+        ("panel-precios", "/panel/precios/?q=DS-", False, "gerente@byte.test"),
+        ("panel-cupones", "/panel/cupones/", False, "admin@byte.test"),
+        ("panel-reportes", "/panel/reportes/", True, "analista@byte.test"),
+        ("403-analista-en-pos", "/panel/pos/", False, "analista@byte.test"),
+    ],
 }
+
+
+def prepare_panel_demo() -> dict[str, str]:
+    """Phase 5: store assignments, a POS shift with sales, pending approvals, a transfer."""
+    from apps.accounts.models import StaffStoreAssignment, User
+    from apps.catalog.models import ProductVariant
+    from apps.inventory import services as inventory
+    from apps.inventory.models import InventoryAdjustment, StockTransfer, Store
+    from apps.orders.models import Order
+    from apps.pos import services as pos
+    from apps.pos.models import CashSession
+    from apps.purchasing import services as purchasing
+    from apps.purchasing.models import PurchaseOrder, Supplier
+
+    tokens = prepare_checkout_demo("cliente@byte.test")
+    bog = Store.objects.get(code="BOG-CEN")
+    bodega = Store.objects.get(code="BOD-BOG")
+    users = {
+        email: User.objects.get(email=email)
+        for email in (
+            "vendedor@byte.test",
+            "bodega@byte.test",
+            "gerente@byte.test",
+            "admin@byte.test",
+        )
+    }
+    for email in ("vendedor@byte.test", "bodega@byte.test", "gerente@byte.test"):
+        for store in (bog, bodega):
+            StaffStoreAssignment.objects.get_or_create(user=users[email], store=store)
+    variant = ProductVariant.objects.get(sku="DS-WHT-N")
+    seller = users["vendedor@byte.test"]
+    session = CashSession.objects.filter(
+        opened_by=seller, closed_at=None
+    ).first() or pos.open_session(bog, actor=seller, opening_float=200000)
+    if not session.orders.exists():
+        pos.sell(session, [(variant, 1)], actor=seller, method=pos.CASH, cash_received=300000)
+        pos.sell(
+            session,
+            [(ProductVariant.objects.get(sku="DS-COBALT-N"), 1)],
+            actor=seller,
+            method=pos.CARD,
+        )
+    if not InventoryAdjustment.objects.filter(status="pending").exists():
+        inventory.request_adjustment(
+            ProductVariant.objects.get(sku="XBC-BLK-N"),
+            bodega,
+            2,
+            reason="Conteo cíclico: 1 unidad dañada",
+            actor=users["bodega@byte.test"],
+        )
+    if not StockTransfer.objects.exists():
+        inventory.request_transfer(variant, bodega, bog, 2, actor=users["bodega@byte.test"])
+    supplier, _ = Supplier.objects.get_or_create(
+        tax_id="900555123-4",
+        defaults={
+            "name": "Distribuidora Andina de Videojuegos S.A.S.",
+            "email": "compras@proveedor.test",
+        },
+    )
+    order = PurchaseOrder.objects.filter(
+        status="draft"
+    ).first() or purchasing.create_purchase_order(
+        supplier,
+        bodega,
+        [
+            (ProductVariant.objects.get(sku="PS5S-DISC-STD-N"), 4, "2300000"),
+            (variant, 10, "215000"),
+        ],
+        actor=users["gerente@byte.test"],
+        notes="Reposición mensual",
+    )
+    web = Order.objects.get(public_id=tokens["pedido"])
+    return {**tokens, "oc": str(order.public_id), "pedido_web": str(web.public_id)}
 
 
 def prepare_checkout_demo(email: str) -> dict[str, str]:
@@ -204,7 +300,11 @@ def main() -> int:
 
     # Django's ORM must not run inside Playwright's event loop: create sessions first.
     cookies = {str(spec[3]): session_cookie(str(spec[3])) for spec in pages if len(spec) > 3}
-    tokens = prepare_checkout_demo("cliente@byte.test") if args.fase == 4 else {}
+    tokens = (
+        prepare_checkout_demo("cliente@byte.test")
+        if args.fase == 4
+        else prepare_panel_demo() if args.fase == 5 else {}
+    )
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()

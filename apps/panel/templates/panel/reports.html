@@ -1,0 +1,15 @@
+{% extends "panel/base.html" %}
+{% load money %}
+{% block title %}Reportes{% endblock %}
+{% block content %}
+<div class="flex flex-wrap items-center justify-between gap-3"><h1 class="font-display text-2xl font-black">Ventas de los últimos 30 días</h1><a class="btn-secondary" href="?formato=csv">Descargar CSV</a></div>
+<div class="mt-6 grid gap-4 sm:grid-cols-2"><div class="stat-card"><p class="stat-label">Ventas</p><p class="stat-value">{{ total|cop }}</p></div><div class="stat-card"><p class="stat-label">Pedidos</p><p class="stat-value">{{ orders }}</p></div></div>
+<section class="stat-card mt-6"><h2 class="stat-label">Ventas por día</h2>
+  <svg class="mt-4 h-40 w-full text-neon-violet" viewBox="0 0 300 100" preserveAspectRatio="none" role="img" aria-label="Ventas por día de los últimos 30 días">{% for bar in bars %}<rect x="{{ bar.x }}" y="{{ bar.y }}" width="8" height="{{ bar.h }}" class="fill-current"><title>{{ bar.day.day|date:"j M" }}: {{ bar.day.total|cop }} ({{ bar.day.orders }} pedidos)</title></rect>{% endfor %}</svg>
+</section>
+<div class="mt-6 grid gap-6 lg:grid-cols-3">
+  <section class="stat-card"><h2 class="stat-label">Por canal</h2><table class="mt-3 w-full text-sm">{% for row in channels %}<tr><td>{{ row.channel }}</td><td class="text-right">{{ row.orders }}</td><td class="text-right">{{ row.total|cop }}</td></tr>{% empty %}<tr><td>Sin ventas.</td></tr>{% endfor %}</table></section>
+  <section class="stat-card"><h2 class="stat-label">Por sede</h2><table class="mt-3 w-full text-sm">{% for row in stores %}<tr><td>{{ row.store }}</td><td class="text-right">{{ row.orders }}</td><td class="text-right">{{ row.total|cop }}</td></tr>{% empty %}<tr><td>Sin ventas.</td></tr>{% endfor %}</table></section>
+  <section class="stat-card"><h2 class="stat-label">Productos más vendidos</h2><table class="mt-3 w-full text-sm">{% for row in products %}<tr><td>{{ row.name }}</td><td class="text-right">{{ row.units }}</td><td class="text-right">{{ row.total|cop }}</td></tr>{% empty %}<tr><td>Sin ventas.</td></tr>{% endfor %}</table></section>
+</div>
+{% endblock %}

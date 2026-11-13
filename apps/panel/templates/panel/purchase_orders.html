@@ -1,0 +1,10 @@
+{% extends "panel/base.html" %}
+{% block title %}Compras{% endblock %}
+{% block content %}
+<div class="flex flex-wrap items-center justify-between gap-3"><h1 class="font-display text-2xl font-black">Órdenes de compra</h1><a class="btn-secondary" href="{% url 'panel:suppliers' %}">Proveedores</a></div>
+{% if can_create %}<form method="post" class="stat-card mt-6 grid gap-3 lg:grid-cols-2">{% csrf_token %}{% include "panel/_form.html" %}<div class="self-end"><button class="btn-primary" type="submit">Crear orden</button></div></form>{% endif %}
+<div class="mt-6 overflow-x-auto"><table class="data-table">
+  <thead><tr><th>Número</th><th>Proveedor</th><th>Sede</th><th>Estado</th><th>Creó</th><th>Aprobó</th></tr></thead>
+  <tbody>{% for o in orders %}<tr><td><a class="font-semibold underline" href="{% url 'panel:purchase_order' o.public_id %}">{{ o.number }}</a></td><td>{{ o.supplier.name }}</td><td>{{ o.store.name }}</td><td>{{ o.get_status_display }}</td><td>{{ o.created_by.email }}</td><td>{{ o.approved_by.email|default:"—" }}</td></tr>{% empty %}<tr><td colspan="6">Sin órdenes de compra.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% endblock %}

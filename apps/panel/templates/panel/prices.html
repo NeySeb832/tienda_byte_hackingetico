@@ -1,0 +1,14 @@
+{% extends "panel/base.html" %}
+{% load money %}
+{% block title %}Precios{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black">Precios</h1>
+<p class="mt-1 text-sm text-slate-500">Cada cambio queda en el historial de precios (no se puede editar) y en la auditoría.</p>
+<form method="get" class="mt-4 flex gap-3"><input class="form-input max-w-sm" name="q" value="{{ q }}" placeholder="SKU o producto"><button class="btn-secondary" type="submit">Buscar</button></form>
+<div class="mt-6 overflow-x-auto"><table class="data-table">
+  <thead><tr><th>Producto</th><th>SKU</th><th class="text-right">Precio vigente</th><th>Cambiar</th></tr></thead>
+  <tbody>{% for v in page %}<tr><td>{{ v.product.name }}</td><td><code>{{ v.sku }}</code></td><td class="text-right">{{ v.price|cop }}</td>
+  <td><form method="post" class="flex flex-wrap items-center gap-2">{% csrf_token %}<input type="hidden" name="sku" value="{{ v.sku }}"><input class="form-input w-32" name="precio" type="number" min="1" step="1" required placeholder="Nuevo precio"><input class="form-input w-52" name="desde" type="datetime-local" title="Opcional: programar"><input class="form-input w-40" name="nota" maxlength="200" placeholder="Motivo"><button class="btn-secondary" type="submit">Guardar</button></form></td></tr>{% empty %}<tr><td colspan="4">Sin resultados.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% include "panel/_pagination.html" %}
+{% endblock %}

@@ -51,7 +51,7 @@ class Order(BaseModel):
         on_delete=models.PROTECT,
         related_name="orders",
     )
-    email = models.EmailField(_("correo"))
+    email = models.EmailField(_("correo"), blank=True)
     channel = models.CharField(
         _("canal"), max_length=4, choices=Channel.choices, default=Channel.WEB
     )
@@ -72,6 +72,12 @@ class Order(BaseModel):
     tax_total = models.DecimalField(_("IVA incluido"), max_digits=14, decimal_places=2, default=0)
     total = models.DecimalField(_("total"), max_digits=14, decimal_places=2)
     coupon_code = models.CharField(_("cupón"), max_length=30, blank=True)
+    cash_session = models.ForeignKey(
+        "pos.CashSession", null=True, blank=True, on_delete=models.PROTECT, related_name="orders"
+    )
+    sold_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
+    )
     terms_accepted_at = models.DateTimeField(_("términos aceptados"), null=True, blank=True)
     expires_at = models.DateTimeField(_("vence"), null=True, blank=True)
     paid_at = models.DateTimeField(_("pagado"), null=True, blank=True)
@@ -80,6 +86,10 @@ class Order(BaseModel):
         ordering = ["-created_at"]
         verbose_name = _("pedido")
         verbose_name_plural = _("pedidos")
+        permissions = [
+            ("manage_fulfillment", "Puede preparar, despachar y entregar pedidos"),
+            ("view_sales_report", "Puede ver los reportes de ventas"),
+        ]
         indexes = [models.Index(fields=["status", "expires_at"], name="orders_status_expires")]
         constraints = [
             models.CheckConstraint(

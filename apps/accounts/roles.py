@@ -30,6 +30,31 @@ ROLE_DESCRIPTIONS = {
 }
 
 PANEL = "accounts.access_panel"
+_ORDERS = {"orders.view_order", "orders.manage_fulfillment"}
+_STOCK = {"inventory.view_stockitem", "inventory.view_stockmovement"}
+_WAREHOUSE = _STOCK | {
+    "inventory.request_adjustment",
+    "inventory.manage_transfers",
+    "purchasing.view_purchaseorder",
+    "purchasing.receive_purchaseorder",
+    "purchasing.view_supplier",
+}
+_MANAGEMENT = (
+    _ORDERS
+    | _WAREHOUSE
+    | {
+        "inventory.approve_adjustment",
+        "purchasing.add_purchaseorder",
+        "purchasing.approve_purchaseorder",
+        "purchasing.add_supplier",
+        "pos.use_pos",
+        "pricing.change_price",
+        "promotions.view_coupon",
+        "promotions.add_coupon",
+        "promotions.approve_coupon",
+        "orders.view_sales_report",
+    }
+)
 _ADMIN = frozenset(
     {
         PANEL,
@@ -40,17 +65,21 @@ _ADMIN = frozenset(
         "inventory.change_store",
         "audit.view_auditlog",
     }
+    | _MANAGEMENT
 )
 
 ROLE_PERMISSIONS: dict[str, frozenset[str]] = {
     CUSTOMER: frozenset(),
-    SELLER: frozenset({PANEL, "accounts.view_customers", "inventory.view_store"}),
-    WAREHOUSE: frozenset({PANEL, "inventory.view_store"}),
+    SELLER: frozenset(
+        {PANEL, "accounts.view_customers", "inventory.view_store", "pos.use_pos"} | _ORDERS | _STOCK
+    ),
+    WAREHOUSE: frozenset({PANEL, "inventory.view_store", "orders.view_order"} | _WAREHOUSE),
     TECHNICIAN: frozenset({PANEL}),
     MANAGER: frozenset(
         {PANEL, "accounts.view_customers", "inventory.view_store", "audit.view_auditlog"}
+        | _MANAGEMENT
     ),
-    ANALYST: frozenset({PANEL}),
+    ANALYST: frozenset({PANEL, "orders.view_sales_report"}),
     ADMIN: _ADMIN,
     SUPERADMIN: _ADMIN | {"audit.view_securityevent"},
 }
