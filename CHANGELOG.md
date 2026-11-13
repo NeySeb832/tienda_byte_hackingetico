@@ -5,6 +5,12 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 
 ## [Sin publicar]
 
+## [1.0.0] — 2026-11-13 — Fase 10: Documentación final
+
+### Añadido
+- README completo, manuales del cliente y del personal, manual técnico y guion de sustentación.
+
+
 ## [0.9.0] — 2026-11-13 — Fase 9: Despliegue
 
 ### Añadido

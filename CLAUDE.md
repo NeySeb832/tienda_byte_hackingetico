@@ -50,7 +50,7 @@ primer nivel, no un añadido.
 | 7 | Big Data / BI (seed masivo, pipeline medallón, modelo estrella, modelos, dashboards, PySpark) | ✅ en revisión (`fase/07-bigdata`) |
 | 8 | Endurecimiento de seguridad (matriz OWASP, STRIDE, suite de seguridad, ZAP, SBOM) | ✅ en revisión (`fase/08-seguridad`) |
 | 9 | Despliegue (Render Blueprint, CI/CD, datos demo, verificación end-to-end) | ✅ en revisión (`fase/09-despliegue`) |
-| 10 | Documentación final (README, manuales por rol, manual técnico, guion de sustentación) | ⏳ |
+| 10 | Documentación final (README, manuales por rol, manual técnico, guion de sustentación) | ✅ en revisión (`fase/10-documentacion`) |
 
 ## Arquitectura
 
