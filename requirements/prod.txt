@@ -150,9 +150,9 @@ colorama==0.4.6 ; sys_platform == 'win32' \
     # via
     #   click
     #   qrcode
-cron-descriptor==1.4.5 \
-    --hash=sha256:736b3ae9d1a99bc3dbfc5b55b5e6e7c12031e7ba5de716625772f8b02dcd6013 \
-    --hash=sha256:f51ce4ffc1d1f2816939add8524f206c376a42c87a5fca3091ce26725b3b1bca
+cron-descriptor==2.2.1 \
+    --hash=sha256:23b42aca983841333aaf28095024e0457f005621d03e658edbd7316a5f2bbd42 \
+    --hash=sha256:6759056f43b3cabca274b5df182bb63571f2f383bdd4d9d3ff4662c527430a65
     # via django-celery-beat
 cryptography==50.0.2 \
     --hash=sha256:0ddc924c04591c2811ca024d62ecad4f7f6f08af8939c211438f48a16bd23602 \
