@@ -1,0 +1,12 @@
+{% extends "accounts/base.html" %}
+{% load money %}
+{% block title %}Mis pedidos · {{ site_name }}{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black text-slate-900 dark:text-white">Mis pedidos</h1>
+{% if orders %}
+<div class="mt-6 overflow-x-auto"><table class="data-table">
+  <thead><tr><th class="px-4 py-3">Pedido</th><th class="px-4 py-3">Fecha</th><th class="px-4 py-3">Estado</th><th class="px-4 py-3 text-right">Total</th></tr></thead>
+  <tbody>{% for order in orders %}<tr><td class="px-4 py-3"><a class="font-semibold underline" href="{% url 'orders:detail' order.public_id %}">{{ order.number }}</a></td><td class="px-4 py-3">{{ order.created_at|date:"j M Y" }}</td><td class="px-4 py-3">{{ order.get_status_display }}</td><td class="px-4 py-3 text-right">{{ order.total|cop }}</td></tr>{% endfor %}</tbody>
+</table></div>
+{% else %}<p class="mt-6 text-slate-600 dark:text-slate-300">Aún no tienes pedidos. <a class="underline" href="{% url 'catalog:list' %}">Explora el catálogo</a>.</p>{% endif %}
+{% endblock %}

@@ -1,6 +1,10 @@
 """Data models for the inventory app."""
 
+from typing import Any
+
+from django.conf import settings
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import BaseModel, City
@@ -66,3 +70,91 @@ class StockItem(models.Model):
     @property
     def available(self) -> int:
         return self.quantity - self.reserved
+
+
+class AppendOnlyQuerySet(models.QuerySet):
+    def update(self, **kwargs: Any) -> int:
+        raise PermissionError("The stock ledger is append-only.")
+
+    def delete(self) -> tuple[int, dict[str, int]]:
+        raise PermissionError("The stock ledger is append-only.")
+
+
+class StockMovement(models.Model):
+    """Kardex: every change of physical units. Append-only (ORM and database trigger)."""
+
+    class Reason(models.TextChoices):
+        INITIAL = "initial", _("Inventario inicial")
+        ADJUSTMENT = "adjustment", _("Ajuste por conteo")
+        SALE = "sale", _("Venta")
+        RETURN = "return", _("Devolución")
+
+    variant = models.ForeignKey(
+        "catalog.ProductVariant", on_delete=models.PROTECT, related_name="stock_movements"
+    )
+    store = models.ForeignKey(Store, on_delete=models.PROTECT, related_name="stock_movements")
+    delta = models.IntegerField(_("unidades"))
+    balance = models.IntegerField(_("saldo"))
+    reason = models.CharField(_("motivo"), max_length=12, choices=Reason.choices)
+    reference = models.CharField(_("referencia"), max_length=64, blank=True)
+    note = models.CharField(_("nota"), max_length=200, blank=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
+    )
+    created_at = models.DateTimeField(_("fecha"), default=timezone.now, db_index=True)
+
+    objects = AppendOnlyQuerySet.as_manager()
+
+    class Meta:
+        ordering = ["created_at", "pk"]
+        verbose_name = _("movimiento de inventario")
+        verbose_name_plural = _("kardex")
+        constraints = [
+            models.CheckConstraint(
+                condition=~models.Q(delta=0), name="inventory_movement_delta_not_0"
+            ),
+            models.CheckConstraint(
+                condition=models.Q(balance__gte=0), name="inventory_movement_balance_gte_0"
+            ),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.variant_id} @ {self.store_id}: {self.delta:+d}"
+
+    def save(self, *args: Any, **kwargs: Any) -> None:
+        if not self._state.adding:
+            raise PermissionError("The stock ledger is append-only.")
+        super().save(*args, **kwargs)
+
+
+class StockReservation(BaseModel):
+    """Units held for an order awaiting payment (TTL ``BYTE_STOCK_RESERVATION_TTL_MINUTES``)."""
+
+    class Status(models.TextChoices):
+        ACTIVE = "active", _("Activa")
+        CONSUMED = "consumed", _("Vendida")
+        RELEASED = "released", _("Liberada")
+
+    variant = models.ForeignKey(
+        "catalog.ProductVariant", on_delete=models.PROTECT, related_name="reservations"
+    )
+    store = models.ForeignKey(Store, on_delete=models.PROTECT, related_name="reservations")
+    order = models.ForeignKey("orders.Order", on_delete=models.CASCADE, related_name="reservations")
+    quantity = models.PositiveIntegerField(_("unidades"))
+    status = models.CharField(
+        _("estado"), max_length=10, choices=Status.choices, default=Status.ACTIVE
+    )
+    expires_at = models.DateTimeField(_("vence"))
+
+    class Meta:
+        ordering = ["pk"]
+        verbose_name = _("reserva de stock")
+        verbose_name_plural = _("reservas de stock")
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(quantity__gte=1), name="inventory_reservation_qty_gte_1"
+            ),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.quantity} x {self.variant_id} ({self.status})"

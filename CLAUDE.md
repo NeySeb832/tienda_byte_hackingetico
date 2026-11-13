@@ -44,7 +44,7 @@ primer nivel, no un añadido.
 | 1 | Fundaciones (estructura, settings, Docker, CI, ADRs, modelo de datos) | ✅ en revisión (`fase/01-fundaciones`) |
 | 2 | Usuarios y seguridad base (allauth + MFA, axes, roles, mixins, auditoría, CSP, tests de acceso) | ✅ en revisión (`fase/02-usuarios-seguridad`) |
 | 3 | Catálogo y precios (variantes con precio dinámico, búsqueda, filtros, comparador, historial) | ✅ en revisión (`fase/03-catalogo`) |
-| 4 | Carrito, checkout y pagos (cupones, envíos, Wompi sandbox, webhooks, facturas PDF, correos) | ⏳ |
+| 4 | Carrito, checkout y pagos (cupones, envíos, Wompi sandbox, webhooks, facturas PDF, correos) | ✅ en revisión (`fase/04-checkout`) |
 | 5 | Panel administrativo (dashboard, inventario multi-sede, compras, pedidos, POS, CRM, reportes) | ⏳ |
 | 6 | Valor agregado (retomas, servicio técnico, fidelidad, preventas, alertas, devoluciones) | ⏳ |
 | 7 | Big Data / BI (seed masivo, pipeline medallón, modelo estrella, modelos, dashboards, PySpark) | ⏳ |
@@ -79,7 +79,7 @@ primer nivel, no un añadido.
   hace con `split_vat()` y el redondeo es `ROUND_HALF_UP` (ADR-0004).
 - **Inventario**: los cambios de stock se hacen siempre en `transaction.atomic()` con
   `select_for_update()`, bloqueando en orden de PK para evitar deadlocks. Hay constraints `CHECK` en la BD.
-- **Registros append-only**: el kardex, los ledgers de puntos y de crédito, el historial de precios
+- **Registros append-only**: el kardex (`StockMovement`), la línea de tiempo de los pedidos, los ledgers de puntos y de crédito, el historial de precios
   (`PriceHistory`, con trigger en la BD) y la auditoría solo se agregan; las correcciones se hacen con movimientos inversos.
 - **Precios**: cambian solo con `apps.pricing.services` (manual, recálculo por modificadores o
   cambio programado aplicado por Beat). El precio tachado solo aparece tras una bajada real en
@@ -88,6 +88,11 @@ primer nivel, no un añadido.
   atributo, sin combinaciones repetidas). Después de cambiar nombres, plataformas o variantes se
   llama a `refresh_search_index`. Las listas del visitante (comparador, vistos) guardan solo
   `public_id` en la sesión.
+- **Checkout y pagos** (ADR-0014): el pedido se crea con `orders.services.place_order`, que
+  recalcula precios, cupón y envío en el servidor y reserva stock todo o nada. Los estados solo
+  cambian con `orders.services.transition`. Un pago se aplica solo con firma válida, referencia
+  existente y monto exacto; si no, se rechaza y se registra un evento de seguridad. La URL de
+  retorno de la pasarela nunca decide el estado. `BYTE_PAYMENT_GATEWAY=fake` usa el simulador.
 - **Snapshots**: los pedidos copian precio, nombre, SKU y dirección. Cambiar el catálogo no altera un pedido.
 - **Control de acceso**: se deniega por defecto. Toda vista del panel exige autenticación y un permiso
   explícito a través de los mixins propios. Los querysets se filtran por dueño o sede (anti-IDOR).
@@ -245,6 +250,7 @@ backup y restauración (F9).
 - 0011: identificadores públicos y usuario por email
 - 0012: autenticación con allauth, axes, Turnstile y HIBP
 - 0013: búsqueda en PostgreSQL y precios con historial
+- 0014: checkout con reserva de stock y pagos que fallan cerrado
 
 ## Parámetros de negocio por defecto
 

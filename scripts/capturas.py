@@ -81,7 +81,69 @@ PAGES: dict[int, list[tuple[str, ...] | tuple[str, str, bool] | tuple[str, str, 
             "comparar:playstation-5-slim,xbox-series-x,nintendo-switch-2",
         ),
     ],
+    4: [
+        ("ficha-agregar-al-carrito", "/producto/control-dualsense/", False, "cliente@byte.test"),
+        ("carrito", "/carrito/", True, "cliente@byte.test"),
+        ("checkout", "/checkout/", True, "cliente@byte.test"),
+        ("pasarela-de-pruebas", "/pagos/simulador/{pago}/", False, "cliente@byte.test"),
+        ("pago-aprobado", "/checkout/resultado/{pedido}/", False, "cliente@byte.test"),
+        ("pago-rechazado", "/checkout/resultado/{rechazado}/", False, "cliente@byte.test"),
+        ("mis-pedidos", "/cuenta/pedidos/", False, "cliente@byte.test"),
+        ("detalle-pedido", "/cuenta/pedidos/{pedido}/", True, "cliente@byte.test"),
+    ],
 }
+
+
+def prepare_checkout_demo(email: str) -> dict[str, str]:
+    """Phase 4: a paid order, a declined one and a pending payment for the demo customer."""
+    from apps.accounts.models import Address, User
+    from apps.cart import services as cart_services
+    from apps.catalog.models import ProductVariant
+    from apps.core.models import City
+    from apps.orders import services as orders
+    from apps.orders.models import Order
+    from apps.payments import services as payments
+
+    user = User.objects.get(email=email)
+    address, _ = Address.objects.get_or_create(
+        user=user,
+        label="Casa",
+        defaults={
+            "recipient_name": "Cliente Demo",
+            "phone": "3001234567",
+            "city": City.objects.get(code="05001"),
+            "line1": "Carrera 43A # 9-12",
+            "neighborhood": "El Poblado",
+            "is_default": True,
+        },
+    )
+
+    def fill_cart(skus: list[str]) -> object:
+        cart = cart_services.get_cart({}, user, create=True)
+        assert cart is not None  # noqa: S101
+        cart.items.all().delete()
+        for sku in skus:
+            cart_services.add_item(cart, ProductVariant.objects.get(sku=sku), 1)
+        return cart
+
+    def checkout(skus: list[str]) -> Order:
+        cart = fill_cart(skus)
+        return orders.place_order(
+            user=user, cart=cart, fulfillment="shipping", address=address, accepted_terms=True  # type: ignore[arg-type]
+        )
+
+    paid = checkout(["PS5S-DISC-STD-N", "DS-COBALT-N"])
+    payments.simulate(payments.start_payment(paid, redirect_url="/")[0], approve=True)
+    declined = checkout(["XSS-512-N"])
+    payments.simulate(payments.start_payment(declined, redirect_url="/")[0], approve=False)
+    pending = checkout(["NSW2-MKW-N"])
+    payment, _ = payments.start_payment(pending, redirect_url="/")
+    fill_cart(["NSW2-MKW-N", "DS-WHT-N", "CASE-NSW-N"])
+    return {
+        "pedido": str(paid.public_id),
+        "rechazado": str(declined.public_id),
+        "pago": payment.reference,
+    }
 
 
 def session_cookie(email: str) -> dict[str, str]:
@@ -142,6 +204,7 @@ def main() -> int:
 
     # Django's ORM must not run inside Playwright's event loop: create sessions first.
     cookies = {str(spec[3]): session_cookie(str(spec[3])) for spec in pages if len(spec) > 3}
+    tokens = prepare_checkout_demo("cliente@byte.test") if args.fase == 4 else {}
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()
@@ -174,7 +237,7 @@ def main() -> int:
                     on_console, on_error = _recorders(console_log, label)
                     page.on("console", on_console)
                     page.on("pageerror", on_error)
-                    page.goto(f"{args.base_url}{path}", wait_until="load")
+                    page.goto(f"{args.base_url}{path.format(**tokens)}", wait_until="load")
                     settle(page)
                     load_lazy_images(page)
                     # JPEG keeps full-page shots with gradients small enough for the repo.

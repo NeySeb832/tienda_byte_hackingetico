@@ -16,6 +16,7 @@ from django.views import View
 from django.views.decorators.http import require_POST
 from django_ratelimit.decorators import ratelimit
 
+from apps.cart.services import max_quantity
 from apps.catalog import selectors, services
 from apps.catalog.forms import CatalogFilterForm
 from apps.catalog.models import Category, Product
@@ -100,6 +101,7 @@ class ProductDetailView(View):
             "insight": price_insight(config.variant),
             "sparkline": price_sparkline(config.variant),
             "stores": availability_by_store(config.variant),
+            "max_quantity": max_quantity(config.variant),
             "in_compare": str(product.public_id) in services.compare_ids(request.session),
             "vat": (
                 split_vat(config.variant.price).vat

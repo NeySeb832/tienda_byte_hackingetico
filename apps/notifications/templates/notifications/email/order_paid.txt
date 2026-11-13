@@ -1,0 +1,11 @@
+{% load money %}¡Gracias por tu compra!
+
+Recibimos el pago de tu pedido {{ order.number }} por {{ order.total|cop }}.
+
+{% for line in order.lines.all %}- {{ line.quantity }} x {{ line.name }} {{ line.variant_label }}: {{ line.line_total|cop }}
+{% endfor %}
+{% if order.fulfillment == "pickup" %}Te avisaremos cuando esté listo para recoger en {{ order.pickup_store.name }}.{% else %}Te avisaremos cuando lo despachemos.{% endif %}
+
+Detalle y factura: {{ site_url }}{% url 'orders:detail' order.public_id %}
+
+Factura de prueba (ambiente sandbox): no tiene validez fiscal.

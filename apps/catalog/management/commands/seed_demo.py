@@ -27,7 +27,7 @@ from apps.catalog.models import (
     ProductVariant,
 )
 from apps.core.models import City
-from apps.inventory.models import StockItem, Store
+from apps.inventory.models import StockItem, StockMovement, Store
 from apps.inventory.services import set_stock
 
 
@@ -51,6 +51,7 @@ class Command(BaseCommand):
             stores = self._stores()
             self._taxonomy()
             created = sum(self._product(spec, stores) for spec in data.PRODUCTS)
+            self._coupons()
         self.stdout.write(
             self.style.SUCCESS(
                 f"Catálogo listo: {Product.objects.count()} productos, "
@@ -179,9 +180,23 @@ class Command(BaseCommand):
             plan = stock_plan(sku, store_codes, extra.get("stock"))
             for store in stores:
                 if not StockItem.objects.filter(variant=variant, store=store).exists():
-                    set_stock(variant, store, plan[store.code], note="Inventario inicial")
+                    set_stock(
+                        variant,
+                        store,
+                        plan[store.code],
+                        note="Inventario inicial",
+                        reason=StockMovement.Reason.INITIAL,
+                    )
         services.refresh_search_index(product)
         return created
+
+    def _coupons(self) -> None:
+        from apps.promotions.models import Coupon
+
+        for code, kind, value, extra in data.COUPONS:
+            Coupon.objects.get_or_create(
+                code=code, defaults={"kind": kind, "value": value, **extra}
+            )
 
     def _game(self, product: Product, info: dict[str, Any]) -> None:
         game = GameDetails.objects.create(

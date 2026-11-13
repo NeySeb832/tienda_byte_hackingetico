@@ -49,4 +49,17 @@ def test_blind_index_is_normalised():
     TURNSTILE_SECRET_KEY="1x0000000000000000000000000000000AA",
 )
 def test_deploy_check_flags_missing_secrets():
-    assert {m.id for m in check_production_secrets(None)} == {"byte.E002", "byte.E003", "byte.W003"}
+    assert {m.id for m in check_production_secrets(None)} == {
+        "byte.E002",
+        "byte.E003",
+        "byte.W003",
+        "byte.W004",  # payment simulator
+    }
+
+
+def test_deploy_check_requires_wompi_keys(settings):
+    settings.BYTE_PAYMENT_GATEWAY = "wompi"
+    settings.WOMPI_PUBLIC_KEY = ""
+    assert "byte.E004" in {m.id for m in check_production_secrets(None)}
+    settings.BYTE_PAYMENT_GATEWAY = "otra"
+    assert "byte.E004" in {m.id for m in check_production_secrets(None)}

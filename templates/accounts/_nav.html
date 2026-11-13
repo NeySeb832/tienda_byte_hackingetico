@@ -1,6 +1,7 @@
 <nav class="account-nav" aria-label="Mi cuenta">
   <p class="px-3 text-xs font-bold uppercase tracking-widest text-slate-500">Mi cuenta</p>
   <a href="{% url 'accounts:dashboard' %}">Resumen</a>
+  <a href="{% url 'orders:list' %}">Mis pedidos</a>
   <a href="{% url 'accounts:profile' %}">Datos personales</a>
   <a href="{% url 'accounts:addresses' %}">Direcciones</a>
   <a href="{% url 'account_email' %}">Correo electrónico</a>

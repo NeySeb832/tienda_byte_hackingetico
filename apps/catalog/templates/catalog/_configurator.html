@@ -42,7 +42,13 @@
         <ul class="mt-2 space-y-1">{% for line in stores %}<li class="flex justify-between gap-4"><span>{{ line.store }} · {{ line.city }}</span><span class="{% if line.available %}text-emerald-700 dark:text-emerald-300{% else %}text-slate-400{% endif %}">{% if line.available %}{{ line.available }} disp.{% else %}Sin unidades{% endif %}</span></li>{% endfor %}</ul>
       </details>{% endif %}
       <div class="mt-4 flex flex-wrap gap-3">
-        <button type="button" class="btn-primary flex-1 justify-center"{% if not config.available %} disabled aria-disabled="true"{% endif %}>Agregar al carrito</button>
+        <form method="post" action="{% url 'cart:add' %}" class="flex flex-1 gap-2">
+          {% csrf_token %}
+          <input type="hidden" name="sku" value="{{ config.variant.sku }}">
+          <label class="sr-only" for="cantidad">Cantidad</label>
+          <input id="cantidad" type="number" name="cantidad" value="1" min="1" max="{{ max_quantity|default:1 }}" class="form-input w-20"{% if not config.available %} disabled{% endif %}>
+          <button type="submit" class="btn-primary flex-1 justify-center"{% if not config.available %} disabled aria-disabled="true"{% endif %}>Agregar al carrito</button>
+        </form>
         <form method="post" action="{% url 'catalog:compare_toggle' product.slug %}">
           {% csrf_token %}
           <input type="hidden" name="next" value="{{ request.get_full_path }}">

@@ -1,0 +1,5 @@
+$ python.exe -m mypy .
+
+Success: no issues found in 306 source files
+
+[OK en 6.6 s]

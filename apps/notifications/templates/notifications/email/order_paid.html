@@ -1,0 +1,9 @@
+{% load money %}<!doctype html>
+<html lang="es"><body style="font-family:Segoe UI,Arial,sans-serif;color:#0f172a">
+<h1 style="font-size:20px">¡Gracias por tu compra!</h1>
+<p>Recibimos el pago de tu pedido <strong>{{ order.number }}</strong> por <strong>{{ order.total|cop }}</strong>.</p>
+<table cellpadding="6" style="border-collapse:collapse">{% for line in order.lines.all %}<tr><td>{{ line.quantity }} × {{ line.name }} {{ line.variant_label }}</td><td align="right">{{ line.line_total|cop }}</td></tr>{% endfor %}</table>
+<p>{% if order.fulfillment == "pickup" %}Te avisaremos cuando esté listo para recoger en {{ order.pickup_store.name }}.{% else %}Te avisaremos cuando lo despachemos.{% endif %}</p>
+<p><a href="{{ site_url }}{% url 'orders:detail' order.public_id %}">Ver el detalle y la factura</a></p>
+<p style="font-size:12px;color:#b91c1c">Factura de prueba (ambiente sandbox): no tiene validez fiscal.</p>
+</body></html>

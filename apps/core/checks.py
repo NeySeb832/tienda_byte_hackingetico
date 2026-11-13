@@ -73,4 +73,20 @@ def check_production_secrets(app_configs: Any, **kwargs: Any) -> list[CheckMessa
         messages.append(
             Warning("Turnstile is using Cloudflare's public test keys.", id="byte.W003")
         )
+    if settings.BYTE_PAYMENT_GATEWAY == "wompi":
+        missing = [
+            name
+            for name in ("WOMPI_PUBLIC_KEY", "WOMPI_INTEGRITY_SECRET", "WOMPI_EVENTS_SECRET")
+            if not getattr(settings, name)
+        ]
+        if missing:
+            messages.append(Error(f"Missing Wompi settings: {', '.join(missing)}.", id="byte.E004"))
+    elif settings.BYTE_PAYMENT_GATEWAY == "fake":
+        messages.append(
+            Warning(
+                "Payments use the built-in simulator (BYTE_PAYMENT_GATEWAY=fake).", id="byte.W004"
+            )
+        )
+    else:
+        messages.append(Error("BYTE_PAYMENT_GATEWAY must be 'wompi' or 'fake'.", id="byte.E004"))
     return messages

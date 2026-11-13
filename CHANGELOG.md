@@ -5,6 +5,26 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 
 ## [Sin publicar]
 
+## [0.4.0] — 2026-11-13 — Fase 4: Carrito, checkout y pagos
+
+### Añadido
+- **Carrito** para invitados (en la sesión) y clientes, que se fusiona al iniciar sesión. Respeta el stock libre, el máximo por pedido y 10 unidades por línea. Ícono con contador en el encabezado y botón "Agregar al carrito" en la ficha.
+- **Checkout** con cuenta y correo verificado (ADR-0008): envío a domicilio o recogida en tienda, cupón, cálculo de envío por zona, IVA desglosado, aceptación de términos y aviso de sandbox.
+- **Envíos nacionales** por zonas de departamentos (Bogotá y Cundinamarca, ciudades principales y resto del país), con envío gratis desde $ 300.000.
+- **Cupones**: porcentaje con tope, valor fijo y envío gratis; vigencia, compra mínima, usos totales y por cliente, solo primera compra. Mensaje genérico ante cualquier código inválido. Los descuentos mayores al 15 % exigen aprobación de otra persona (servicio y `CHECK` en la BD).
+- **Pedidos** con número consecutivo (`BYT-2026-001001`), líneas con snapshot, dirección cifrada, máquina de estados y línea de tiempo append-only.
+- **Reserva de stock** todo o nada con `SELECT … FOR UPDATE` (sin sobreventa), vencimiento a los 15 minutos por Celery Beat y **kardex** append-only.
+- **Pagos** detrás de `PaymentGateway`: Wompi sandbox (Web Checkout con firma de integridad, consulta de transacción y verificación de eventos) y un simulador interno firmado con HMAC. **Webhook** idempotente, con límite de tamaño y de tasa, que falla cerrado ante firma inválida, referencia desconocida o monto distinto.
+- **Factura electrónica de prueba** en PDF (ReportLab 5.1) con CUFE simulado y marca de agua "documento de prueba".
+- **Correo** de pago aprobado (texto y HTML) enviado por Celery al confirmar la transacción.
+- **Mis pedidos**: listado, detalle con seguimiento y descarga de la factura (solo el dueño).
+- Cupones de demostración en `seed_demo`. Checks de despliegue `byte.E004` (faltan llaves de Wompi) y `byte.W004` (simulador activo).
+- ADR-0014.
+
+### Corregido
+- Un id de carrito alterado en la sesión producía un error 500; ahora se ignora (test de regresión).
+
+
 ## [0.3.0] — 2026-11-13 — Fase 3: Catálogo y precios
 
 ### Añadido

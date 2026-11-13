@@ -81,6 +81,10 @@ def test_check_deploy_reports_no_warnings():
         "BYTE_BLIND_INDEX_KEY": "deploy-check-blind-index-key",
         "TURNSTILE_SITE_KEY": "0x4AAAAAAAdeploycheck",
         "TURNSTILE_SECRET_KEY": "0x4AAAAAAAdeploycheck-secret",
+        "BYTE_PAYMENT_GATEWAY": "wompi",
+        "WOMPI_PUBLIC_KEY": "pub_test_deploycheck",
+        "WOMPI_INTEGRITY_SECRET": "test_integrity_deploycheck",
+        "WOMPI_EVENTS_SECRET": "test_events_deploycheck",
     }
     result = subprocess.run(
         [sys.executable, "manage.py", "check", "--deploy", "--fail-level", "WARNING"],

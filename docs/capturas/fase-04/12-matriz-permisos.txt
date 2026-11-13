@@ -1,0 +1,5 @@
+$ python.exe manage.py export_permissions_matrix --check
+
+Matriz de permisos al día.
+
+[OK en 10.3 s]

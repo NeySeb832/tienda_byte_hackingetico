@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load money %}
+{% block title %}Pasarela de pruebas · {{ site_name }}{% endblock %}
+{% block content %}
+<div class="auth-shell"><div class="auth-card">
+  <p class="alert alert-warning">Pasarela de pruebas (sandbox). No se solicitan datos de tarjeta ni se cobra dinero.</p>
+  <h1 class="mt-4 font-display text-2xl font-black text-slate-900 dark:text-white">Pagar {{ payment.amount|cop }}</h1>
+  <p class="mt-1 text-sm text-slate-500">Pedido {{ payment.order.number }} · Referencia {{ payment.reference }}</p>
+  <form method="post" class="mt-6 grid gap-3">{% csrf_token %}
+    <button type="submit" name="resultado" value="aprobar" class="btn-primary justify-center">Simular pago aprobado</button>
+    <button type="submit" name="resultado" value="rechazar" class="btn-secondary">Simular pago rechazado</button>
+  </form>
+</div></div>
+{% endblock %}

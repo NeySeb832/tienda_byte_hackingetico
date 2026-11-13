@@ -115,6 +115,7 @@ TEMPLATES = [
                 "apps.core.context_processors.site",
                 "apps.panel.context_processors.panel",
                 "apps.catalog.context_processors.catalog",
+                "apps.cart.context_processors.cart",
             ],
         },
     },
@@ -291,6 +292,10 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 CELERY_BEAT_SCHEDULE = {
     # Scheduled price changes (apps.pricing): applied within 5 minutes of their start.
+    "orders-expire-unpaid": {
+        "task": "orders.expire_unpaid_orders",
+        "schedule": 300.0,
+    },
     "pricing-apply-scheduled": {
         "task": "pricing.apply_scheduled_price_changes",
         "schedule": 300.0,
@@ -426,3 +431,15 @@ BYTE_VAT_RATE = Decimal("0.19")
 BYTE_HIGH_DISCOUNT_APPROVAL_PCT = env.int("BYTE_HIGH_DISCOUNT_APPROVAL_PCT", default=15)
 BYTE_STOCK_RESERVATION_TTL_MINUTES = env.int("BYTE_STOCK_RESERVATION_TTL_MINUTES", default=15)
 BYTE_FREE_SHIPPING_FROM = env.int("BYTE_FREE_SHIPPING_FROM", default=300_000)
+
+# ---------------------------------------------------------------------------
+# Checkout and payments (Phase 4, ADR-0007/0014)
+# ---------------------------------------------------------------------------
+BYTE_SITE_URL = env.str("BYTE_SITE_URL", default="http://localhost:8000")
+# "fake" (built-in simulator, no network) or "wompi" (sandbox). Deploy checks: byte.W004/E004.
+BYTE_PAYMENT_GATEWAY = env.str("BYTE_PAYMENT_GATEWAY", default="fake")
+WOMPI_PUBLIC_KEY = env.str("WOMPI_PUBLIC_KEY", default="")
+WOMPI_INTEGRITY_SECRET = env.str("WOMPI_INTEGRITY_SECRET", default="")
+WOMPI_EVENTS_SECRET = env.str("WOMPI_EVENTS_SECRET", default="")
+WOMPI_API_URL = env.str("WOMPI_API_URL", default="https://sandbox.wompi.co/v1")
+WOMPI_CHECKOUT_URL = env.str("WOMPI_CHECKOUT_URL", default="https://checkout.wompi.co/p/")

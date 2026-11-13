@@ -1,0 +1,31 @@
+{% extends "accounts/base.html" %}
+{% load money %}
+{% block title %}Pedido {{ order.number }} · {{ site_name }}{% endblock %}
+{% block content %}
+<div class="flex flex-wrap items-center justify-between gap-3">
+  <h1 class="font-display text-2xl font-black text-slate-900 dark:text-white">Pedido {{ order.number }}</h1>
+  <span class="badge">{{ order.get_status_display }}</span>
+</div>
+<p class="mt-1 text-sm text-slate-500">{{ order.created_at|date:"j \d\e F \d\e Y, H:i" }} · {{ order.get_fulfillment_display }}</p>
+<div class="mt-6 grid gap-6 lg:grid-cols-2">
+  <section class="card"><h2 class="text-sm font-bold uppercase tracking-widest text-slate-500">Productos</h2>
+    <ul class="mt-3 space-y-2 text-sm">{% for line in order.lines.all %}<li class="flex justify-between gap-3"><span>{{ line.quantity }} × {{ line.name }}<span class="block text-xs text-slate-500">{{ line.variant_label }} · {{ line.sku }}</span></span><span class="whitespace-nowrap">{{ line.line_total|cop }}</span></li>{% endfor %}</ul>
+    <dl class="mt-3 space-y-1 border-t border-slate-200 pt-3 text-sm dark:border-white/10">
+      <div class="flex justify-between"><dt>Subtotal</dt><dd>{{ order.subtotal|cop }}</dd></div>
+      {% if order.discount_total %}<div class="flex justify-between"><dt>Descuento {{ order.coupon_code }}</dt><dd>-{{ order.discount_total|cop }}</dd></div>{% endif %}
+      <div class="flex justify-between"><dt>Envío</dt><dd>{{ order.shipping_total|cop }}</dd></div>
+      <div class="flex justify-between text-xs text-slate-500"><dt>IVA incluido</dt><dd>{{ order.tax_total|cop }}</dd></div>
+      <div class="flex justify-between font-bold"><dt>Total</dt><dd>{{ order.total|cop }}</dd></div>
+    </dl>
+    {% if order.invoice %}<a class="btn-secondary mt-4" href="{% url 'orders:invoice' order.public_id %}">Descargar factura (PDF)</a>{% endif %}
+  </section>
+  <section class="space-y-6">
+    <div class="card"><h2 class="text-sm font-bold uppercase tracking-widest text-slate-500">Entrega</h2>
+      {% if address %}<p class="mt-2 text-sm">{{ address.recipient }}<br>{{ address.line1 }}{% if address.line2 %}, {{ address.line2 }}{% endif %}<br>{{ address.city }}, {{ address.department }}</p>{% else %}<p class="mt-2 text-sm">Recoge en {{ order.pickup_store.name }}: {{ order.pickup_store.address }}</p>{% endif %}
+    </div>
+    <div class="card"><h2 class="text-sm font-bold uppercase tracking-widest text-slate-500">Seguimiento</h2>
+      <ol class="mt-3 space-y-2 text-sm">{% for event in timeline %}<li><span class="font-semibold">{{ event.created_at|date:"j M, H:i" }}</span> · {{ event.label }}{% if event.note %} <span class="text-slate-500">({{ event.note }})</span>{% endif %}</li>{% endfor %}</ol>
+    </div>
+  </section>
+</div>
+{% endblock %}

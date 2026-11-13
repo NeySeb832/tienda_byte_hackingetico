@@ -65,6 +65,10 @@ def prod_env() -> dict[str, str]:
         "BYTE_BLIND_INDEX_KEY": secrets.token_urlsafe(32),
         "TURNSTILE_SITE_KEY": "evidence-placeholder-site-key",
         "TURNSTILE_SECRET_KEY": "evidence-placeholder-secret-key",
+        "BYTE_PAYMENT_GATEWAY": "wompi",
+        "WOMPI_PUBLIC_KEY": "pub_test_evidence",
+        "WOMPI_INTEGRITY_SECRET": "test_integrity_evidence",
+        "WOMPI_EVENTS_SECRET": "test_events_evidence",
     }
 
 

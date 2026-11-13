@@ -160,6 +160,26 @@ STORES = [
     ("BOD-BOG", "Bodega central Bogotá", "11001", "warehouse", "Calle 13 # 68-50, bodega 4", False),
 ]
 
+# code, kind, value, extra fields. 5 % does not need approval (limit: BYTE_HIGH_DISCOUNT_APPROVAL_PCT).
+COUPONS = [
+    (
+        "BIENVENIDA",
+        "free_shipping",
+        0,
+        {"description": "Envío gratis en tu primera compra", "first_order_only": True},
+    ),
+    (
+        "BYTE5",
+        "percent",
+        5,
+        {
+            "description": "5 % de descuento (máximo $ 50.000)",
+            "max_discount": 50000,
+            "min_subtotal": 200000,
+        },
+    ),
+]
+
 N, U, R = "Nuevo", "Usado", "Reacondicionado"
 
 P = dict[str, Any]
