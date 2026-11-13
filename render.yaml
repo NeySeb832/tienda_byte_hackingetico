@@ -1,0 +1,104 @@
+# Render Blueprint de Byte (docs/despliegue.md). Secretos: generados por Render o cargados a mano
+# (sync: false); ninguno vive en el repositorio.
+previews:
+  generation: off
+
+databases:
+  - name: byte-db
+    plan: basic-256mb
+    databaseName: byte
+    user: byte
+    postgresMajorVersion: "17"
+    ipAllowList: [] # solo red privada de Render
+
+services:
+  - type: keyvalue
+    name: byte-valkey
+    plan: starter
+    ipAllowList: []
+    maxmemoryPolicy: noeviction # colas de Celery: no se descartan tareas
+
+  - type: web
+    name: byte-web
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    dockerCommand: gunicorn config.wsgi:application --config gunicorn.conf.py
+    healthCheckPath: /healthz
+    preDeployCommand: python manage.py migrate --noinput && python manage.py setup_roles
+    autoDeploy: false # despliega el job "deploy" de CI cuando todo pasa
+    disk:
+      name: byte-lake
+      mountPath: /var/data
+      sizeGB: 1
+    envVars: &shared
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings.prod
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_ALLOWED_HOSTS
+        sync: false # p. ej. byte-web.onrender.com
+      - key: DJANGO_CSRF_TRUSTED_ORIGINS
+        sync: false # p. ej. https://byte-web.onrender.com
+      - key: DJANGO_ADMIN_URL
+        sync: false # ruta aleatoria, nunca "admin/"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: byte-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: byte-valkey
+          property: connectionString
+      - key: BYTE_FIELD_ENCRYPTION_KEYS
+        sync: false # Fernet: python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+      - key: BYTE_BLIND_INDEX_KEY
+        generateValue: true
+      - key: BYTE_SITE_URL
+        sync: false
+      - key: BYTE_PAYMENT_GATEWAY
+        value: wompi
+      - key: WOMPI_PUBLIC_KEY
+        sync: false
+      - key: WOMPI_INTEGRITY_SECRET
+        sync: false
+      - key: WOMPI_EVENTS_SECRET
+        sync: false
+      - key: TURNSTILE_SITE_KEY
+        sync: false
+      - key: TURNSTILE_SECRET_KEY
+        sync: false
+      - key: DJANGO_EMAIL_BACKEND
+        value: anymail.backends.brevo.EmailBackend
+      - key: DJANGO_ANYMAIL # JSON: {"BREVO_API_KEY": "..."}
+        sync: false
+      - key: DJANGO_USE_S3
+        value: "false"
+      - key: BYTE_DATA_LAKE_DIR
+        value: /var/data/lake
+      - key: BYTE_DEMO_PASSWORD
+        sync: false # contraseña de los usuarios demo (solo si se cargan datos demo)
+      - key: SENTRY_DSN
+        sync: false
+
+  - type: worker
+    name: byte-worker
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    dockerCommand: celery -A config worker -l INFO --concurrency 2
+    autoDeploy: false
+    envVars: *shared
+
+  - type: worker
+    name: byte-beat
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    dockerCommand: celery -A config beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    autoDeploy: false
+    envVars: *shared

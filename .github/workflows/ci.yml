@@ -125,6 +125,10 @@ jobs:
           REDIS_URL: redis://localhost:6379/0
           TURNSTILE_SITE_KEY: ci-placeholder-site-key
           TURNSTILE_SECRET_KEY: ci-placeholder-secret-key
+          BYTE_PAYMENT_GATEWAY: wompi
+          WOMPI_PUBLIC_KEY: pub_test_ci
+          WOMPI_INTEGRITY_SECRET: test_integrity_ci
+          WOMPI_EVENTS_SECRET: test_events_ci
           BYTE_BLIND_INDEX_KEY: ci-placeholder-blind-index-key
         run: |
           export BYTE_FIELD_ENCRYPTION_KEYS="$(python3 -c 'import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())')"
@@ -154,3 +158,28 @@ jobs:
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock
           aquasec/trivy:0.76.2@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb
           image --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 --no-progress byte:ci
+
+  deploy:
+    name: Despliegue en Render
+    # Solo en main y solo si lint, tests, seguridad e imagen pasaron (autoDeploy de Render: off).
+    needs: [image]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: production
+    steps:
+      - name: Disparar el deploy hook de Render
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          test -n "$RENDER_DEPLOY_HOOK_URL" || { echo "Falta el secreto RENDER_DEPLOY_HOOK_URL"; exit 1; }
+          curl --fail --silent --show-error --max-time 30 -X POST "$RENDER_DEPLOY_HOOK_URL" > /dev/null
+      - name: Esperar /healthz en producción
+        env:
+          BYTE_PUBLIC_URL: ${{ vars.BYTE_PUBLIC_URL }}
+        run: |
+          for i in $(seq 1 40); do
+            if curl --fail --silent --max-time 10 "$BYTE_PUBLIC_URL/healthz" | grep -q '"ok"'; then echo "OK"; exit 0; fi
+            sleep 15
+          done
+          echo "El sitio no respondió /healthz a tiempo"; exit 1
