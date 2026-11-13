@@ -25,10 +25,10 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
     # The BI lake lives on this service's disk: build it at start-up when missing.
-    dockerCommand: sh -c "python manage.py ensure_lake && exec gunicorn config.wsgi:application --config gunicorn.conf.py"
+    dockerCommand: sh deploy/start-web.sh
     healthCheckPath: /healthz
-    # Render runs this without a shell: wrap it so "&&" works.
-    preDeployCommand: sh -c "python manage.py migrate --noinput && python manage.py bootstrap_demo --sin-bi"
+    # Render runs commands without a shell or quote parsing: use scripts.
+    preDeployCommand: sh deploy/predeploy.sh
     autoDeploy: false # despliega el job "deploy" de CI cuando todo pasa
     disk:
       name: byte-lake
