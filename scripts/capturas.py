@@ -284,6 +284,7 @@ def prepare_value_added_demo() -> dict[str, str]:
             orders.transition(paid, status, actor=seller)
     if not paid.returns.exists():
         line = paid.lines.order_by("pk").last()
+        assert line is not None  # noqa: S101
         rma = returns.request_return(
             paid,
             user=customer,

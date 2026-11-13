@@ -62,7 +62,13 @@ copia de trabajo (`git worktree`) de ese commit: todo en OK, semgrep con 0 halla
 
 El resumen está en [`00-resumen.svg`](../capturas/fase-06/00-resumen.svg).
 
-RESULTADOS_EVIDENCIAS
+| Verificación | Resultado |
+|--------------|-----------|
+| Tests (BD recién creada) | ✅ **699 pasan**, cobertura **93 %** |
+| ruff · black · bandit · pip-audit · check --deploy · cabeceras · vendor · matriz · auditoría | ✅ |
+| mypy | ✅ (la 1.ª corrida falló por un `Optional` en `scripts/capturas.py`; corregido) |
+| semgrep | ✅ **0 hallazgos** en 152 reglas y 399 archivos |
+| Trivy | ✅ 0 HIGH/CRITICAL corregibles |
 
 ### Pantallas (Playwright)
 
