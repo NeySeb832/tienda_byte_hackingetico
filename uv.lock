@@ -333,7 +333,7 @@ requires-dist = [
     { name = "hiredis", specifier = ">=3,<4" },
     { name = "httpx", specifier = ">=0.28,<0.29" },
     { name = "pillow", specifier = ">=11.3,<14" },
-    { name = "psycopg", extras = ["binary"], specifier = ">=3.2,<4" },
+    { name = "psycopg", extras = ["binary"], specifier = ">=3.3.8,<4" },
     { name = "python-json-logger", specifier = ">=3.3,<5" },
     { name = "redis", specifier = ">=6,<9" },
     { name = "reportlab", specifier = ">=5.1,<6" },
