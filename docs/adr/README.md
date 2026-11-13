@@ -24,5 +24,6 @@ consecuencias trae. Son cortos a propósito. Si una decisión cambia, se crea un
 | [0016](0016-valor-agregado-libros-de-saldo-y-devoluciones.md) | Puntos y saldo en libros append-only; devoluciones con reembolso aprobado por otra persona | Aceptada |
 
 | [0017](0017-bi-duckdb-medallon.md) | BI con DuckDB sobre Parquet (medallón) y PySpark opcional | Aceptada |
+| [0018](0018-ip-del-cliente-tras-proxies.md) | IP del cliente tras proxies (Cloudflare y Render) | Aceptada |
 
 Plantilla: [`template.md`](template.md).

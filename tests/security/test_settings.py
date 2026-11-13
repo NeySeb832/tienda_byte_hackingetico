@@ -85,6 +85,7 @@ def test_check_deploy_reports_no_warnings():
         "WOMPI_PUBLIC_KEY": "pub_test_deploycheck",
         "WOMPI_INTEGRITY_SECRET": "test_integrity_deploycheck",
         "WOMPI_EVENTS_SECRET": "test_events_deploycheck",
+        "BYTE_CLIENT_IP_HEADER": "HTTP_CF_CONNECTING_IP",
     }
     result = subprocess.run(
         [sys.executable, "manage.py", "check", "--deploy", "--fail-level", "WARNING"],

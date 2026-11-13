@@ -5,6 +5,17 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 
 ## [Sin publicar]
 
+### Seguridad
+- PT-01 (pentest, A07): una sola función de IP del cliente (`apps.core.net.client_ip`) para axes,
+  django-ratelimit, allauth y la auditoría. En Render se lee `CF-Connecting-IP`; antes todos los
+  controles por IP veían el balanceador (`REMOTE_ADDR`) y el bloqueo por fuerza bruta no disparaba
+  (django-ipware no estaba instalado, así que `AXES_IPWARE_*` no tenía efecto). ADR-0018.
+- PT-01: CAPTCHA en todo inicio de sesión en producción (`BYTE_LOGIN_CAPTCHA_AFTER_FAILURES=0`) y
+  chequeo `byte.W005` en `check --deploy` si la IP sale de `REMOTE_ADDR`.
+- PT-04 (pentest, A07): el secreto TOTP público de los usuarios demo solo se siembra con
+  `DEBUG=True`; en otros entornos se elimina el que hubiera y el personal activa su propio
+  autenticador al primer ingreso (queda en la auditoría).
+
 ### Corregido
 - Render: el pre-deploy y el arranque web van en `deploy/*.sh` (Render no interpreta `&&` ni comillas).
 - gunicorn sin socket de control (fallaba al escribir en `/app` y no se usa).

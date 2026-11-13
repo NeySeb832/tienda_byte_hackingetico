@@ -54,7 +54,13 @@ def test_deploy_check_flags_missing_secrets():
         "byte.E003",
         "byte.W003",
         "byte.W004",  # payment simulator
+        "byte.W005",  # client IP from REMOTE_ADDR
     }
+
+
+@override_settings(BYTE_CLIENT_IP_HEADER="HTTP_CF_CONNECTING_IP")
+def test_deploy_check_accepts_a_trusted_client_ip_source():
+    assert "byte.W005" not in {m.id for m in check_production_secrets(None)}
 
 
 def test_deploy_check_requires_wompi_keys(settings):

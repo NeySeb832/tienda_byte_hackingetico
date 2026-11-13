@@ -44,8 +44,9 @@ uv run python manage.py runserver              # http://127.0.0.1:8000
 Stack completo en contenedores: `docker compose up --build`.
 
 ## Usuarios de demostración
-Contraseña: `BYTE_DEMO_PASSWORD` de tu `.env`. El personal entra con MFA (TOTP de demostración en
-`seed_demo_users`, solo desarrollo).
+Contraseña: `BYTE_DEMO_PASSWORD` de tu `.env`. El personal entra con MFA. En desarrollo
+(`DEBUG=True`) usa el TOTP de demostración de `seed_demo_users`; en cualquier otro entorno, como
+Render, cada cuenta del personal activa su propio autenticador en el primer ingreso.
 
 | Rol | Correo | Qué puede hacer |
 |-----|--------|-----------------|

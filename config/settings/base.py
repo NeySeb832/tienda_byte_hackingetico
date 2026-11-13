@@ -383,8 +383,13 @@ AXES_USERNAME_CALLABLE = "apps.accounts.security.axes_username"
 AXES_RESET_ON_SUCCESS = True
 AXES_LOCKOUT_TEMPLATE = "account/lockout.html"
 AXES_HTTP_RESPONSE_CODE = 429
-AXES_IPWARE_PROXY_COUNT = env.int("AXES_IPWARE_PROXY_COUNT", default=0)  # 1 behind Render's proxy
-AXES_IPWARE_META_PRECEDENCE_ORDER = ("HTTP_X_FORWARDED_FOR", "REMOTE_ADDR")
+# Client IP behind proxies (pentest PT-01): one resolver for axes, django-ratelimit, allauth
+# and the audit log. REMOTE_ADDR is the last proxy (a private address on Render), so per-IP
+# controls need a trusted source. Render sits behind Cloudflare: HTTP_CF_CONNECTING_IP.
+BYTE_CLIENT_IP_HEADER = env.str("BYTE_CLIENT_IP_HEADER", default="")
+BYTE_TRUSTED_PROXY_COUNT = env.int("BYTE_TRUSTED_PROXY_COUNT", default=0)
+AXES_CLIENT_IP_CALLABLE = "apps.core.net.client_ip"
+RATELIMIT_IP_META_KEY = "apps.core.net.client_ip"
 # Progressive lockout (failures, minutes). Converted to axes.conf.LockoutTier in
 # AccountsConfig.ready(): axes.conf cannot be imported from settings.
 BYTE_LOCKOUT_TIERS = ((5, 5), (10, 30), (20, 24 * 60))

@@ -45,12 +45,13 @@ MAX_W = 1400
 
 
 def crop_jpg(name: str, src: str, max_h: int | None) -> None:
-    with Image.open(CAPTURAS / src) as im:
-        im = im.convert("RGB")
+    with Image.open(CAPTURAS / src) as original:
+        im: Image.Image = original.convert("RGB")
         if max_h and im.height > max_h:
             im = im.crop((0, 0, im.width, max_h))
         if im.width > MAX_W:
-            im = im.resize((MAX_W, round(im.height * MAX_W / im.width)), Image.LANCZOS)
+            size = (MAX_W, round(im.height * MAX_W / im.width))
+            im = im.resize(size, Image.Resampling.LANCZOS)
         im.save(OUT / f"{name}.jpg", quality=85, optimize=True, progressive=True)
 
 
@@ -73,7 +74,7 @@ def main() -> None:
             page.screenshot(path=str(OUT / f"{name}.png"))
             crop_jpg_from_png(name)
         browser.close()
-    print("figuras:", sorted(p.name for p in OUT.iterdir()))
+    print("figuras:", sorted(p.name for p in OUT.iterdir()))  # noqa: T201 - CLI script
 
 
 def trim_white(png: Path, pad: int = 12) -> None:
@@ -83,8 +84,15 @@ def trim_white(png: Path, pad: int = 12) -> None:
         mask = rgb.point(lambda v: 255 if v < 245 else 0).convert("L")
         box = mask.getbbox()
         if box:
-            l, t, r, b = box
-            rgb = rgb.crop((max(l - pad, 0), max(t - pad, 0), min(r + pad, rgb.width), min(b + pad, rgb.height)))
+            left, top, right, bottom = box
+            rgb = rgb.crop(
+                (
+                    max(left - pad, 0),
+                    max(top - pad, 0),
+                    min(right + pad, rgb.width),
+                    min(bottom + pad, rgb.height),
+                )
+            )
         rgb.save(png)
 
 

@@ -73,6 +73,15 @@ def check_production_secrets(app_configs: Any, **kwargs: Any) -> list[CheckMessa
         messages.append(
             Warning("Turnstile is using Cloudflare's public test keys.", id="byte.W003")
         )
+    if not settings.BYTE_CLIENT_IP_HEADER and settings.BYTE_TRUSTED_PROXY_COUNT <= 0:
+        messages.append(
+            Warning(
+                "Client IP comes from REMOTE_ADDR: behind a proxy, lockout and rate limits "
+                "see the proxy, not the client. Set BYTE_CLIENT_IP_HEADER or "
+                "BYTE_TRUSTED_PROXY_COUNT.",
+                id="byte.W005",
+            )
+        )
     if settings.BYTE_PAYMENT_GATEWAY == "wompi":
         missing = [
             name

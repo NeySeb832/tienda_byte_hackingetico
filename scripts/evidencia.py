@@ -70,6 +70,7 @@ def prod_env() -> dict[str, str]:
         "WOMPI_PUBLIC_KEY": "pub_test_evidence",
         "WOMPI_INTEGRITY_SECRET": "test_integrity_evidence",
         "WOMPI_EVENTS_SECRET": "test_events_evidence",
+        "BYTE_CLIENT_IP_HEADER": "HTTP_CF_CONNECTING_IP",
     }
 
 

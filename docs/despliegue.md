@@ -19,23 +19,32 @@
 2. El *pre-deploy* (`deploy/predeploy.sh`) migra y carga la demo (idempotente); el arranque web
    (`deploy/start-web.sh`) construye el data lake si falta y lanza gunicorn. Render ejecuta los
    comandos **sin shell ni comillas**: por eso van en scripts.
-3. Arranca con el **simulador de pagos** y los correos al log. Para el sandbox real, cargar en
+   El Blueprint fija `BYTE_CLIENT_IP_HEADER=HTTP_CF_CONNECTING_IP` (la IP real la escribe
+   Cloudflare; `REMOTE_ADDR` es el balanceador de Render, ADR-0018) y exige CAPTCHA en todo inicio
+   de sesión (`BYTE_LOGIN_CAPTCHA_AFTER_FAILURES=0`).
+3. **Obligatorio antes de abrir la tienda: llaves reales de Turnstile.** Sin ellas el CAPTCHA usa las
+   llaves públicas de prueba de Cloudflare, que siempre aprueban (pentest PT-01, aviso `byte.W003`).
+   En Cloudflare → *Turnstile* → *Add site* (dominio `byte-web-v9h4.onrender.com`, modo *Managed*), y
+   cargar en *Environment* de `byte-web` las variables `TURNSTILE_SITE_KEY` y `TURNSTILE_SECRET_KEY`.
+4. Arranca con el **simulador de pagos** y los correos al log. Para el sandbox real, cargar en
    *Environment* de `byte-web`, `byte-worker` y `byte-beat`:
    - `BYTE_PAYMENT_GATEWAY=wompi`, `WOMPI_PUBLIC_KEY`, `WOMPI_INTEGRITY_SECRET`, `WOMPI_EVENTS_SECRET`;
-   - `TURNSTILE_SITE_KEY` y `TURNSTILE_SECRET_KEY`;
    - `DJANGO_EMAIL_BACKEND=anymail.backends.brevo.EmailBackend` y `DJANGO_ANYMAIL`;
    - `DJANGO_ADMIN_URL` (ruta aleatoria; sin ella el admin de Django no se publica) y `SENTRY_DSN`.
-4. En Wompi (sandbox) registrar la URL de eventos: `https://<dominio>/pagos/webhook/`.
-5. En GitHub: secreto `RENDER_DEPLOY_HOOK_URL` y variable `BYTE_PUBLIC_URL` en el entorno
+5. En Wompi (sandbox) registrar la URL de eventos: `https://<dominio>/pagos/webhook/`.
+6. En GitHub: secreto `RENDER_DEPLOY_HOOK_URL` y variable `BYTE_PUBLIC_URL` en el entorno
    `production`. Desde ahí, cada push a `main` despliega **solo si** lint, tests, seguridad e
    imagen pasan (job `deploy`), y luego espera `/healthz`.
 
 **Instancia actual:** https://byte-web-v9h4.onrender.com (la contraseña demo está en
 *Environment* de `byte-web`, variable `BYTE_DEMO_PASSWORD`).
+Las cuentas demo del personal no traen autenticador: cada una activa su TOTP en el primer
+ingreso (pentest PT-04). El cliente demo entra solo con la contraseña.
 
 ## Verificación
 - `/healthz` responde `{"status": "ok"}` (BD y caché).
-- `python manage.py check --deploy` sin advertencias (`byte.W004` avisa si se usa el simulador).
+- `python manage.py check --deploy` sin advertencias (`byte.W004` avisa si se usa el simulador,
+  `byte.W003` si Turnstile usa llaves de prueba y `byte.W005` si la IP sale de `REMOTE_ADDR`).
 - `uv run python scripts/e2e.py --base-url https://<dominio>`: compra completa con el cliente demo.
 
 ## Respaldos

@@ -130,6 +130,7 @@ jobs:
           WOMPI_INTEGRITY_SECRET: test_integrity_ci
           WOMPI_EVENTS_SECRET: test_events_ci
           BYTE_BLIND_INDEX_KEY: ci-placeholder-blind-index-key
+          BYTE_CLIENT_IP_HEADER: HTTP_CF_CONNECTING_IP
         run: |
           export BYTE_FIELD_ENCRYPTION_KEYS="$(python3 -c 'import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())')"
           DJANGO_SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_urlsafe(64))')" \

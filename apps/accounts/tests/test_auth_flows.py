@@ -121,3 +121,29 @@ def test_login_captcha_appears_after_failures(client, user, settings):
     for n in range(settings.BYTE_LOGIN_CAPTCHA_AFTER_FAILURES):
         client.post(login_url, {"login": user.email, "password": f"mala-{n}"})
     assert "captcha" in client.get(login_url).context["form"].fields
+
+
+@pytest.mark.security
+def test_brute_force_behind_rotating_proxies_is_still_locked_out(client, user, settings):
+    """Pentest PT-01: on Render each request may reach Django through a different private
+    proxy (REMOTE_ADDR), and an attacker can forge X-Forwarded-For. The lockout must follow
+    the client IP that Cloudflare writes, not either of those."""
+    settings.BYTE_CLIENT_IP_HEADER = "HTTP_CF_CONNECTING_IP"
+    statuses = [
+        client.post(
+            reverse("account_login"),
+            {"login": user.email, "password": f"mala-{n}"},
+            REMOTE_ADDR=f"10.21.0.{n + 1}",
+            HTTP_X_FORWARDED_FOR=f"198.51.100.{n + 1}, 203.0.113.7, 104.22.17.40",
+            HTTP_CF_CONNECTING_IP="203.0.113.7",
+        ).status_code
+        for n in range(7)
+    ]
+    assert 429 in statuses
+
+
+@pytest.mark.security
+def test_login_captcha_on_every_attempt_when_threshold_is_zero(client, settings):
+    settings.BYTE_CAPTCHA_ENABLED = True
+    settings.BYTE_LOGIN_CAPTCHA_AFTER_FAILURES = 0
+    assert "captcha" in client.get(reverse("account_login")).context["form"].fields

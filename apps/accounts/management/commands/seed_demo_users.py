@@ -13,6 +13,7 @@ from django.db import transaction
 from apps.accounts import roles
 from apps.accounts.models import Address, CustomerProfile, User
 from apps.accounts.services import record_consent
+from apps.audit.services import record_event
 from apps.core.models import City
 
 DEMO_USERS = {
@@ -25,7 +26,7 @@ DEMO_USERS = {
     roles.ADMIN: ("admin@byte.test", "Sofía", "Vargas"),
     roles.SUPERADMIN: ("superadmin@byte.test", "Mateo", "Suárez"),
 }
-# Public, development-only TOTP secret for demo staff (documented in the README).
+# Public TOTP secret for demo staff, seeded ONLY when DEBUG=True (documented in the README).
 DEMO_TOTP_SECRET = "JBSWY3DPEHPK3PXP"  # noqa: S105 - public dev-only demo value
 
 
@@ -56,19 +57,40 @@ class Command(BaseCommand):
             EmailAddress.objects.update_or_create(
                 user=user, email=email, defaults={"verified": True, "primary": True}
             )
-            if (
-                user.is_staff
-                and not Authenticator.objects.filter(
-                    user=user, type=Authenticator.Type.TOTP
-                ).exists()
-            ):
-                Authenticator.objects.create(
-                    user=user, type=Authenticator.Type.TOTP, data={"secret": DEMO_TOTP_SECRET}
-                )
+            if user.is_staff and self._staff_totp(user):
+                self.stdout.write(f"{email}: secreto TOTP público retirado")
             if role == roles.CUSTOMER:
                 self._customer_extras(user)
             self.stdout.write(f"{role}: {email}")
         self.stdout.write(self.style.SUCCESS("Usuarios de demostración listos."))
+
+    @staticmethod
+    def _staff_totp(user: User) -> bool:
+        """Known TOTP secret only in development (DEBUG), so local scripts can sign staff in.
+
+        Anywhere else the secret would be public (it is in the repository), turning MFA into
+        a single factor (pentest PT-04). There, staff enrol their own authenticator on first
+        login (StaffSecurityMiddleware forces it) and any known secret left by an earlier
+        seed is removed, together with its recovery codes. Returns True when one was removed.
+        """
+        totp = Authenticator.objects.filter(user=user, type=Authenticator.Type.TOTP)
+        if settings.DEBUG:
+            if not totp.exists():
+                Authenticator.objects.create(
+                    user=user, type=Authenticator.Type.TOTP, data={"secret": DEMO_TOTP_SECRET}
+                )
+            return False
+        known = [a.pk for a in totp if (a.data or {}).get("secret") == DEMO_TOTP_SECRET]
+        if not known:
+            return False
+        Authenticator.objects.filter(pk__in=known).delete()
+        Authenticator.objects.filter(user=user, type=Authenticator.Type.RECOVERY_CODES).delete()
+        record_event(
+            "accounts.demo_mfa_reset",
+            target=user,
+            changes={"reason": "public demo TOTP secret removed"},
+        )
+        return True
 
     @staticmethod
     def _customer_extras(user: User) -> None:

@@ -129,6 +129,11 @@ primer nivel, no un añadido.
   datos de tarjeta; `apps.core.logging.SensitiveDataFilter` enmascara las claves sensibles.
 - **Errores**: el usuario ve un mensaje genérico con el ID de correlación (`X-Request-ID`). El detalle
   va solo al log. Ante cualquier fallo de permisos, pasarela o antifraude, se falla cerrado.
+- **IP del cliente** (ADR-0018): siempre con `apps.core.net.client_ip`, que ya usan axes,
+  django-ratelimit, allauth y la auditoría. Nunca `REMOTE_ADDR` ni la primera entrada de
+  `X-Forwarded-For`. En producción se fija `BYTE_CLIENT_IP_HEADER` (Render: `HTTP_CF_CONNECTING_IP`).
+- **Usuarios demo**: el secreto TOTP público solo se siembra con `DEBUG=True`; en Render el personal
+  demo activa su propio autenticador (pentest PT-04).
 
 ## Interfaz y catálogo (indicaciones del usuario)
 
@@ -264,6 +269,8 @@ Fase 9: `bootstrap_demo` (demo completa), `scripts/backup.py` (respaldar, verifi
 - 0014: checkout con reserva de stock y pagos que fallan cerrado
 - 0015: panel con separación de funciones y alcance por sede
 - 0016: puntos y saldo append-only; reembolsos con aprobación de otra persona
+- 0017: BI con DuckDB sobre Parquet (medallón)
+- 0018: IP del cliente tras proxies (Cloudflare y Render)
 
 ## Parámetros de negocio por defecto
 

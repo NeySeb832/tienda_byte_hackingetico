@@ -52,6 +52,10 @@ services:
         generateValue: true # se deriva una clave Fernet (apps/core/crypto.py)
       - key: BYTE_BLIND_INDEX_KEY
         generateValue: true
+      - key: BYTE_CLIENT_IP_HEADER
+        value: HTTP_CF_CONNECTING_IP # Cloudflare delante de Render; REMOTE_ADDR es el proxy
+      - key: BYTE_LOGIN_CAPTCHA_AFTER_FAILURES
+        value: "0" # CAPTCHA en todo inicio de sesión (pentest PT-01)
       - key: BYTE_PAYMENT_GATEWAY
         value: fake # cambiar a wompi al cargar las llaves del sandbox
       - key: DJANGO_EMAIL_BACKEND
