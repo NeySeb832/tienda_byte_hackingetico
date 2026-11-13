@@ -5,6 +5,17 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 
 ## [Sin publicar]
 
+## [0.9.0] — 2026-11-13 — Fase 9: Despliegue
+
+### Añadido
+- `render.yaml` (Blueprint): web, worker, beat, PostgreSQL 17 y Valkey en red privada, disco para el data lake y secretos generados o cargados a mano.
+- Job `deploy` en CI: solo despliega en `main` si pasan lint, tests, seguridad e imagen, y espera `/healthz`.
+- `bootstrap_demo`: roles, catálogo, usuarios demo e histórico de BI en un paso.
+- `scripts/backup.py`: respaldar, verificar y restaurar (con confirmación y verificación de la cadena de auditoría).
+- `scripts/e2e.py`: compra completa con Playwright (7 pasos, de invitado a factura PDF).
+- Guía `docs/despliegue.md`.
+
+
 ## [0.8.0] — 2026-11-13 — Fase 8: Endurecimiento de seguridad
 
 ### Añadido

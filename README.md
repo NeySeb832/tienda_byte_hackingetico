@@ -2,90 +2,70 @@
 
 Byte es la tienda en línea y el punto de venta de una cadena colombiana de videojuegos, consolas y
 accesorios: precios en COP con IVA incluido, envíos por departamento y ciudad, retomas, servicio
-técnico y un módulo de Big Data / BI para la gerencia.
+técnico, fidelidad y un módulo de Big Data / BI para la gerencia.
 
-> **Proyecto académico (Hacking ético).** La seguridad sigue el OWASP Top 10:2025. Los pagos funcionan
-> en modo sandbox y las facturas son documentos de prueba.
+> **Proyecto académico (Hacking ético).** La seguridad sigue el OWASP Top 10:2025
+> ([matriz](docs/seguridad/owasp-top10-2025.md), [STRIDE](docs/seguridad/stride.md)). Los pagos
+> funcionan en sandbox y las facturas son documentos de prueba.
 
-**Estado:** Fase 1 de 10 (Fundaciones). Ver [`CHANGELOG.md`](CHANGELOG.md) y [`docs/bitacora/`](docs/bitacora/).
+**Estado:** las 10 fases completas. Ver [`CHANGELOG.md`](CHANGELOG.md) y la
+[bitácora con evidencias](docs/bitacora/).
+
+## Qué incluye
+- **Tienda:** catálogo con variantes y precio dinámico, búsqueda tolerante a errores, filtros con
+  facetas, comparador, carrito de invitado, checkout con envíos por zona o recogida, cupones,
+  pagos Wompi (sandbox) o simulador, factura PDF de prueba, puntos, saldo a favor, retomas,
+  servicio técnico, alertas de stock y precio, devoluciones (Ley 1480) y preventas.
+- **Panel:** pedidos, inventario multi-sede con kardex, ajustes y traslados, compras, punto de
+  venta con arqueo, clientes, precios, cupones, retomas, servicio técnico, devoluciones, reportes,
+  BI, personal, auditoría y eventos de seguridad. Todo con separación de funciones y alcance por sede.
+- **BI:** lago de datos medallón con DuckDB, modelo estrella, RFM, pronóstico y tablero ECharts.
 
 ## Stack
-
-- Python 3.12 y Django 5.2 LTS, con Django REST Framework.
-- PostgreSQL 17 con `pg_trgm` y Valkey 8, compatible con Redis.
-- Celery y Celery Beat.
-- Plantillas Django, HTMX, Alpine.js en versión CSP y Tailwind CSS 4, compilado con su CLI standalone, sin Node.
-- `uv` para las dependencias, con lock con hashes y una cuarentena de 7 días.
-- Docker multi-etapa con usuario no root, GitHub Actions, bandit, semgrep, pip-audit, Trivy y un SBOM CycloneDX.
-
-Las decisiones de arquitectura están en [`docs/adr/`](docs/adr/README.md).
+Python 3.12 · Django 5.2 LTS · PostgreSQL 17 · Valkey 8 · Celery + Beat · HTMX · Alpine CSP ·
+Tailwind 4 (sin Node) · DuckDB · ECharts · ReportLab · `uv` (lock con hashes y cuarentena de 7 días) ·
+Docker multi-etapa (no root) · GitHub Actions · bandit · semgrep · pip-audit · Trivy · ZAP · SBOM.
+Decisiones en [`docs/adr/`](docs/adr/README.md) (17 ADR).
 
 ## Puesta en marcha (desarrollo)
-
 Requisitos: Python 3.12, [uv](https://docs.astral.sh/uv/) y Docker Desktop.
 
 ```bash
-uv sync                                        # dependencias desde uv.lock
-cp .env.example .env                           # completa DJANGO_SECRET_KEY, POSTGRES_PASSWORD y DATABASE_URL
-uv run python scripts/vendor_assets.py         # descarga y verifica htmx, Alpine CSP y Tailwind
-docker compose up -d db redis                  # PostgreSQL y Valkey
+uv sync
+cp .env.example .env                           # completar secretos (ver comentarios del archivo)
+uv run python scripts/vendor_assets.py         # htmx, Alpine CSP, ECharts y Tailwind verificados
+docker compose up -d db redis
 uv run python manage.py migrate
+uv run python manage.py bootstrap_demo         # roles, catálogo, usuarios demo y BI
 uv run python manage.py tailwind build
 uv run python manage.py runserver              # http://127.0.0.1:8000
 ```
 
-También puedes levantar todo el stack en contenedores (web, worker, beat, db, redis y tailwind):
+Stack completo en contenedores: `docker compose up --build`.
 
+## Usuarios de demostración
+Contraseña: `BYTE_DEMO_PASSWORD` de tu `.env`. El personal entra con MFA (TOTP de demostración en
+`seed_demo_users`, solo desarrollo).
+
+| Rol | Correo | Qué puede hacer |
+|-----|--------|-----------------|
+| Cliente | `cliente@byte.test` | Comprar, retomas, puntos, devoluciones, servicio técnico |
+| Vendedor / Cajero | `vendedor@byte.test` | POS, pedidos, recibir devoluciones y equipos |
+| Bodeguero | `bodega@byte.test` | Inventario, ajustes (sin aprobar), traslados, recepciones |
+| Técnico de soporte | `tecnico@byte.test` | Servicio técnico y evaluación de retomas |
+| Gerente de tienda | `gerente@byte.test` | Todo lo operativo y las aprobaciones |
+| Analista de datos | `analista@byte.test` | Reportes y BI |
+| Administrador | `admin@byte.test` | Todo lo anterior y gestión de personal |
+| Superadmin | `superadmin@byte.test` | Además, eventos de seguridad y admin de Django |
+
+## Calidad y seguridad
 ```bash
-docker compose up --build
-```
-
-Usuarios de demostración (solo desarrollo; la contraseña se define en `BYTE_DEMO_PASSWORD` de tu `.env`):
-
-```bash
-uv run python manage.py seed_demo_users
-```
-
-| Rol | Correo |
-|-----|--------|
-| Cliente | `cliente@byte.test` |
-| Vendedor / Cajero | `vendedor@byte.test` |
-| Bodeguero | `bodega@byte.test` |
-| Técnico de soporte | `tecnico@byte.test` |
-| Gerente de tienda | `gerente@byte.test` |
-| Analista de datos | `analista@byte.test` |
-| Administrador | `admin@byte.test` |
-| Superadmin | `superadmin@byte.test` |
-
-El personal entra con MFA. El secreto TOTP de demostración, que es público y solo para desarrollo,
-es `JBSWY3DPEHPK3PXP`: agrégalo a tu app de autenticación (Google Authenticator, Aegis, 1Password…).
-
-Pruebas y calidad:
-
-```bash
-uv run pytest --cov
-uv run ruff check . && uv run black --check . && uv run mypy .
-uv run python scripts/evidencia.py --fase 1    # evidencias (SVG y TXT) en docs/capturas/
-```
-
-La lista completa de comandos y convenciones está en [`CLAUDE.md`](CLAUDE.md).
-
-## Estructura
-
-```
-config/          settings por entorno (base, dev, test, prod), urls, celery, wsgi y asgi
-apps/            una app por dominio, cada una con models, services, selectors, forms, views, permissions y tests
-templates/       layout base, componentes y páginas de error
-static/          js propio y vendor/ (librerías verificadas por hash)
-assets/css/      fuente de Tailwind (se compila a static/css/)
-docs/            ADR, modelo de datos, bitácora y capturas
-scripts/         vendor_assets, evidencia y capturas
-tests/           pruebas transversales (estructura y seguridad)
+uv run pytest -n 4                                   # 724 tests
+uv run python scripts/evidencia.py --fase 10         # tests, linters, SAST, SCA, Trivy, SBOM (y ZAP con BYTE_ZAP_TARGET)
+uv run python scripts/e2e.py --base-url http://127.0.0.1:8000
 ```
 
 ## Documentación
-
-- [Modelo de datos (ER en Mermaid)](docs/modelo-datos.md)
-- [Decisiones de arquitectura (ADR)](docs/adr/README.md)
-- [Bitácora por fases, con capturas](docs/bitacora/)
-- Seguridad (matriz OWASP), modelo de amenazas, Big Data y despliegue: se publican en las fases 7 a 9.
+- [Manuales por rol](docs/manuales/) · [Manual técnico](docs/manual-tecnico.md) ·
+  [Despliegue en Render](docs/despliegue.md) · [Modelo de datos](docs/modelo-datos.md) ·
+  [Matriz de permisos](docs/matriz-permisos.md) · [Guion de sustentación](docs/sustentacion.md)

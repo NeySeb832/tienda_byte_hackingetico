@@ -49,7 +49,7 @@ primer nivel, no un añadido.
 | 6 | Valor agregado (retomas, servicio técnico, fidelidad, preventas, alertas, devoluciones) | ✅ en revisión (`fase/06-valor-agregado`) |
 | 7 | Big Data / BI (seed masivo, pipeline medallón, modelo estrella, modelos, dashboards, PySpark) | ✅ en revisión (`fase/07-bigdata`) |
 | 8 | Endurecimiento de seguridad (matriz OWASP, STRIDE, suite de seguridad, ZAP, SBOM) | ✅ en revisión (`fase/08-seguridad`) |
-| 9 | Despliegue (Render Blueprint, CI/CD, datos demo, verificación end-to-end) | ⏳ |
+| 9 | Despliegue (Render Blueprint, CI/CD, datos demo, verificación end-to-end) | ✅ en revisión (`fase/09-despliegue`) |
 | 10 | Documentación final (README, manuales por rol, manual técnico, guion de sustentación) | ⏳ |
 
 ## Arquitectura
@@ -229,7 +229,8 @@ uv run python manage.py seed_demo                    # catálogo demo, sedes y s
 ```
 
 Fase 7: `seed_bigdata` (histórico sintético + lago) y `run_pipeline` (reconstruye plata y oro).
-Los scripts de backup y restauración llegan en la F9.
+Fase 9: `bootstrap_demo` (demo completa), `scripts/backup.py` (respaldar, verificar y restaurar) y
+`scripts/e2e.py` (compra de extremo a extremo con Playwright). Guía: `docs/despliegue.md`.
 
 ## Dependencias
 
