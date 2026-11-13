@@ -1,0 +1,1568 @@
+<svg class="rich-terminal" viewBox="0 0 1458 9273.199999999999" xmlns="http://www.w3.org/2000/svg">
+    <!-- Generated with Rich https://www.textualize.io -->
+    <style>
+
+    @font-face {
+        font-family: "Fira Code";
+        src: local("FiraCode-Regular"),
+                url("https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/woff2/FiraCode-Regular.woff2") format("woff2"),
+                url("https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/woff/FiraCode-Regular.woff") format("woff");
+        font-style: normal;
+        font-weight: 400;
+    }
+    @font-face {
+        font-family: "Fira Code";
+        src: local("FiraCode-Bold"),
+                url("https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/woff2/FiraCode-Bold.woff2") format("woff2"),
+                url("https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/woff/FiraCode-Bold.woff") format("woff");
+        font-style: bold;
+        font-weight: 700;
+    }
+
+    .terminal-3391370205-matrix {
+        font-family: Fira Code, monospace;
+        font-size: 20px;
+        line-height: 24.4px;
+        font-variant-east-asian: full-width;
+    }
+
+    .terminal-3391370205-title {
+        font-size: 18px;
+        font-weight: bold;
+        font-family: arial;
+    }
+
+    .terminal-3391370205-r1 { fill: #68a0b3;font-weight: bold }
+.terminal-3391370205-r2 { fill: #c5c8c6 }
+.terminal-3391370205-r3 { fill: #98a84b }
+    </style>
+
+    <defs>
+    <clipPath id="terminal-3391370205-clip-terminal">
+      <rect x="0" y="0" width="1438.6" height="9222.199999999999" />
+    </clipPath>
+    <clipPath id="terminal-3391370205-line-0">
+    <rect x="0" y="1.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-1">
+    <rect x="0" y="25.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-2">
+    <rect x="0" y="50.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-3">
+    <rect x="0" y="74.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-4">
+    <rect x="0" y="99.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-5">
+    <rect x="0" y="123.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-6">
+    <rect x="0" y="147.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-7">
+    <rect x="0" y="172.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-8">
+    <rect x="0" y="196.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-9">
+    <rect x="0" y="221.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-10">
+    <rect x="0" y="245.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-11">
+    <rect x="0" y="269.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-12">
+    <rect x="0" y="294.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-13">
+    <rect x="0" y="318.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-14">
+    <rect x="0" y="343.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-15">
+    <rect x="0" y="367.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-16">
+    <rect x="0" y="391.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-17">
+    <rect x="0" y="416.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-18">
+    <rect x="0" y="440.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-19">
+    <rect x="0" y="465.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-20">
+    <rect x="0" y="489.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-21">
+    <rect x="0" y="513.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-22">
+    <rect x="0" y="538.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-23">
+    <rect x="0" y="562.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-24">
+    <rect x="0" y="587.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-25">
+    <rect x="0" y="611.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-26">
+    <rect x="0" y="635.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-27">
+    <rect x="0" y="660.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-28">
+    <rect x="0" y="684.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-29">
+    <rect x="0" y="709.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-30">
+    <rect x="0" y="733.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-31">
+    <rect x="0" y="757.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-32">
+    <rect x="0" y="782.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-33">
+    <rect x="0" y="806.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-34">
+    <rect x="0" y="831.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-35">
+    <rect x="0" y="855.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-36">
+    <rect x="0" y="879.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-37">
+    <rect x="0" y="904.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-38">
+    <rect x="0" y="928.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-39">
+    <rect x="0" y="953.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-40">
+    <rect x="0" y="977.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-41">
+    <rect x="0" y="1001.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-42">
+    <rect x="0" y="1026.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-43">
+    <rect x="0" y="1050.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-44">
+    <rect x="0" y="1075.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-45">
+    <rect x="0" y="1099.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-46">
+    <rect x="0" y="1123.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-47">
+    <rect x="0" y="1148.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-48">
+    <rect x="0" y="1172.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-49">
+    <rect x="0" y="1197.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-50">
+    <rect x="0" y="1221.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-51">
+    <rect x="0" y="1245.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-52">
+    <rect x="0" y="1270.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-53">
+    <rect x="0" y="1294.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-54">
+    <rect x="0" y="1319.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-55">
+    <rect x="0" y="1343.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-56">
+    <rect x="0" y="1367.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-57">
+    <rect x="0" y="1392.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-58">
+    <rect x="0" y="1416.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-59">
+    <rect x="0" y="1441.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-60">
+    <rect x="0" y="1465.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-61">
+    <rect x="0" y="1489.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-62">
+    <rect x="0" y="1514.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-63">
+    <rect x="0" y="1538.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-64">
+    <rect x="0" y="1563.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-65">
+    <rect x="0" y="1587.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-66">
+    <rect x="0" y="1611.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-67">
+    <rect x="0" y="1636.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-68">
+    <rect x="0" y="1660.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-69">
+    <rect x="0" y="1685.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-70">
+    <rect x="0" y="1709.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-71">
+    <rect x="0" y="1733.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-72">
+    <rect x="0" y="1758.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-73">
+    <rect x="0" y="1782.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-74">
+    <rect x="0" y="1807.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-75">
+    <rect x="0" y="1831.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-76">
+    <rect x="0" y="1855.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-77">
+    <rect x="0" y="1880.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-78">
+    <rect x="0" y="1904.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-79">
+    <rect x="0" y="1929.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-80">
+    <rect x="0" y="1953.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-81">
+    <rect x="0" y="1977.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-82">
+    <rect x="0" y="2002.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-83">
+    <rect x="0" y="2026.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-84">
+    <rect x="0" y="2051.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-85">
+    <rect x="0" y="2075.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-86">
+    <rect x="0" y="2099.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-87">
+    <rect x="0" y="2124.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-88">
+    <rect x="0" y="2148.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-89">
+    <rect x="0" y="2173.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-90">
+    <rect x="0" y="2197.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-91">
+    <rect x="0" y="2221.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-92">
+    <rect x="0" y="2246.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-93">
+    <rect x="0" y="2270.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-94">
+    <rect x="0" y="2295.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-95">
+    <rect x="0" y="2319.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-96">
+    <rect x="0" y="2343.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-97">
+    <rect x="0" y="2368.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-98">
+    <rect x="0" y="2392.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-99">
+    <rect x="0" y="2417.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-100">
+    <rect x="0" y="2441.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-101">
+    <rect x="0" y="2465.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-102">
+    <rect x="0" y="2490.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-103">
+    <rect x="0" y="2514.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-104">
+    <rect x="0" y="2539.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-105">
+    <rect x="0" y="2563.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-106">
+    <rect x="0" y="2587.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-107">
+    <rect x="0" y="2612.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-108">
+    <rect x="0" y="2636.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-109">
+    <rect x="0" y="2661.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-110">
+    <rect x="0" y="2685.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-111">
+    <rect x="0" y="2709.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-112">
+    <rect x="0" y="2734.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-113">
+    <rect x="0" y="2758.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-114">
+    <rect x="0" y="2783.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-115">
+    <rect x="0" y="2807.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-116">
+    <rect x="0" y="2831.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-117">
+    <rect x="0" y="2856.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-118">
+    <rect x="0" y="2880.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-119">
+    <rect x="0" y="2905.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-120">
+    <rect x="0" y="2929.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-121">
+    <rect x="0" y="2953.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-122">
+    <rect x="0" y="2978.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-123">
+    <rect x="0" y="3002.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-124">
+    <rect x="0" y="3027.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-125">
+    <rect x="0" y="3051.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-126">
+    <rect x="0" y="3075.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-127">
+    <rect x="0" y="3100.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-128">
+    <rect x="0" y="3124.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-129">
+    <rect x="0" y="3149.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-130">
+    <rect x="0" y="3173.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-131">
+    <rect x="0" y="3197.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-132">
+    <rect x="0" y="3222.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-133">
+    <rect x="0" y="3246.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-134">
+    <rect x="0" y="3271.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-135">
+    <rect x="0" y="3295.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-136">
+    <rect x="0" y="3319.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-137">
+    <rect x="0" y="3344.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-138">
+    <rect x="0" y="3368.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-139">
+    <rect x="0" y="3393.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-140">
+    <rect x="0" y="3417.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-141">
+    <rect x="0" y="3441.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-142">
+    <rect x="0" y="3466.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-143">
+    <rect x="0" y="3490.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-144">
+    <rect x="0" y="3515.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-145">
+    <rect x="0" y="3539.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-146">
+    <rect x="0" y="3563.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-147">
+    <rect x="0" y="3588.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-148">
+    <rect x="0" y="3612.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-149">
+    <rect x="0" y="3637.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-150">
+    <rect x="0" y="3661.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-151">
+    <rect x="0" y="3685.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-152">
+    <rect x="0" y="3710.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-153">
+    <rect x="0" y="3734.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-154">
+    <rect x="0" y="3759.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-155">
+    <rect x="0" y="3783.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-156">
+    <rect x="0" y="3807.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-157">
+    <rect x="0" y="3832.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-158">
+    <rect x="0" y="3856.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-159">
+    <rect x="0" y="3881.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-160">
+    <rect x="0" y="3905.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-161">
+    <rect x="0" y="3929.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-162">
+    <rect x="0" y="3954.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-163">
+    <rect x="0" y="3978.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-164">
+    <rect x="0" y="4003.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-165">
+    <rect x="0" y="4027.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-166">
+    <rect x="0" y="4051.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-167">
+    <rect x="0" y="4076.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-168">
+    <rect x="0" y="4100.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-169">
+    <rect x="0" y="4125.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-170">
+    <rect x="0" y="4149.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-171">
+    <rect x="0" y="4173.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-172">
+    <rect x="0" y="4198.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-173">
+    <rect x="0" y="4222.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-174">
+    <rect x="0" y="4247.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-175">
+    <rect x="0" y="4271.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-176">
+    <rect x="0" y="4295.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-177">
+    <rect x="0" y="4320.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-178">
+    <rect x="0" y="4344.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-179">
+    <rect x="0" y="4369.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-180">
+    <rect x="0" y="4393.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-181">
+    <rect x="0" y="4417.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-182">
+    <rect x="0" y="4442.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-183">
+    <rect x="0" y="4466.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-184">
+    <rect x="0" y="4491.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-185">
+    <rect x="0" y="4515.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-186">
+    <rect x="0" y="4539.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-187">
+    <rect x="0" y="4564.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-188">
+    <rect x="0" y="4588.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-189">
+    <rect x="0" y="4613.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-190">
+    <rect x="0" y="4637.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-191">
+    <rect x="0" y="4661.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-192">
+    <rect x="0" y="4686.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-193">
+    <rect x="0" y="4710.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-194">
+    <rect x="0" y="4735.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-195">
+    <rect x="0" y="4759.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-196">
+    <rect x="0" y="4783.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-197">
+    <rect x="0" y="4808.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-198">
+    <rect x="0" y="4832.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-199">
+    <rect x="0" y="4857.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-200">
+    <rect x="0" y="4881.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-201">
+    <rect x="0" y="4905.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-202">
+    <rect x="0" y="4930.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-203">
+    <rect x="0" y="4954.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-204">
+    <rect x="0" y="4979.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-205">
+    <rect x="0" y="5003.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-206">
+    <rect x="0" y="5027.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-207">
+    <rect x="0" y="5052.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-208">
+    <rect x="0" y="5076.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-209">
+    <rect x="0" y="5101.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-210">
+    <rect x="0" y="5125.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-211">
+    <rect x="0" y="5149.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-212">
+    <rect x="0" y="5174.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-213">
+    <rect x="0" y="5198.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-214">
+    <rect x="0" y="5223.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-215">
+    <rect x="0" y="5247.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-216">
+    <rect x="0" y="5271.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-217">
+    <rect x="0" y="5296.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-218">
+    <rect x="0" y="5320.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-219">
+    <rect x="0" y="5345.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-220">
+    <rect x="0" y="5369.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-221">
+    <rect x="0" y="5393.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-222">
+    <rect x="0" y="5418.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-223">
+    <rect x="0" y="5442.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-224">
+    <rect x="0" y="5467.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-225">
+    <rect x="0" y="5491.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-226">
+    <rect x="0" y="5515.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-227">
+    <rect x="0" y="5540.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-228">
+    <rect x="0" y="5564.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-229">
+    <rect x="0" y="5589.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-230">
+    <rect x="0" y="5613.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-231">
+    <rect x="0" y="5637.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-232">
+    <rect x="0" y="5662.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-233">
+    <rect x="0" y="5686.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-234">
+    <rect x="0" y="5711.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-235">
+    <rect x="0" y="5735.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-236">
+    <rect x="0" y="5759.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-237">
+    <rect x="0" y="5784.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-238">
+    <rect x="0" y="5808.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-239">
+    <rect x="0" y="5833.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-240">
+    <rect x="0" y="5857.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-241">
+    <rect x="0" y="5881.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-242">
+    <rect x="0" y="5906.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-243">
+    <rect x="0" y="5930.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-244">
+    <rect x="0" y="5955.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-245">
+    <rect x="0" y="5979.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-246">
+    <rect x="0" y="6003.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-247">
+    <rect x="0" y="6028.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-248">
+    <rect x="0" y="6052.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-249">
+    <rect x="0" y="6077.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-250">
+    <rect x="0" y="6101.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-251">
+    <rect x="0" y="6125.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-252">
+    <rect x="0" y="6150.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-253">
+    <rect x="0" y="6174.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-254">
+    <rect x="0" y="6199.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-255">
+    <rect x="0" y="6223.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-256">
+    <rect x="0" y="6247.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-257">
+    <rect x="0" y="6272.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-258">
+    <rect x="0" y="6296.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-259">
+    <rect x="0" y="6321.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-260">
+    <rect x="0" y="6345.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-261">
+    <rect x="0" y="6369.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-262">
+    <rect x="0" y="6394.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-263">
+    <rect x="0" y="6418.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-264">
+    <rect x="0" y="6443.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-265">
+    <rect x="0" y="6467.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-266">
+    <rect x="0" y="6491.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-267">
+    <rect x="0" y="6516.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-268">
+    <rect x="0" y="6540.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-269">
+    <rect x="0" y="6565.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-270">
+    <rect x="0" y="6589.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-271">
+    <rect x="0" y="6613.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-272">
+    <rect x="0" y="6638.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-273">
+    <rect x="0" y="6662.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-274">
+    <rect x="0" y="6687.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-275">
+    <rect x="0" y="6711.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-276">
+    <rect x="0" y="6735.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-277">
+    <rect x="0" y="6760.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-278">
+    <rect x="0" y="6784.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-279">
+    <rect x="0" y="6809.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-280">
+    <rect x="0" y="6833.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-281">
+    <rect x="0" y="6857.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-282">
+    <rect x="0" y="6882.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-283">
+    <rect x="0" y="6906.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-284">
+    <rect x="0" y="6931.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-285">
+    <rect x="0" y="6955.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-286">
+    <rect x="0" y="6979.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-287">
+    <rect x="0" y="7004.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-288">
+    <rect x="0" y="7028.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-289">
+    <rect x="0" y="7053.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-290">
+    <rect x="0" y="7077.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-291">
+    <rect x="0" y="7101.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-292">
+    <rect x="0" y="7126.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-293">
+    <rect x="0" y="7150.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-294">
+    <rect x="0" y="7175.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-295">
+    <rect x="0" y="7199.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-296">
+    <rect x="0" y="7223.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-297">
+    <rect x="0" y="7248.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-298">
+    <rect x="0" y="7272.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-299">
+    <rect x="0" y="7297.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-300">
+    <rect x="0" y="7321.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-301">
+    <rect x="0" y="7345.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-302">
+    <rect x="0" y="7370.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-303">
+    <rect x="0" y="7394.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-304">
+    <rect x="0" y="7419.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-305">
+    <rect x="0" y="7443.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-306">
+    <rect x="0" y="7467.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-307">
+    <rect x="0" y="7492.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-308">
+    <rect x="0" y="7516.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-309">
+    <rect x="0" y="7541.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-310">
+    <rect x="0" y="7565.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-311">
+    <rect x="0" y="7589.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-312">
+    <rect x="0" y="7614.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-313">
+    <rect x="0" y="7638.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-314">
+    <rect x="0" y="7663.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-315">
+    <rect x="0" y="7687.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-316">
+    <rect x="0" y="7711.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-317">
+    <rect x="0" y="7736.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-318">
+    <rect x="0" y="7760.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-319">
+    <rect x="0" y="7785.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-320">
+    <rect x="0" y="7809.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-321">
+    <rect x="0" y="7833.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-322">
+    <rect x="0" y="7858.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-323">
+    <rect x="0" y="7882.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-324">
+    <rect x="0" y="7907.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-325">
+    <rect x="0" y="7931.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-326">
+    <rect x="0" y="7955.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-327">
+    <rect x="0" y="7980.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-328">
+    <rect x="0" y="8004.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-329">
+    <rect x="0" y="8029.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-330">
+    <rect x="0" y="8053.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-331">
+    <rect x="0" y="8077.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-332">
+    <rect x="0" y="8102.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-333">
+    <rect x="0" y="8126.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-334">
+    <rect x="0" y="8151.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-335">
+    <rect x="0" y="8175.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-336">
+    <rect x="0" y="8199.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-337">
+    <rect x="0" y="8224.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-338">
+    <rect x="0" y="8248.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-339">
+    <rect x="0" y="8273.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-340">
+    <rect x="0" y="8297.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-341">
+    <rect x="0" y="8321.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-342">
+    <rect x="0" y="8346.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-343">
+    <rect x="0" y="8370.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-344">
+    <rect x="0" y="8395.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-345">
+    <rect x="0" y="8419.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-346">
+    <rect x="0" y="8443.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-347">
+    <rect x="0" y="8468.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-348">
+    <rect x="0" y="8492.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-349">
+    <rect x="0" y="8517.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-350">
+    <rect x="0" y="8541.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-351">
+    <rect x="0" y="8565.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-352">
+    <rect x="0" y="8590.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-353">
+    <rect x="0" y="8614.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-354">
+    <rect x="0" y="8639.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-355">
+    <rect x="0" y="8663.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-356">
+    <rect x="0" y="8687.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-357">
+    <rect x="0" y="8712.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-358">
+    <rect x="0" y="8736.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-359">
+    <rect x="0" y="8761.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-360">
+    <rect x="0" y="8785.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-361">
+    <rect x="0" y="8809.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-362">
+    <rect x="0" y="8834.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-363">
+    <rect x="0" y="8858.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-364">
+    <rect x="0" y="8883.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-365">
+    <rect x="0" y="8907.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-366">
+    <rect x="0" y="8931.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-367">
+    <rect x="0" y="8956.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-368">
+    <rect x="0" y="8980.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-369">
+    <rect x="0" y="9005.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-370">
+    <rect x="0" y="9029.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-371">
+    <rect x="0" y="9053.9" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-372">
+    <rect x="0" y="9078.3" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-373">
+    <rect x="0" y="9102.7" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-374">
+    <rect x="0" y="9127.1" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-375">
+    <rect x="0" y="9151.5" width="1439.6" height="24.65"/>
+            </clipPath>
+<clipPath id="terminal-3391370205-line-376">
+    <rect x="0" y="9175.9" width="1439.6" height="24.65"/>
+            </clipPath>
+    </defs>
+
+    <rect fill="#292929" stroke="rgba(255,255,255,0.35)" stroke-width="1" x="1" y="1" width="1456" height="9271.2" rx="8"/><text class="terminal-3391370205-title" fill="#c5c8c6" text-anchor="middle" x="728" y="27">Byte&#160;·&#160;Vulnerabilidades&#160;de&#160;la&#160;imagen&#160;byte:local&#160;(Trivy)</text>
+            <g transform="translate(26,22)">
+            <circle cx="0" cy="0" r="7" fill="#ff5f57"/>
+            <circle cx="22" cy="0" r="7" fill="#febc2e"/>
+            <circle cx="44" cy="0" r="7" fill="#28c840"/>
+            </g>
+        
+    <g transform="translate(9, 41)" clip-path="url(#terminal-3391370205-clip-terminal)">
+    
+    <g class="terminal-3391370205-matrix">
+    <text class="terminal-3391370205-r1" x="0" y="20" textLength="780.8" clip-path="url(#terminal-3391370205-line-0)">$&#160;docker&#160;run&#160;--rm&#160;-v&#160;//var/run/docker.sock:/var/run/docker.sock&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="20" textLength="12.2" clip-path="url(#terminal-3391370205-line-0)">
+</text><text class="terminal-3391370205-r1" x="0" y="44.4" textLength="1342" clip-path="url(#terminal-3391370205-line-1)">aquasec/trivy:0.76.2@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb&#160;image&#160;--severity&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="44.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-1)">
+</text><text class="terminal-3391370205-r1" x="0" y="68.8" textLength="841.8" clip-path="url(#terminal-3391370205-line-2)">HIGH,CRITICAL&#160;--ignore-unfixed&#160;--exit-code&#160;1&#160;--no-progress&#160;byte:local</text><text class="terminal-3391370205-r2" x="1439.6" y="68.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-2)">
+</text><text class="terminal-3391370205-r2" x="1439.6" y="93.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-3)">
+</text><text class="terminal-3391370205-r2" x="0" y="117.6" textLength="170.8" clip-path="url(#terminal-3391370205-line-4)">Report&#160;Summary</text><text class="terminal-3391370205-r2" x="1439.6" y="117.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-4)">
+</text><text class="terminal-3391370205-r2" x="1439.6" y="142" textLength="12.2" clip-path="url(#terminal-3391370205-line-5)">
+</text><text class="terminal-3391370205-r2" x="0" y="166.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-6)">┌──────────────────────────────────────────────────────────────────────────────────┬────────────┬─────────────────┬───</text><text class="terminal-3391370205-r2" x="1439.6" y="166.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-6)">
+</text><text class="terminal-3391370205-r2" x="0" y="190.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-7)">──────┐</text><text class="terminal-3391370205-r2" x="1439.6" y="190.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-7)">
+</text><text class="terminal-3391370205-r2" x="0" y="215.2" textLength="1415.2" clip-path="url(#terminal-3391370205-line-8)">│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Target&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;Type&#160;&#160;&#160;&#160;│&#160;Vulnerabilities&#160;│&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="215.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-8)">
+</text><text class="terminal-3391370205-r2" x="0" y="239.6" textLength="109.8" clip-path="url(#terminal-3391370205-line-9)">Secrets&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="239.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-9)">
+</text><text class="terminal-3391370205-r2" x="0" y="264" textLength="1439.6" clip-path="url(#terminal-3391370205-line-10)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="264" textLength="12.2" clip-path="url(#terminal-3391370205-line-10)">
+</text><text class="terminal-3391370205-r2" x="0" y="288.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-11)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="288.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-11)">
+</text><text class="terminal-3391370205-r2" x="0" y="312.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-12)">│&#160;byte:local&#160;(debian&#160;13.7)&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;debian&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="312.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-12)">
+</text><text class="terminal-3391370205-r2" x="0" y="337.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-13)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="337.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-13)">
+</text><text class="terminal-3391370205-r2" x="0" y="361.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-14)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="361.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-14)">
+</text><text class="terminal-3391370205-r2" x="0" y="386" textLength="85.4" clip-path="url(#terminal-3391370205-line-15)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="386" textLength="12.2" clip-path="url(#terminal-3391370205-line-15)">
+</text><text class="terminal-3391370205-r2" x="0" y="410.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-16)">│&#160;opt/venv/lib/python3.12/site-packages/amqp-5.4.2.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="410.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-16)">
+</text><text class="terminal-3391370205-r2" x="0" y="434.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-17)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="434.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-17)">
+</text><text class="terminal-3391370205-r2" x="0" y="459.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-18)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="459.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-18)">
+</text><text class="terminal-3391370205-r2" x="0" y="483.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-19)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="483.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-19)">
+</text><text class="terminal-3391370205-r2" x="0" y="508" textLength="1439.6" clip-path="url(#terminal-3391370205-line-20)">│&#160;opt/venv/lib/python3.12/site-packages/anyio-4.16.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="508" textLength="12.2" clip-path="url(#terminal-3391370205-line-20)">
+</text><text class="terminal-3391370205-r2" x="0" y="532.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-21)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="532.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-21)">
+</text><text class="terminal-3391370205-r2" x="0" y="556.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-22)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="556.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-22)">
+</text><text class="terminal-3391370205-r2" x="0" y="581.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-23)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="581.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-23)">
+</text><text class="terminal-3391370205-r2" x="0" y="605.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-24)">│&#160;opt/venv/lib/python3.12/site-packages/argon2_cffi-25.1.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="605.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-24)">
+</text><text class="terminal-3391370205-r2" x="0" y="630" textLength="73.2" clip-path="url(#terminal-3391370205-line-25)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="630" textLength="12.2" clip-path="url(#terminal-3391370205-line-25)">
+</text><text class="terminal-3391370205-r2" x="0" y="654.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-26)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="654.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-26)">
+</text><text class="terminal-3391370205-r2" x="0" y="678.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-27)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="678.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-27)">
+</text><text class="terminal-3391370205-r2" x="0" y="703.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-28)">│&#160;opt/venv/lib/python3.12/site-packages/argon2_cffi_bindings-26.1.0.dist-info/MET-&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="703.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-28)">
+</text><text class="terminal-3391370205-r2" x="0" y="727.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-29)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="727.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-29)">
+</text><text class="terminal-3391370205-r2" x="0" y="752" textLength="1439.6" clip-path="url(#terminal-3391370205-line-30)">│&#160;ADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="752" textLength="12.2" clip-path="url(#terminal-3391370205-line-30)">
+</text><text class="terminal-3391370205-r2" x="0" y="776.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-31)">│</text><text class="terminal-3391370205-r2" x="1439.6" y="776.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-31)">
+</text><text class="terminal-3391370205-r2" x="0" y="800.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-32)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="800.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-32)">
+</text><text class="terminal-3391370205-r2" x="0" y="825.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-33)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="825.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-33)">
+</text><text class="terminal-3391370205-r2" x="0" y="849.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-34)">│&#160;opt/venv/lib/python3.12/site-packages/asgiref-3.13.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="849.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-34)">
+</text><text class="terminal-3391370205-r2" x="0" y="874" textLength="73.2" clip-path="url(#terminal-3391370205-line-35)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="874" textLength="12.2" clip-path="url(#terminal-3391370205-line-35)">
+</text><text class="terminal-3391370205-r2" x="0" y="898.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-36)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="898.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-36)">
+</text><text class="terminal-3391370205-r2" x="0" y="922.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-37)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="922.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-37)">
+</text><text class="terminal-3391370205-r2" x="0" y="947.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-38)">│&#160;opt/venv/lib/python3.12/site-packages/attrs-26.1.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="947.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-38)">
+</text><text class="terminal-3391370205-r2" x="0" y="971.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-39)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="971.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-39)">
+</text><text class="terminal-3391370205-r2" x="0" y="996" textLength="1439.6" clip-path="url(#terminal-3391370205-line-40)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="996" textLength="12.2" clip-path="url(#terminal-3391370205-line-40)">
+</text><text class="terminal-3391370205-r2" x="0" y="1020.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-41)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="1020.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-41)">
+</text><text class="terminal-3391370205-r2" x="0" y="1044.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-42)">│&#160;opt/venv/lib/python3.12/site-packages/billiard-4.3.2.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="1044.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-42)">
+</text><text class="terminal-3391370205-r2" x="0" y="1069.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-43)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="1069.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-43)">
+</text><text class="terminal-3391370205-r2" x="0" y="1093.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-44)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="1093.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-44)">
+</text><text class="terminal-3391370205-r2" x="0" y="1118" textLength="85.4" clip-path="url(#terminal-3391370205-line-45)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="1118" textLength="12.2" clip-path="url(#terminal-3391370205-line-45)">
+</text><text class="terminal-3391370205-r2" x="0" y="1142.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-46)">│&#160;opt/venv/lib/python3.12/site-packages/boto3-1.43.125.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="1142.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-46)">
+</text><text class="terminal-3391370205-r2" x="0" y="1166.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-47)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="1166.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-47)">
+</text><text class="terminal-3391370205-r2" x="0" y="1191.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-48)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="1191.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-48)">
+</text><text class="terminal-3391370205-r2" x="0" y="1215.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-49)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="1215.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-49)">
+</text><text class="terminal-3391370205-r2" x="0" y="1240" textLength="1439.6" clip-path="url(#terminal-3391370205-line-50)">│&#160;opt/venv/lib/python3.12/site-packages/botocore-1.43.125.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="1240" textLength="12.2" clip-path="url(#terminal-3391370205-line-50)">
+</text><text class="terminal-3391370205-r2" x="0" y="1264.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-51)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="1264.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-51)">
+</text><text class="terminal-3391370205-r2" x="0" y="1288.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-52)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="1288.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-52)">
+</text><text class="terminal-3391370205-r2" x="0" y="1313.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-53)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="1313.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-53)">
+</text><text class="terminal-3391370205-r2" x="0" y="1337.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-54)">│&#160;opt/venv/lib/python3.12/site-packages/celery-5.7.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="1337.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-54)">
+</text><text class="terminal-3391370205-r2" x="0" y="1362" textLength="73.2" clip-path="url(#terminal-3391370205-line-55)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="1362" textLength="12.2" clip-path="url(#terminal-3391370205-line-55)">
+</text><text class="terminal-3391370205-r2" x="0" y="1386.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-56)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="1386.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-56)">
+</text><text class="terminal-3391370205-r2" x="0" y="1410.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-57)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="1410.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-57)">
+</text><text class="terminal-3391370205-r2" x="0" y="1435.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-58)">│&#160;opt/venv/lib/python3.12/site-packages/certifi-2026.10.23.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="1435.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-58)">
+</text><text class="terminal-3391370205-r2" x="0" y="1459.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-59)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="1459.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-59)">
+</text><text class="terminal-3391370205-r2" x="0" y="1484" textLength="1439.6" clip-path="url(#terminal-3391370205-line-60)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="1484" textLength="12.2" clip-path="url(#terminal-3391370205-line-60)">
+</text><text class="terminal-3391370205-r2" x="0" y="1508.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-61)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="1508.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-61)">
+</text><text class="terminal-3391370205-r2" x="0" y="1532.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-62)">│&#160;opt/venv/lib/python3.12/site-packages/cffi-2.1.1.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="1532.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-62)">
+</text><text class="terminal-3391370205-r2" x="0" y="1557.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-63)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="1557.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-63)">
+</text><text class="terminal-3391370205-r2" x="0" y="1581.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-64)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="1581.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-64)">
+</text><text class="terminal-3391370205-r2" x="0" y="1606" textLength="85.4" clip-path="url(#terminal-3391370205-line-65)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="1606" textLength="12.2" clip-path="url(#terminal-3391370205-line-65)">
+</text><text class="terminal-3391370205-r2" x="0" y="1630.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-66)">│&#160;opt/venv/lib/python3.12/site-packages/charset_normalizer-3.5.2.dist-info/METADA-&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="1630.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-66)">
+</text><text class="terminal-3391370205-r2" x="0" y="1654.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-67)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="1654.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-67)">
+</text><text class="terminal-3391370205-r2" x="0" y="1679.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-68)">│&#160;TA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="1679.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-68)">
+</text><text class="terminal-3391370205-r2" x="0" y="1703.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-69)">│</text><text class="terminal-3391370205-r2" x="1439.6" y="1703.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-69)">
+</text><text class="terminal-3391370205-r2" x="0" y="1728" textLength="1439.6" clip-path="url(#terminal-3391370205-line-70)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="1728" textLength="12.2" clip-path="url(#terminal-3391370205-line-70)">
+</text><text class="terminal-3391370205-r2" x="0" y="1752.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-71)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="1752.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-71)">
+</text><text class="terminal-3391370205-r2" x="0" y="1776.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-72)">│&#160;opt/venv/lib/python3.12/site-packages/click-8.4.2.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="1776.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-72)">
+</text><text class="terminal-3391370205-r2" x="0" y="1801.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-73)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="1801.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-73)">
+</text><text class="terminal-3391370205-r2" x="0" y="1825.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-74)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="1825.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-74)">
+</text><text class="terminal-3391370205-r2" x="0" y="1850" textLength="85.4" clip-path="url(#terminal-3391370205-line-75)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="1850" textLength="12.2" clip-path="url(#terminal-3391370205-line-75)">
+</text><text class="terminal-3391370205-r2" x="0" y="1874.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-76)">│&#160;opt/venv/lib/python3.12/site-packages/click_didyoumean-0.3.1.dist-info/METADATA&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="1874.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-76)">
+</text><text class="terminal-3391370205-r2" x="0" y="1898.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-77)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="1898.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-77)">
+</text><text class="terminal-3391370205-r2" x="0" y="1923.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-78)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="1923.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-78)">
+</text><text class="terminal-3391370205-r2" x="0" y="1947.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-79)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="1947.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-79)">
+</text><text class="terminal-3391370205-r2" x="0" y="1972" textLength="1439.6" clip-path="url(#terminal-3391370205-line-80)">│&#160;opt/venv/lib/python3.12/site-packages/click_plugins-1.1.1.2.dist-info/METADATA&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="1972" textLength="12.2" clip-path="url(#terminal-3391370205-line-80)">
+</text><text class="terminal-3391370205-r2" x="0" y="1996.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-81)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="1996.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-81)">
+</text><text class="terminal-3391370205-r2" x="0" y="2020.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-82)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="2020.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-82)">
+</text><text class="terminal-3391370205-r2" x="0" y="2045.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-83)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="2045.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-83)">
+</text><text class="terminal-3391370205-r2" x="0" y="2069.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-84)">│&#160;opt/venv/lib/python3.12/site-packages/click_repl-0.4.1.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="2069.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-84)">
+</text><text class="terminal-3391370205-r2" x="0" y="2094" textLength="73.2" clip-path="url(#terminal-3391370205-line-85)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="2094" textLength="12.2" clip-path="url(#terminal-3391370205-line-85)">
+</text><text class="terminal-3391370205-r2" x="0" y="2118.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-86)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="2118.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-86)">
+</text><text class="terminal-3391370205-r2" x="0" y="2142.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-87)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="2142.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-87)">
+</text><text class="terminal-3391370205-r2" x="0" y="2167.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-88)">│&#160;opt/venv/lib/python3.12/site-packages/cron_descriptor-1.4.5.dist-info/METADATA&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="2167.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-88)">
+</text><text class="terminal-3391370205-r2" x="0" y="2191.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-89)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="2191.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-89)">
+</text><text class="terminal-3391370205-r2" x="0" y="2216" textLength="1439.6" clip-path="url(#terminal-3391370205-line-90)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="2216" textLength="12.2" clip-path="url(#terminal-3391370205-line-90)">
+</text><text class="terminal-3391370205-r2" x="0" y="2240.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-91)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="2240.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-91)">
+</text><text class="terminal-3391370205-r2" x="0" y="2264.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-92)">│&#160;opt/venv/lib/python3.12/site-packages/cryptography-50.0.2.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="2264.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-92)">
+</text><text class="terminal-3391370205-r2" x="0" y="2289.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-93)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="2289.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-93)">
+</text><text class="terminal-3391370205-r2" x="0" y="2313.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-94)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="2313.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-94)">
+</text><text class="terminal-3391370205-r2" x="0" y="2338" textLength="85.4" clip-path="url(#terminal-3391370205-line-95)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="2338" textLength="12.2" clip-path="url(#terminal-3391370205-line-95)">
+</text><text class="terminal-3391370205-r2" x="0" y="2362.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-96)">│&#160;opt/venv/lib/python3.12/site-packages/django-5.2.19.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="2362.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-96)">
+</text><text class="terminal-3391370205-r2" x="0" y="2386.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-97)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="2386.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-97)">
+</text><text class="terminal-3391370205-r2" x="0" y="2411.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-98)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="2411.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-98)">
+</text><text class="terminal-3391370205-r2" x="0" y="2435.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-99)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="2435.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-99)">
+</text><text class="terminal-3391370205-r2" x="0" y="2460" textLength="1439.6" clip-path="url(#terminal-3391370205-line-100)">│&#160;opt/venv/lib/python3.12/site-packages/django_allauth-65.21.1.dist-info/METADATA&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="2460" textLength="12.2" clip-path="url(#terminal-3391370205-line-100)">
+</text><text class="terminal-3391370205-r2" x="0" y="2484.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-101)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="2484.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-101)">
+</text><text class="terminal-3391370205-r2" x="0" y="2508.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-102)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="2508.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-102)">
+</text><text class="terminal-3391370205-r2" x="0" y="2533.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-103)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="2533.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-103)">
+</text><text class="terminal-3391370205-r2" x="0" y="2557.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-104)">│&#160;opt/venv/lib/python3.12/site-packages/django_anymail-15.2.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="2557.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-104)">
+</text><text class="terminal-3391370205-r2" x="0" y="2582" textLength="73.2" clip-path="url(#terminal-3391370205-line-105)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="2582" textLength="12.2" clip-path="url(#terminal-3391370205-line-105)">
+</text><text class="terminal-3391370205-r2" x="0" y="2606.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-106)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="2606.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-106)">
+</text><text class="terminal-3391370205-r2" x="0" y="2630.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-107)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="2630.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-107)">
+</text><text class="terminal-3391370205-r2" x="0" y="2655.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-108)">│&#160;opt/venv/lib/python3.12/site-packages/django_axes-9.0.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="2655.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-108)">
+</text><text class="terminal-3391370205-r2" x="0" y="2679.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-109)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="2679.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-109)">
+</text><text class="terminal-3391370205-r2" x="0" y="2704" textLength="1439.6" clip-path="url(#terminal-3391370205-line-110)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="2704" textLength="12.2" clip-path="url(#terminal-3391370205-line-110)">
+</text><text class="terminal-3391370205-r2" x="0" y="2728.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-111)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="2728.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-111)">
+</text><text class="terminal-3391370205-r2" x="0" y="2752.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-112)">│&#160;opt/venv/lib/python3.12/site-packages/django_celery_beat-2.9.0.dist-info/METADA-&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="2752.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-112)">
+</text><text class="terminal-3391370205-r2" x="0" y="2777.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-113)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="2777.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-113)">
+</text><text class="terminal-3391370205-r2" x="0" y="2801.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-114)">│&#160;TA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="2801.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-114)">
+</text><text class="terminal-3391370205-r2" x="0" y="2826" textLength="12.2" clip-path="url(#terminal-3391370205-line-115)">│</text><text class="terminal-3391370205-r2" x="1439.6" y="2826" textLength="12.2" clip-path="url(#terminal-3391370205-line-115)">
+</text><text class="terminal-3391370205-r2" x="0" y="2850.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-116)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="2850.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-116)">
+</text><text class="terminal-3391370205-r2" x="0" y="2874.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-117)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="2874.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-117)">
+</text><text class="terminal-3391370205-r2" x="0" y="2899.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-118)">│&#160;opt/venv/lib/python3.12/site-packages/django_click-2.5.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="2899.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-118)">
+</text><text class="terminal-3391370205-r2" x="0" y="2923.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-119)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="2923.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-119)">
+</text><text class="terminal-3391370205-r2" x="0" y="2948" textLength="1439.6" clip-path="url(#terminal-3391370205-line-120)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="2948" textLength="12.2" clip-path="url(#terminal-3391370205-line-120)">
+</text><text class="terminal-3391370205-r2" x="0" y="2972.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-121)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="2972.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-121)">
+</text><text class="terminal-3391370205-r2" x="0" y="2996.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-122)">│&#160;opt/venv/lib/python3.12/site-packages/django_csp-4.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="2996.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-122)">
+</text><text class="terminal-3391370205-r2" x="0" y="3021.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-123)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="3021.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-123)">
+</text><text class="terminal-3391370205-r2" x="0" y="3045.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-124)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="3045.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-124)">
+</text><text class="terminal-3391370205-r2" x="0" y="3070" textLength="85.4" clip-path="url(#terminal-3391370205-line-125)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="3070" textLength="12.2" clip-path="url(#terminal-3391370205-line-125)">
+</text><text class="terminal-3391370205-r2" x="0" y="3094.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-126)">│&#160;opt/venv/lib/python3.12/site-packages/django_environ-0.14.0.dist-info/METADATA&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="3094.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-126)">
+</text><text class="terminal-3391370205-r2" x="0" y="3118.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-127)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="3118.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-127)">
+</text><text class="terminal-3391370205-r2" x="0" y="3143.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-128)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="3143.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-128)">
+</text><text class="terminal-3391370205-r2" x="0" y="3167.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-129)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="3167.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-129)">
+</text><text class="terminal-3391370205-r2" x="0" y="3192" textLength="1439.6" clip-path="url(#terminal-3391370205-line-130)">│&#160;opt/venv/lib/python3.12/site-packages/django_htmx-1.29.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="3192" textLength="12.2" clip-path="url(#terminal-3391370205-line-130)">
+</text><text class="terminal-3391370205-r2" x="0" y="3216.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-131)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="3216.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-131)">
+</text><text class="terminal-3391370205-r2" x="0" y="3240.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-132)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="3240.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-132)">
+</text><text class="terminal-3391370205-r2" x="0" y="3265.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-133)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="3265.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-133)">
+</text><text class="terminal-3391370205-r2" x="0" y="3289.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-134)">│&#160;opt/venv/lib/python3.12/site-packages/django_ratelimit-4.1.0.dist-info/METADATA&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="3289.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-134)">
+</text><text class="terminal-3391370205-r2" x="0" y="3314" textLength="73.2" clip-path="url(#terminal-3391370205-line-135)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="3314" textLength="12.2" clip-path="url(#terminal-3391370205-line-135)">
+</text><text class="terminal-3391370205-r2" x="0" y="3338.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-136)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="3338.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-136)">
+</text><text class="terminal-3391370205-r2" x="0" y="3362.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-137)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="3362.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-137)">
+</text><text class="terminal-3391370205-r2" x="0" y="3387.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-138)">│&#160;opt/venv/lib/python3.12/site-packages/django_redis-7.0.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="3387.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-138)">
+</text><text class="terminal-3391370205-r2" x="0" y="3411.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-139)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="3411.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-139)">
+</text><text class="terminal-3391370205-r2" x="0" y="3436" textLength="1439.6" clip-path="url(#terminal-3391370205-line-140)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="3436" textLength="12.2" clip-path="url(#terminal-3391370205-line-140)">
+</text><text class="terminal-3391370205-r2" x="0" y="3460.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-141)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="3460.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-141)">
+</text><text class="terminal-3391370205-r2" x="0" y="3484.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-142)">│&#160;opt/venv/lib/python3.12/site-packages/django_storages-1.14.6.dist-info/METADATA&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="3484.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-142)">
+</text><text class="terminal-3391370205-r2" x="0" y="3509.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-143)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="3509.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-143)">
+</text><text class="terminal-3391370205-r2" x="0" y="3533.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-144)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="3533.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-144)">
+</text><text class="terminal-3391370205-r2" x="0" y="3558" textLength="85.4" clip-path="url(#terminal-3391370205-line-145)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="3558" textLength="12.2" clip-path="url(#terminal-3391370205-line-145)">
+</text><text class="terminal-3391370205-r2" x="0" y="3582.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-146)">│&#160;opt/venv/lib/python3.12/site-packages/django_tailwind_cli-4.8.2.dist-info/METAD-&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="3582.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-146)">
+</text><text class="terminal-3391370205-r2" x="0" y="3606.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-147)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="3606.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-147)">
+</text><text class="terminal-3391370205-r2" x="0" y="3631.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-148)">│&#160;ATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="3631.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-148)">
+</text><text class="terminal-3391370205-r2" x="0" y="3655.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-149)">│</text><text class="terminal-3391370205-r2" x="1439.6" y="3655.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-149)">
+</text><text class="terminal-3391370205-r2" x="0" y="3680" textLength="1439.6" clip-path="url(#terminal-3391370205-line-150)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="3680" textLength="12.2" clip-path="url(#terminal-3391370205-line-150)">
+</text><text class="terminal-3391370205-r2" x="0" y="3704.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-151)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="3704.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-151)">
+</text><text class="terminal-3391370205-r2" x="0" y="3728.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-152)">│&#160;opt/venv/lib/python3.12/site-packages/django_timezone_field-7.2.2.dist-info/MET-&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="3728.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-152)">
+</text><text class="terminal-3391370205-r2" x="0" y="3753.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-153)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="3753.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-153)">
+</text><text class="terminal-3391370205-r2" x="0" y="3777.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-154)">│&#160;ADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="3777.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-154)">
+</text><text class="terminal-3391370205-r2" x="0" y="3802" textLength="12.2" clip-path="url(#terminal-3391370205-line-155)">│</text><text class="terminal-3391370205-r2" x="1439.6" y="3802" textLength="12.2" clip-path="url(#terminal-3391370205-line-155)">
+</text><text class="terminal-3391370205-r2" x="0" y="3826.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-156)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="3826.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-156)">
+</text><text class="terminal-3391370205-r2" x="0" y="3850.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-157)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="3850.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-157)">
+</text><text class="terminal-3391370205-r2" x="0" y="3875.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-158)">│&#160;opt/venv/lib/python3.12/site-packages/djangorestframework-3.18.3.dist-info/META-&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="3875.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-158)">
+</text><text class="terminal-3391370205-r2" x="0" y="3899.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-159)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="3899.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-159)">
+</text><text class="terminal-3391370205-r2" x="0" y="3924" textLength="1439.6" clip-path="url(#terminal-3391370205-line-160)">│&#160;DATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="3924" textLength="12.2" clip-path="url(#terminal-3391370205-line-160)">
+</text><text class="terminal-3391370205-r2" x="0" y="3948.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-161)">│</text><text class="terminal-3391370205-r2" x="1439.6" y="3948.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-161)">
+</text><text class="terminal-3391370205-r2" x="0" y="3972.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-162)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="3972.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-162)">
+</text><text class="terminal-3391370205-r2" x="0" y="3997.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-163)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="3997.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-163)">
+</text><text class="terminal-3391370205-r2" x="0" y="4021.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-164)">│&#160;opt/venv/lib/python3.12/site-packages/drf_spectacular-0.30.0.dist-info/METADATA&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="4021.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-164)">
+</text><text class="terminal-3391370205-r2" x="0" y="4046" textLength="73.2" clip-path="url(#terminal-3391370205-line-165)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="4046" textLength="12.2" clip-path="url(#terminal-3391370205-line-165)">
+</text><text class="terminal-3391370205-r2" x="0" y="4070.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-166)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="4070.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-166)">
+</text><text class="terminal-3391370205-r2" x="0" y="4094.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-167)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="4094.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-167)">
+</text><text class="terminal-3391370205-r2" x="0" y="4119.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-168)">│&#160;opt/venv/lib/python3.12/site-packages/duckdb-2.0.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="4119.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-168)">
+</text><text class="terminal-3391370205-r2" x="0" y="4143.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-169)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="4143.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-169)">
+</text><text class="terminal-3391370205-r2" x="0" y="4168" textLength="1439.6" clip-path="url(#terminal-3391370205-line-170)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="4168" textLength="12.2" clip-path="url(#terminal-3391370205-line-170)">
+</text><text class="terminal-3391370205-r2" x="0" y="4192.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-171)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="4192.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-171)">
+</text><text class="terminal-3391370205-r2" x="0" y="4216.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-172)">│&#160;opt/venv/lib/python3.12/site-packages/fido2-2.2.1.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="4216.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-172)">
+</text><text class="terminal-3391370205-r2" x="0" y="4241.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-173)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="4241.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-173)">
+</text><text class="terminal-3391370205-r2" x="0" y="4265.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-174)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="4265.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-174)">
+</text><text class="terminal-3391370205-r2" x="0" y="4290" textLength="85.4" clip-path="url(#terminal-3391370205-line-175)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="4290" textLength="12.2" clip-path="url(#terminal-3391370205-line-175)">
+</text><text class="terminal-3391370205-r2" x="0" y="4314.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-176)">│&#160;opt/venv/lib/python3.12/site-packages/gunicorn-26.2.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="4314.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-176)">
+</text><text class="terminal-3391370205-r2" x="0" y="4338.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-177)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="4338.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-177)">
+</text><text class="terminal-3391370205-r2" x="0" y="4363.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-178)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="4363.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-178)">
+</text><text class="terminal-3391370205-r2" x="0" y="4387.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-179)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="4387.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-179)">
+</text><text class="terminal-3391370205-r2" x="0" y="4412" textLength="1439.6" clip-path="url(#terminal-3391370205-line-180)">│&#160;opt/venv/lib/python3.12/site-packages/h11-0.16.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="4412" textLength="12.2" clip-path="url(#terminal-3391370205-line-180)">
+</text><text class="terminal-3391370205-r2" x="0" y="4436.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-181)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="4436.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-181)">
+</text><text class="terminal-3391370205-r2" x="0" y="4460.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-182)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="4460.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-182)">
+</text><text class="terminal-3391370205-r2" x="0" y="4485.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-183)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="4485.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-183)">
+</text><text class="terminal-3391370205-r2" x="0" y="4509.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-184)">│&#160;opt/venv/lib/python3.12/site-packages/hiredis-3.5.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="4509.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-184)">
+</text><text class="terminal-3391370205-r2" x="0" y="4534" textLength="73.2" clip-path="url(#terminal-3391370205-line-185)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="4534" textLength="12.2" clip-path="url(#terminal-3391370205-line-185)">
+</text><text class="terminal-3391370205-r2" x="0" y="4558.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-186)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="4558.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-186)">
+</text><text class="terminal-3391370205-r2" x="0" y="4582.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-187)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="4582.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-187)">
+</text><text class="terminal-3391370205-r2" x="0" y="4607.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-188)">│&#160;opt/venv/lib/python3.12/site-packages/httpcore-1.0.9.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="4607.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-188)">
+</text><text class="terminal-3391370205-r2" x="0" y="4631.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-189)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="4631.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-189)">
+</text><text class="terminal-3391370205-r2" x="0" y="4656" textLength="1439.6" clip-path="url(#terminal-3391370205-line-190)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="4656" textLength="12.2" clip-path="url(#terminal-3391370205-line-190)">
+</text><text class="terminal-3391370205-r2" x="0" y="4680.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-191)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="4680.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-191)">
+</text><text class="terminal-3391370205-r2" x="0" y="4704.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-192)">│&#160;opt/venv/lib/python3.12/site-packages/httpx-0.28.1.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="4704.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-192)">
+</text><text class="terminal-3391370205-r2" x="0" y="4729.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-193)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="4729.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-193)">
+</text><text class="terminal-3391370205-r2" x="0" y="4753.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-194)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="4753.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-194)">
+</text><text class="terminal-3391370205-r2" x="0" y="4778" textLength="85.4" clip-path="url(#terminal-3391370205-line-195)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="4778" textLength="12.2" clip-path="url(#terminal-3391370205-line-195)">
+</text><text class="terminal-3391370205-r2" x="0" y="4802.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-196)">│&#160;opt/venv/lib/python3.12/site-packages/idna-3.20.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="4802.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-196)">
+</text><text class="terminal-3391370205-r2" x="0" y="4826.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-197)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="4826.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-197)">
+</text><text class="terminal-3391370205-r2" x="0" y="4851.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-198)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="4851.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-198)">
+</text><text class="terminal-3391370205-r2" x="0" y="4875.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-199)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="4875.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-199)">
+</text><text class="terminal-3391370205-r2" x="0" y="4900" textLength="1439.6" clip-path="url(#terminal-3391370205-line-200)">│&#160;opt/venv/lib/python3.12/site-packages/inflection-0.5.1.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="4900" textLength="12.2" clip-path="url(#terminal-3391370205-line-200)">
+</text><text class="terminal-3391370205-r2" x="0" y="4924.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-201)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="4924.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-201)">
+</text><text class="terminal-3391370205-r2" x="0" y="4948.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-202)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="4948.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-202)">
+</text><text class="terminal-3391370205-r2" x="0" y="4973.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-203)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="4973.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-203)">
+</text><text class="terminal-3391370205-r2" x="0" y="4997.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-204)">│&#160;opt/venv/lib/python3.12/site-packages/jmespath-1.1.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="4997.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-204)">
+</text><text class="terminal-3391370205-r2" x="0" y="5022" textLength="73.2" clip-path="url(#terminal-3391370205-line-205)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="5022" textLength="12.2" clip-path="url(#terminal-3391370205-line-205)">
+</text><text class="terminal-3391370205-r2" x="0" y="5046.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-206)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="5046.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-206)">
+</text><text class="terminal-3391370205-r2" x="0" y="5070.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-207)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="5070.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-207)">
+</text><text class="terminal-3391370205-r2" x="0" y="5095.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-208)">│&#160;opt/venv/lib/python3.12/site-packages/jsonschema-4.25.1.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="5095.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-208)">
+</text><text class="terminal-3391370205-r2" x="0" y="5119.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-209)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="5119.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-209)">
+</text><text class="terminal-3391370205-r2" x="0" y="5144" textLength="1439.6" clip-path="url(#terminal-3391370205-line-210)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="5144" textLength="12.2" clip-path="url(#terminal-3391370205-line-210)">
+</text><text class="terminal-3391370205-r2" x="0" y="5168.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-211)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="5168.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-211)">
+</text><text class="terminal-3391370205-r2" x="0" y="5192.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-212)">│&#160;opt/venv/lib/python3.12/site-packages/jsonschema_specifications-2025.9.1.dist-i-&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="5192.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-212)">
+</text><text class="terminal-3391370205-r2" x="0" y="5217.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-213)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="5217.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-213)">
+</text><text class="terminal-3391370205-r2" x="0" y="5241.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-214)">│&#160;nfo/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="5241.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-214)">
+</text><text class="terminal-3391370205-r2" x="0" y="5266" textLength="12.2" clip-path="url(#terminal-3391370205-line-215)">│</text><text class="terminal-3391370205-r2" x="1439.6" y="5266" textLength="12.2" clip-path="url(#terminal-3391370205-line-215)">
+</text><text class="terminal-3391370205-r2" x="0" y="5290.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-216)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="5290.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-216)">
+</text><text class="terminal-3391370205-r2" x="0" y="5314.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-217)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="5314.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-217)">
+</text><text class="terminal-3391370205-r2" x="0" y="5339.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-218)">│&#160;opt/venv/lib/python3.12/site-packages/kombu-5.7.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="5339.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-218)">
+</text><text class="terminal-3391370205-r2" x="0" y="5363.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-219)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="5363.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-219)">
+</text><text class="terminal-3391370205-r2" x="0" y="5388" textLength="1439.6" clip-path="url(#terminal-3391370205-line-220)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="5388" textLength="12.2" clip-path="url(#terminal-3391370205-line-220)">
+</text><text class="terminal-3391370205-r2" x="0" y="5412.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-221)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="5412.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-221)">
+</text><text class="terminal-3391370205-r2" x="0" y="5436.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-222)">│&#160;opt/venv/lib/python3.12/site-packages/packaging-26.3.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="5436.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-222)">
+</text><text class="terminal-3391370205-r2" x="0" y="5461.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-223)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="5461.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-223)">
+</text><text class="terminal-3391370205-r2" x="0" y="5485.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-224)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="5485.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-224)">
+</text><text class="terminal-3391370205-r2" x="0" y="5510" textLength="85.4" clip-path="url(#terminal-3391370205-line-225)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="5510" textLength="12.2" clip-path="url(#terminal-3391370205-line-225)">
+</text><text class="terminal-3391370205-r2" x="0" y="5534.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-226)">│&#160;opt/venv/lib/python3.12/site-packages/pillow-13.0.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="5534.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-226)">
+</text><text class="terminal-3391370205-r2" x="0" y="5558.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-227)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="5558.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-227)">
+</text><text class="terminal-3391370205-r2" x="0" y="5583.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-228)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="5583.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-228)">
+</text><text class="terminal-3391370205-r2" x="0" y="5607.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-229)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="5607.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-229)">
+</text><text class="terminal-3391370205-r2" x="0" y="5632" textLength="1439.6" clip-path="url(#terminal-3391370205-line-230)">│&#160;opt/venv/lib/python3.12/site-packages/pip-25.0.1.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="5632" textLength="12.2" clip-path="url(#terminal-3391370205-line-230)">
+</text><text class="terminal-3391370205-r2" x="0" y="5656.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-231)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="5656.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-231)">
+</text><text class="terminal-3391370205-r2" x="0" y="5680.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-232)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="5680.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-232)">
+</text><text class="terminal-3391370205-r2" x="0" y="5705.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-233)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="5705.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-233)">
+</text><text class="terminal-3391370205-r2" x="0" y="5729.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-234)">│&#160;opt/venv/lib/python3.12/site-packages/prompt_toolkit-3.0.53.dist-info/METADATA&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="5729.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-234)">
+</text><text class="terminal-3391370205-r2" x="0" y="5754" textLength="73.2" clip-path="url(#terminal-3391370205-line-235)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="5754" textLength="12.2" clip-path="url(#terminal-3391370205-line-235)">
+</text><text class="terminal-3391370205-r2" x="0" y="5778.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-236)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="5778.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-236)">
+</text><text class="terminal-3391370205-r2" x="0" y="5802.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-237)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="5802.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-237)">
+</text><text class="terminal-3391370205-r2" x="0" y="5827.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-238)">│&#160;opt/venv/lib/python3.12/site-packages/psycopg-3.3.8.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="5827.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-238)">
+</text><text class="terminal-3391370205-r2" x="0" y="5851.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-239)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="5851.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-239)">
+</text><text class="terminal-3391370205-r2" x="0" y="5876" textLength="1439.6" clip-path="url(#terminal-3391370205-line-240)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="5876" textLength="12.2" clip-path="url(#terminal-3391370205-line-240)">
+</text><text class="terminal-3391370205-r2" x="0" y="5900.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-241)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="5900.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-241)">
+</text><text class="terminal-3391370205-r2" x="0" y="5924.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-242)">│&#160;opt/venv/lib/python3.12/site-packages/psycopg_binary-3.3.8.dist-info/METADATA&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="5924.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-242)">
+</text><text class="terminal-3391370205-r2" x="0" y="5949.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-243)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="5949.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-243)">
+</text><text class="terminal-3391370205-r2" x="0" y="5973.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-244)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="5973.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-244)">
+</text><text class="terminal-3391370205-r2" x="0" y="5998" textLength="85.4" clip-path="url(#terminal-3391370205-line-245)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="5998" textLength="12.2" clip-path="url(#terminal-3391370205-line-245)">
+</text><text class="terminal-3391370205-r2" x="0" y="6022.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-246)">│&#160;opt/venv/lib/python3.12/site-packages/pycparser-3.12.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="6022.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-246)">
+</text><text class="terminal-3391370205-r2" x="0" y="6046.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-247)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="6046.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-247)">
+</text><text class="terminal-3391370205-r2" x="0" y="6071.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-248)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="6071.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-248)">
+</text><text class="terminal-3391370205-r2" x="0" y="6095.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-249)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="6095.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-249)">
+</text><text class="terminal-3391370205-r2" x="0" y="6120" textLength="1439.6" clip-path="url(#terminal-3391370205-line-250)">│&#160;opt/venv/lib/python3.12/site-packages/python_crontab-3.4.0.dist-info/METADATA&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="6120" textLength="12.2" clip-path="url(#terminal-3391370205-line-250)">
+</text><text class="terminal-3391370205-r2" x="0" y="6144.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-251)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="6144.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-251)">
+</text><text class="terminal-3391370205-r2" x="0" y="6168.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-252)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="6168.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-252)">
+</text><text class="terminal-3391370205-r2" x="0" y="6193.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-253)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="6193.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-253)">
+</text><text class="terminal-3391370205-r2" x="0" y="6217.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-254)">│&#160;opt/venv/lib/python3.12/site-packages/python_dateutil-2.9.0.post0.dist-info/MET-&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="6217.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-254)">
+</text><text class="terminal-3391370205-r2" x="0" y="6242" textLength="73.2" clip-path="url(#terminal-3391370205-line-255)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="6242" textLength="12.2" clip-path="url(#terminal-3391370205-line-255)">
+</text><text class="terminal-3391370205-r2" x="0" y="6266.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-256)">│&#160;ADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="6266.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-256)">
+</text><text class="terminal-3391370205-r2" x="0" y="6290.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-257)">│</text><text class="terminal-3391370205-r2" x="1439.6" y="6290.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-257)">
+</text><text class="terminal-3391370205-r2" x="0" y="6315.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-258)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="6315.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-258)">
+</text><text class="terminal-3391370205-r2" x="0" y="6339.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-259)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="6339.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-259)">
+</text><text class="terminal-3391370205-r2" x="0" y="6364" textLength="1439.6" clip-path="url(#terminal-3391370205-line-260)">│&#160;opt/venv/lib/python3.12/site-packages/python_json_logger-4.2.0.dist-info/METADA-&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="6364" textLength="12.2" clip-path="url(#terminal-3391370205-line-260)">
+</text><text class="terminal-3391370205-r2" x="0" y="6388.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-261)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="6388.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-261)">
+</text><text class="terminal-3391370205-r2" x="0" y="6412.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-262)">│&#160;TA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="6412.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-262)">
+</text><text class="terminal-3391370205-r2" x="0" y="6437.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-263)">│</text><text class="terminal-3391370205-r2" x="1439.6" y="6437.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-263)">
+</text><text class="terminal-3391370205-r2" x="0" y="6461.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-264)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="6461.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-264)">
+</text><text class="terminal-3391370205-r2" x="0" y="6486" textLength="85.4" clip-path="url(#terminal-3391370205-line-265)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="6486" textLength="12.2" clip-path="url(#terminal-3391370205-line-265)">
+</text><text class="terminal-3391370205-r2" x="0" y="6510.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-266)">│&#160;opt/venv/lib/python3.12/site-packages/pyyaml-6.0.3.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="6510.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-266)">
+</text><text class="terminal-3391370205-r2" x="0" y="6534.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-267)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="6534.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-267)">
+</text><text class="terminal-3391370205-r2" x="0" y="6559.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-268)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="6559.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-268)">
+</text><text class="terminal-3391370205-r2" x="0" y="6583.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-269)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="6583.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-269)">
+</text><text class="terminal-3391370205-r2" x="0" y="6608" textLength="1439.6" clip-path="url(#terminal-3391370205-line-270)">│&#160;opt/venv/lib/python3.12/site-packages/qrcode-8.2.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="6608" textLength="12.2" clip-path="url(#terminal-3391370205-line-270)">
+</text><text class="terminal-3391370205-r2" x="0" y="6632.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-271)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="6632.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-271)">
+</text><text class="terminal-3391370205-r2" x="0" y="6656.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-272)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="6656.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-272)">
+</text><text class="terminal-3391370205-r2" x="0" y="6681.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-273)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="6681.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-273)">
+</text><text class="terminal-3391370205-r2" x="0" y="6705.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-274)">│&#160;opt/venv/lib/python3.12/site-packages/redis-8.1.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="6705.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-274)">
+</text><text class="terminal-3391370205-r2" x="0" y="6730" textLength="73.2" clip-path="url(#terminal-3391370205-line-275)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="6730" textLength="12.2" clip-path="url(#terminal-3391370205-line-275)">
+</text><text class="terminal-3391370205-r2" x="0" y="6754.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-276)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="6754.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-276)">
+</text><text class="terminal-3391370205-r2" x="0" y="6778.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-277)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="6778.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-277)">
+</text><text class="terminal-3391370205-r2" x="0" y="6803.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-278)">│&#160;opt/venv/lib/python3.12/site-packages/referencing-0.37.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="6803.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-278)">
+</text><text class="terminal-3391370205-r2" x="0" y="6827.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-279)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="6827.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-279)">
+</text><text class="terminal-3391370205-r2" x="0" y="6852" textLength="1439.6" clip-path="url(#terminal-3391370205-line-280)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="6852" textLength="12.2" clip-path="url(#terminal-3391370205-line-280)">
+</text><text class="terminal-3391370205-r2" x="0" y="6876.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-281)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="6876.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-281)">
+</text><text class="terminal-3391370205-r2" x="0" y="6900.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-282)">│&#160;opt/venv/lib/python3.12/site-packages/reportlab-5.1.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="6900.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-282)">
+</text><text class="terminal-3391370205-r2" x="0" y="6925.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-283)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="6925.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-283)">
+</text><text class="terminal-3391370205-r2" x="0" y="6949.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-284)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="6949.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-284)">
+</text><text class="terminal-3391370205-r2" x="0" y="6974" textLength="85.4" clip-path="url(#terminal-3391370205-line-285)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="6974" textLength="12.2" clip-path="url(#terminal-3391370205-line-285)">
+</text><text class="terminal-3391370205-r2" x="0" y="6998.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-286)">│&#160;opt/venv/lib/python3.12/site-packages/requests-2.34.2.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="6998.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-286)">
+</text><text class="terminal-3391370205-r2" x="0" y="7022.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-287)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="7022.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-287)">
+</text><text class="terminal-3391370205-r2" x="0" y="7047.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-288)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="7047.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-288)">
+</text><text class="terminal-3391370205-r2" x="0" y="7071.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-289)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="7071.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-289)">
+</text><text class="terminal-3391370205-r2" x="0" y="7096" textLength="1439.6" clip-path="url(#terminal-3391370205-line-290)">│&#160;opt/venv/lib/python3.12/site-packages/rpds_py-2026.9.1.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="7096" textLength="12.2" clip-path="url(#terminal-3391370205-line-290)">
+</text><text class="terminal-3391370205-r2" x="0" y="7120.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-291)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="7120.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-291)">
+</text><text class="terminal-3391370205-r2" x="0" y="7144.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-292)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="7144.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-292)">
+</text><text class="terminal-3391370205-r2" x="0" y="7169.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-293)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="7169.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-293)">
+</text><text class="terminal-3391370205-r2" x="0" y="7193.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-294)">│&#160;opt/venv/lib/python3.12/site-packages/s3transfer-0.19.3.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="7193.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-294)">
+</text><text class="terminal-3391370205-r2" x="0" y="7218" textLength="73.2" clip-path="url(#terminal-3391370205-line-295)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="7218" textLength="12.2" clip-path="url(#terminal-3391370205-line-295)">
+</text><text class="terminal-3391370205-r2" x="0" y="7242.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-296)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="7242.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-296)">
+</text><text class="terminal-3391370205-r2" x="0" y="7266.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-297)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="7266.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-297)">
+</text><text class="terminal-3391370205-r2" x="0" y="7291.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-298)">│&#160;opt/venv/lib/python3.12/site-packages/semver-3.1.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="7291.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-298)">
+</text><text class="terminal-3391370205-r2" x="0" y="7315.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-299)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="7315.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-299)">
+</text><text class="terminal-3391370205-r2" x="0" y="7340" textLength="1439.6" clip-path="url(#terminal-3391370205-line-300)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="7340" textLength="12.2" clip-path="url(#terminal-3391370205-line-300)">
+</text><text class="terminal-3391370205-r2" x="0" y="7364.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-301)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="7364.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-301)">
+</text><text class="terminal-3391370205-r2" x="0" y="7388.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-302)">│&#160;opt/venv/lib/python3.12/site-packages/sentry_sdk-2.74.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="7388.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-302)">
+</text><text class="terminal-3391370205-r2" x="0" y="7413.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-303)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="7413.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-303)">
+</text><text class="terminal-3391370205-r2" x="0" y="7437.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-304)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="7437.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-304)">
+</text><text class="terminal-3391370205-r2" x="0" y="7462" textLength="85.4" clip-path="url(#terminal-3391370205-line-305)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="7462" textLength="12.2" clip-path="url(#terminal-3391370205-line-305)">
+</text><text class="terminal-3391370205-r2" x="0" y="7486.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-306)">│&#160;opt/venv/lib/python3.12/site-packages/six-1.17.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="7486.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-306)">
+</text><text class="terminal-3391370205-r2" x="0" y="7510.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-307)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="7510.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-307)">
+</text><text class="terminal-3391370205-r2" x="0" y="7535.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-308)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="7535.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-308)">
+</text><text class="terminal-3391370205-r2" x="0" y="7559.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-309)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="7559.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-309)">
+</text><text class="terminal-3391370205-r2" x="0" y="7584" textLength="1439.6" clip-path="url(#terminal-3391370205-line-310)">│&#160;opt/venv/lib/python3.12/site-packages/sqlparse-0.6.1.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="7584" textLength="12.2" clip-path="url(#terminal-3391370205-line-310)">
+</text><text class="terminal-3391370205-r2" x="0" y="7608.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-311)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="7608.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-311)">
+</text><text class="terminal-3391370205-r2" x="0" y="7632.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-312)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="7632.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-312)">
+</text><text class="terminal-3391370205-r2" x="0" y="7657.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-313)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="7657.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-313)">
+</text><text class="terminal-3391370205-r2" x="0" y="7681.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-314)">│&#160;opt/venv/lib/python3.12/site-packages/typing_extensions-4.16.0.dist-info/METADA-&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="7681.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-314)">
+</text><text class="terminal-3391370205-r2" x="0" y="7706" textLength="73.2" clip-path="url(#terminal-3391370205-line-315)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="7706" textLength="12.2" clip-path="url(#terminal-3391370205-line-315)">
+</text><text class="terminal-3391370205-r2" x="0" y="7730.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-316)">│&#160;TA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="7730.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-316)">
+</text><text class="terminal-3391370205-r2" x="0" y="7754.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-317)">│</text><text class="terminal-3391370205-r2" x="1439.6" y="7754.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-317)">
+</text><text class="terminal-3391370205-r2" x="0" y="7779.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-318)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="7779.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-318)">
+</text><text class="terminal-3391370205-r2" x="0" y="7803.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-319)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="7803.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-319)">
+</text><text class="terminal-3391370205-r2" x="0" y="7828" textLength="1439.6" clip-path="url(#terminal-3391370205-line-320)">│&#160;opt/venv/lib/python3.12/site-packages/tzdata-2026.6.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="7828" textLength="12.2" clip-path="url(#terminal-3391370205-line-320)">
+</text><text class="terminal-3391370205-r2" x="0" y="7852.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-321)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="7852.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-321)">
+</text><text class="terminal-3391370205-r2" x="0" y="7876.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-322)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="7876.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-322)">
+</text><text class="terminal-3391370205-r2" x="0" y="7901.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-323)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="7901.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-323)">
+</text><text class="terminal-3391370205-r2" x="0" y="7925.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-324)">│&#160;opt/venv/lib/python3.12/site-packages/tzlocal-5.4.5.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="7925.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-324)">
+</text><text class="terminal-3391370205-r2" x="0" y="7950" textLength="73.2" clip-path="url(#terminal-3391370205-line-325)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="7950" textLength="12.2" clip-path="url(#terminal-3391370205-line-325)">
+</text><text class="terminal-3391370205-r2" x="0" y="7974.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-326)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="7974.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-326)">
+</text><text class="terminal-3391370205-r2" x="0" y="7998.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-327)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="7998.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-327)">
+</text><text class="terminal-3391370205-r2" x="0" y="8023.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-328)">│&#160;opt/venv/lib/python3.12/site-packages/uritemplate-4.2.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="8023.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-328)">
+</text><text class="terminal-3391370205-r2" x="0" y="8047.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-329)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="8047.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-329)">
+</text><text class="terminal-3391370205-r2" x="0" y="8072" textLength="1439.6" clip-path="url(#terminal-3391370205-line-330)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="8072" textLength="12.2" clip-path="url(#terminal-3391370205-line-330)">
+</text><text class="terminal-3391370205-r2" x="0" y="8096.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-331)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="8096.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-331)">
+</text><text class="terminal-3391370205-r2" x="0" y="8120.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-332)">│&#160;opt/venv/lib/python3.12/site-packages/urllib3-2.8.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="8120.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-332)">
+</text><text class="terminal-3391370205-r2" x="0" y="8145.2" textLength="73.2" clip-path="url(#terminal-3391370205-line-333)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="8145.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-333)">
+</text><text class="terminal-3391370205-r2" x="0" y="8169.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-334)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="8169.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-334)">
+</text><text class="terminal-3391370205-r2" x="0" y="8194" textLength="85.4" clip-path="url(#terminal-3391370205-line-335)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="8194" textLength="12.2" clip-path="url(#terminal-3391370205-line-335)">
+</text><text class="terminal-3391370205-r2" x="0" y="8218.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-336)">│&#160;opt/venv/lib/python3.12/site-packages/vine-5.1.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="8218.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-336)">
+</text><text class="terminal-3391370205-r2" x="0" y="8242.8" textLength="73.2" clip-path="url(#terminal-3391370205-line-337)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="8242.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-337)">
+</text><text class="terminal-3391370205-r2" x="0" y="8267.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-338)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="8267.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-338)">
+</text><text class="terminal-3391370205-r2" x="0" y="8291.6" textLength="85.4" clip-path="url(#terminal-3391370205-line-339)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="8291.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-339)">
+</text><text class="terminal-3391370205-r2" x="0" y="8316" textLength="1439.6" clip-path="url(#terminal-3391370205-line-340)">│&#160;opt/venv/lib/python3.12/site-packages/wcwidth-0.9.4.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="8316" textLength="12.2" clip-path="url(#terminal-3391370205-line-340)">
+</text><text class="terminal-3391370205-r2" x="0" y="8340.4" textLength="73.2" clip-path="url(#terminal-3391370205-line-341)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="8340.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-341)">
+</text><text class="terminal-3391370205-r2" x="0" y="8364.8" textLength="1439.6" clip-path="url(#terminal-3391370205-line-342)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="8364.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-342)">
+</text><text class="terminal-3391370205-r2" x="0" y="8389.2" textLength="85.4" clip-path="url(#terminal-3391370205-line-343)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="8389.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-343)">
+</text><text class="terminal-3391370205-r2" x="0" y="8413.6" textLength="1439.6" clip-path="url(#terminal-3391370205-line-344)">│&#160;opt/venv/lib/python3.12/site-packages/whitenoise-6.12.0.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="8413.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-344)">
+</text><text class="terminal-3391370205-r2" x="0" y="8438" textLength="73.2" clip-path="url(#terminal-3391370205-line-345)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="8438" textLength="12.2" clip-path="url(#terminal-3391370205-line-345)">
+</text><text class="terminal-3391370205-r2" x="0" y="8462.4" textLength="1439.6" clip-path="url(#terminal-3391370205-line-346)">├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼───</text><text class="terminal-3391370205-r2" x="1439.6" y="8462.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-346)">
+</text><text class="terminal-3391370205-r2" x="0" y="8486.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-347)">──────┤</text><text class="terminal-3391370205-r2" x="1439.6" y="8486.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-347)">
+</text><text class="terminal-3391370205-r2" x="0" y="8511.2" textLength="1439.6" clip-path="url(#terminal-3391370205-line-348)">│&#160;usr/local/lib/python3.12/site-packages/pip-25.0.1.dist-info/METADATA&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;python-pkg&#160;│&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;│&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="8511.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-348)">
+</text><text class="terminal-3391370205-r2" x="0" y="8535.6" textLength="73.2" clip-path="url(#terminal-3391370205-line-349)">-&#160;&#160;&#160;&#160;│</text><text class="terminal-3391370205-r2" x="1439.6" y="8535.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-349)">
+</text><text class="terminal-3391370205-r2" x="0" y="8560" textLength="1439.6" clip-path="url(#terminal-3391370205-line-350)">└──────────────────────────────────────────────────────────────────────────────────┴────────────┴─────────────────┴───</text><text class="terminal-3391370205-r2" x="1439.6" y="8560" textLength="12.2" clip-path="url(#terminal-3391370205-line-350)">
+</text><text class="terminal-3391370205-r2" x="0" y="8584.4" textLength="85.4" clip-path="url(#terminal-3391370205-line-351)">──────┘</text><text class="terminal-3391370205-r2" x="1439.6" y="8584.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-351)">
+</text><text class="terminal-3391370205-r2" x="0" y="8608.8" textLength="85.4" clip-path="url(#terminal-3391370205-line-352)">Legend:</text><text class="terminal-3391370205-r2" x="1439.6" y="8608.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-352)">
+</text><text class="terminal-3391370205-r2" x="0" y="8633.2" textLength="219.6" clip-path="url(#terminal-3391370205-line-353)">-&#160;&#x27;-&#x27;:&#160;Not&#160;scanned</text><text class="terminal-3391370205-r2" x="1439.6" y="8633.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-353)">
+</text><text class="terminal-3391370205-r2" x="0" y="8657.6" textLength="536.8" clip-path="url(#terminal-3391370205-line-354)">-&#160;&#x27;0&#x27;:&#160;Clean&#160;(no&#160;security&#160;findings&#160;detected)</text><text class="terminal-3391370205-r2" x="1439.6" y="8657.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-354)">
+</text><text class="terminal-3391370205-r2" x="1439.6" y="8682" textLength="12.2" clip-path="url(#terminal-3391370205-line-355)">
+</text><text class="terminal-3391370205-r2" x="0" y="8706.4" textLength="707.6" clip-path="url(#terminal-3391370205-line-356)">2026-11-13T08:23:48Z&#160;&#160;&#160;&#160;INFO&#160;&#160;&#160;&#160;[vulndb]&#160;Need&#160;to&#160;update&#160;DB</text><text class="terminal-3391370205-r2" x="1439.6" y="8706.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-356)">
+</text><text class="terminal-3391370205-r2" x="0" y="8730.8" textLength="878.4" clip-path="url(#terminal-3391370205-line-357)">2026-11-13T08:23:48Z&#160;&#160;&#160;&#160;INFO&#160;&#160;&#160;&#160;[vulndb]&#160;Downloading&#160;vulnerability&#160;DB...</text><text class="terminal-3391370205-r2" x="1439.6" y="8730.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-357)">
+</text><text class="terminal-3391370205-r2" x="0" y="8755.2" textLength="1354.2" clip-path="url(#terminal-3391370205-line-358)">2026-11-13T08:23:48Z&#160;&#160;&#160;&#160;INFO&#160;&#160;&#160;&#160;[vulndb]&#160;Downloading&#160;artifact...&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;repo=&quot;mirror.gcr.io/aquasec/trivy-db:2&quot;</text><text class="terminal-3391370205-r2" x="1439.6" y="8755.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-358)">
+</text><text class="terminal-3391370205-r2" x="0" y="8779.6" textLength="976" clip-path="url(#terminal-3391370205-line-359)">2026-11-13T08:24:10Z&#160;&#160;&#160;&#160;INFO&#160;&#160;&#160;&#160;[vulndb]&#160;Artifact&#160;successfully&#160;downloaded&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="8779.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-359)">
+</text><text class="terminal-3391370205-r2" x="0" y="8804" textLength="475.8" clip-path="url(#terminal-3391370205-line-360)">repo=&quot;mirror.gcr.io/aquasec/trivy-db:2&quot;</text><text class="terminal-3391370205-r2" x="1439.6" y="8804" textLength="12.2" clip-path="url(#terminal-3391370205-line-360)">
+</text><text class="terminal-3391370205-r2" x="0" y="8828.4" textLength="878.4" clip-path="url(#terminal-3391370205-line-361)">2026-11-13T08:24:10Z&#160;&#160;&#160;&#160;INFO&#160;&#160;&#160;&#160;[vuln]&#160;Vulnerability&#160;scanning&#160;is&#160;enabled</text><text class="terminal-3391370205-r2" x="1439.6" y="8828.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-361)">
+</text><text class="terminal-3391370205-r2" x="0" y="8852.8" textLength="817.4" clip-path="url(#terminal-3391370205-line-362)">2026-11-13T08:24:10Z&#160;&#160;&#160;&#160;INFO&#160;&#160;&#160;&#160;[secret]&#160;Secret&#160;scanning&#160;is&#160;enabled</text><text class="terminal-3391370205-r2" x="1439.6" y="8852.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-362)">
+</text><text class="terminal-3391370205-r2" x="0" y="8877.2" textLength="1390.8" clip-path="url(#terminal-3391370205-line-363)">2026-11-13T08:24:10Z&#160;&#160;&#160;&#160;INFO&#160;&#160;&#160;&#160;[secret]&#160;If&#160;your&#160;scanning&#160;is&#160;slow,&#160;please&#160;try&#160;&#x27;--scanners&#160;vuln&#x27;&#160;to&#160;disable&#160;secret&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="8877.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-363)">
+</text><text class="terminal-3391370205-r2" x="0" y="8901.6" textLength="97.6" clip-path="url(#terminal-3391370205-line-364)">scanning</text><text class="terminal-3391370205-r2" x="1439.6" y="8901.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-364)">
+</text><text class="terminal-3391370205-r2" x="0" y="8926" textLength="1427.4" clip-path="url(#terminal-3391370205-line-365)">2026-11-13T08:24:10Z&#160;&#160;&#160;&#160;INFO&#160;&#160;&#160;&#160;[secret]&#160;Please&#160;see&#160;https://trivy.dev/docs/v0.76/guide/scanner/secret#recommendation&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="8926" textLength="12.2" clip-path="url(#terminal-3391370205-line-365)">
+</text><text class="terminal-3391370205-r2" x="0" y="8950.4" textLength="329.4" clip-path="url(#terminal-3391370205-line-366)">for&#160;faster&#160;secret&#160;detection</text><text class="terminal-3391370205-r2" x="1439.6" y="8950.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-366)">
+</text><text class="terminal-3391370205-r2" x="0" y="8974.8" textLength="1329.8" clip-path="url(#terminal-3391370205-line-367)">2026-11-13T08:24:16Z&#160;&#160;&#160;&#160;INFO&#160;&#160;&#160;&#160;[python]&#160;Licenses&#160;acquired&#160;from&#160;one&#160;or&#160;more&#160;METADATA&#160;files&#160;may&#160;be&#160;subject&#160;to&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="8974.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-367)">
+</text><text class="terminal-3391370205-r2" x="0" y="8999.2" textLength="805.2" clip-path="url(#terminal-3391370205-line-368)">additional&#160;terms.&#160;Use&#160;`--debug`&#160;flag&#160;to&#160;see&#160;all&#160;affected&#160;packages.</text><text class="terminal-3391370205-r2" x="1439.6" y="8999.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-368)">
+</text><text class="terminal-3391370205-r2" x="0" y="9023.6" textLength="951.6" clip-path="url(#terminal-3391370205-line-369)">2026-11-13T08:24:20Z&#160;&#160;&#160;&#160;INFO&#160;&#160;&#160;&#160;Detected&#160;OS&#160;&#160;&#160;&#160;&#160;family=&quot;debian&quot;&#160;version=&quot;13.7&quot;</text><text class="terminal-3391370205-r2" x="1439.6" y="9023.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-369)">
+</text><text class="terminal-3391370205-r2" x="0" y="9048" textLength="1195.6" clip-path="url(#terminal-3391370205-line-370)">2026-11-13T08:24:20Z&#160;&#160;&#160;&#160;INFO&#160;&#160;&#160;&#160;[debian]&#160;Detecting&#160;vulnerabilities...&#160;&#160;&#160;os_version=&quot;13&quot;&#160;pkg_num=87</text><text class="terminal-3391370205-r2" x="1439.6" y="9048" textLength="12.2" clip-path="url(#terminal-3391370205-line-370)">
+</text><text class="terminal-3391370205-r2" x="0" y="9072.4" textLength="939.4" clip-path="url(#terminal-3391370205-line-371)">2026-11-13T08:24:20Z&#160;&#160;&#160;&#160;INFO&#160;&#160;&#160;&#160;Number&#160;of&#160;language-specific&#160;files&#160;&#160;&#160;&#160;&#160;&#160;&#160;num=1</text><text class="terminal-3391370205-r2" x="1439.6" y="9072.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-371)">
+</text><text class="terminal-3391370205-r2" x="0" y="9096.8" textLength="890.6" clip-path="url(#terminal-3391370205-line-372)">2026-11-13T08:24:20Z&#160;&#160;&#160;&#160;INFO&#160;&#160;&#160;&#160;[python-pkg]&#160;Detecting&#160;vulnerabilities...</text><text class="terminal-3391370205-r2" x="1439.6" y="9096.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-372)">
+</text><text class="terminal-3391370205-r2" x="0" y="9121.2" textLength="1207.8" clip-path="url(#terminal-3391370205-line-373)">2026-11-13T08:24:20Z&#160;&#160;&#160;&#160;WARN&#160;&#160;&#160;&#160;Using&#160;severities&#160;from&#160;other&#160;vendors&#160;for&#160;some&#160;vulnerabilities.&#160;Read&#160;</text><text class="terminal-3391370205-r2" x="1439.6" y="9121.2" textLength="12.2" clip-path="url(#terminal-3391370205-line-373)">
+</text><text class="terminal-3391370205-r2" x="0" y="9145.6" textLength="1073.6" clip-path="url(#terminal-3391370205-line-374)">https://trivy.dev/docs/v0.76/guide/scanner/vulnerability#severity-selection&#160;for&#160;details.</text><text class="terminal-3391370205-r2" x="1439.6" y="9145.6" textLength="12.2" clip-path="url(#terminal-3391370205-line-374)">
+</text><text class="terminal-3391370205-r3" x="0" y="9170" textLength="183" clip-path="url(#terminal-3391370205-line-375)">┌─────────────┐</text><text class="terminal-3391370205-r2" x="1439.6" y="9170" textLength="12.2" clip-path="url(#terminal-3391370205-line-375)">
+</text><text class="terminal-3391370205-r3" x="0" y="9194.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-376)">│</text><text class="terminal-3391370205-r3" x="24.4" y="9194.4" textLength="134.2" clip-path="url(#terminal-3391370205-line-376)">OK&#160;·&#160;32.9&#160;s</text><text class="terminal-3391370205-r3" x="170.8" y="9194.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-376)">│</text><text class="terminal-3391370205-r2" x="1439.6" y="9194.4" textLength="12.2" clip-path="url(#terminal-3391370205-line-376)">
+</text><text class="terminal-3391370205-r3" x="0" y="9218.8" textLength="183" clip-path="url(#terminal-3391370205-line-377)">└─────────────┘</text><text class="terminal-3391370205-r2" x="1439.6" y="9218.8" textLength="12.2" clip-path="url(#terminal-3391370205-line-377)">
+</text>
+    </g>
+    </g>
+</svg>

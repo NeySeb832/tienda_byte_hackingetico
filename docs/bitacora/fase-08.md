@@ -25,7 +25,14 @@
 | Session/Authentication identified, Storable content, Suspicious comments, Dangerous JS | Informativas: formularios de login, páginas públicas cacheables y código minificado de terceros |
 
 ## Evidencias
-RESULTADOS_EVIDENCIAS
+| Verificación | Resultado |
+|--------------|-----------|
+| Tests (BD recién creada) | ✅ **724 pasan**, cobertura **93 %** |
+| ruff · black · mypy · bandit · pip-audit · check --deploy · cabeceras · vendor · matriz · auditoría | ✅ |
+| SBOM CycloneDX | ✅ `docs/seguridad/sbom.cdx.json` |
+| OWASP ZAP baseline | ✅ 0 fallos (13 advertencias analizadas arriba) |
+| semgrep | ✅ **0 hallazgos** en 152 reglas y 414 archivos |
+| Trivy | ✅ 0 HIGH/CRITICAL corregibles |
 
 ## Pendientes
 ZAP activo (ataque) solo contra un entorno de staging, nunca contra producción.

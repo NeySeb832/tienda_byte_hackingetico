@@ -19,57 +19,57 @@
         font-weight: 700;
     }
 
-    .terminal-920999462-matrix {
+    .terminal-2306560530-matrix {
         font-family: Fira Code, monospace;
         font-size: 20px;
         line-height: 24.4px;
         font-variant-east-asian: full-width;
     }
 
-    .terminal-920999462-title {
+    .terminal-2306560530-title {
         font-size: 18px;
         font-weight: bold;
         font-family: arial;
     }
 
-    .terminal-920999462-r1 { fill: #68a0b3;font-weight: bold }
-.terminal-920999462-r2 { fill: #c5c8c6 }
-.terminal-920999462-r3 { fill: #98a84b }
+    .terminal-2306560530-r1 { fill: #68a0b3;font-weight: bold }
+.terminal-2306560530-r2 { fill: #c5c8c6 }
+.terminal-2306560530-r3 { fill: #98a84b }
     </style>
 
     <defs>
-    <clipPath id="terminal-920999462-clip-terminal">
+    <clipPath id="terminal-2306560530-clip-terminal">
       <rect x="0" y="0" width="1438.6" height="121.0" />
     </clipPath>
-    <clipPath id="terminal-920999462-line-0">
+    <clipPath id="terminal-2306560530-line-0">
     <rect x="0" y="1.5" width="1439.6" height="24.65"/>
             </clipPath>
-<clipPath id="terminal-920999462-line-1">
+<clipPath id="terminal-2306560530-line-1">
     <rect x="0" y="25.9" width="1439.6" height="24.65"/>
             </clipPath>
-<clipPath id="terminal-920999462-line-2">
+<clipPath id="terminal-2306560530-line-2">
     <rect x="0" y="50.3" width="1439.6" height="24.65"/>
             </clipPath>
-<clipPath id="terminal-920999462-line-3">
+<clipPath id="terminal-2306560530-line-3">
     <rect x="0" y="74.7" width="1439.6" height="24.65"/>
             </clipPath>
     </defs>
 
-    <rect fill="#292929" stroke="rgba(255,255,255,0.35)" stroke-width="1" x="1" y="1" width="1456" height="170" rx="8"/><text class="terminal-920999462-title" fill="#c5c8c6" text-anchor="middle" x="728" y="27">Byte&#160;·&#160;SBOM&#160;CycloneDX&#160;de&#160;las&#160;dependencias&#160;de&#160;producción</text>
+    <rect fill="#292929" stroke="rgba(255,255,255,0.35)" stroke-width="1" x="1" y="1" width="1456" height="170" rx="8"/><text class="terminal-2306560530-title" fill="#c5c8c6" text-anchor="middle" x="728" y="27">Byte&#160;·&#160;SBOM&#160;CycloneDX&#160;de&#160;las&#160;dependencias&#160;de&#160;producción</text>
             <g transform="translate(26,22)">
             <circle cx="0" cy="0" r="7" fill="#ff5f57"/>
             <circle cx="22" cy="0" r="7" fill="#febc2e"/>
             <circle cx="44" cy="0" r="7" fill="#28c840"/>
             </g>
         
-    <g transform="translate(9, 41)" clip-path="url(#terminal-920999462-clip-terminal)">
+    <g transform="translate(9, 41)" clip-path="url(#terminal-2306560530-clip-terminal)">
     
-    <g class="terminal-920999462-matrix">
-    <text class="terminal-920999462-r1" x="0" y="20" textLength="1281" clip-path="url(#terminal-920999462-line-0)">$&#160;python.exe&#160;-m&#160;cyclonedx_py&#160;requirements&#160;requirements/prod.txt&#160;--of&#160;JSON&#160;-o&#160;docs/seguridad/sbom.cdx.json</text><text class="terminal-920999462-r2" x="1439.6" y="20" textLength="12.2" clip-path="url(#terminal-920999462-line-0)">
-</text><text class="terminal-920999462-r2" x="0" y="44.4" textLength="146.4" clip-path="url(#terminal-920999462-line-1)">(sin&#160;salida)</text><text class="terminal-920999462-r2" x="1439.6" y="44.4" textLength="12.2" clip-path="url(#terminal-920999462-line-1)">
-</text><text class="terminal-920999462-r3" x="0" y="68.8" textLength="183" clip-path="url(#terminal-920999462-line-2)">┌─────────────┐</text><text class="terminal-920999462-r2" x="1439.6" y="68.8" textLength="12.2" clip-path="url(#terminal-920999462-line-2)">
-</text><text class="terminal-920999462-r3" x="0" y="93.2" textLength="12.2" clip-path="url(#terminal-920999462-line-3)">│</text><text class="terminal-920999462-r3" x="24.4" y="93.2" textLength="134.2" clip-path="url(#terminal-920999462-line-3)">OK&#160;·&#160;10.0&#160;s</text><text class="terminal-920999462-r3" x="170.8" y="93.2" textLength="12.2" clip-path="url(#terminal-920999462-line-3)">│</text><text class="terminal-920999462-r2" x="1439.6" y="93.2" textLength="12.2" clip-path="url(#terminal-920999462-line-3)">
-</text><text class="terminal-920999462-r3" x="0" y="117.6" textLength="183" clip-path="url(#terminal-920999462-line-4)">└─────────────┘</text><text class="terminal-920999462-r2" x="1439.6" y="117.6" textLength="12.2" clip-path="url(#terminal-920999462-line-4)">
+    <g class="terminal-2306560530-matrix">
+    <text class="terminal-2306560530-r1" x="0" y="20" textLength="1281" clip-path="url(#terminal-2306560530-line-0)">$&#160;python.exe&#160;-m&#160;cyclonedx_py&#160;requirements&#160;requirements/prod.txt&#160;--of&#160;JSON&#160;-o&#160;docs/seguridad/sbom.cdx.json</text><text class="terminal-2306560530-r2" x="1439.6" y="20" textLength="12.2" clip-path="url(#terminal-2306560530-line-0)">
+</text><text class="terminal-2306560530-r2" x="0" y="44.4" textLength="146.4" clip-path="url(#terminal-2306560530-line-1)">(sin&#160;salida)</text><text class="terminal-2306560530-r2" x="1439.6" y="44.4" textLength="12.2" clip-path="url(#terminal-2306560530-line-1)">
+</text><text class="terminal-2306560530-r3" x="0" y="68.8" textLength="170.8" clip-path="url(#terminal-2306560530-line-2)">┌────────────┐</text><text class="terminal-2306560530-r2" x="1439.6" y="68.8" textLength="12.2" clip-path="url(#terminal-2306560530-line-2)">
+</text><text class="terminal-2306560530-r3" x="0" y="93.2" textLength="12.2" clip-path="url(#terminal-2306560530-line-3)">│</text><text class="terminal-2306560530-r3" x="24.4" y="93.2" textLength="122" clip-path="url(#terminal-2306560530-line-3)">OK&#160;·&#160;7.2&#160;s</text><text class="terminal-2306560530-r3" x="158.6" y="93.2" textLength="12.2" clip-path="url(#terminal-2306560530-line-3)">│</text><text class="terminal-2306560530-r2" x="1439.6" y="93.2" textLength="12.2" clip-path="url(#terminal-2306560530-line-3)">
+</text><text class="terminal-2306560530-r3" x="0" y="117.6" textLength="170.8" clip-path="url(#terminal-2306560530-line-4)">└────────────┘</text><text class="terminal-2306560530-r2" x="1439.6" y="117.6" textLength="12.2" clip-path="url(#terminal-2306560530-line-4)">
 </text>
     </g>
     </g>

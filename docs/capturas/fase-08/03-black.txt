@@ -1,0 +1,6 @@
+$ python.exe -m black --check .
+
+All done! ✨ 🍰 ✨
+329 files would be left unchanged.
+
+[OK en 3.0 s]

@@ -1,0 +1,52 @@
+$ python.exe -m bandit -c pyproject.toml -r apps config scripts -ll
+
+
+Working... ----------------------------------------   0% -:--:--
+Working... ----------------------------------------   0% -:--:--
+Working... -- -------------------------------------   5% -:--:--
+Working... ---- -----------------------------------  12% 0:00:02
+Working... ---------- -----------------------------  27% 0:00:01
+Working... ----------- ----------------------------  29% 0:00:02
+Working... ------------ ---------------------------  31% 0:00:02
+Working... --------------- ------------------------  38% 0:00:02
+Working... ------------------ ---------------------  46% 0:00:01
+Working... ------------------ ---------------------  47% 0:00:01
+Working... --------------------- ------------------  53% 0:00:01
+Working... ----------------------- ----------------  60% 0:00:01
+Working... -------------------------- -------------  65% 0:00:01
+Working... ---------------------------- -----------  71% 0:00:01
+Working... ------------------------------ ---------  77% 0:00:01
+Working... ------------------------------------ ---  92% 0:00:01
+Working... -------------------------------------- -  96% 0:00:01
+Working... ---------------------------------------- 100% 0:00:02
+Working... ---------------------------------------- 100% 0:00:02
+Run started:2026-11-13 08:12:32.294987+00:00
+
+Test results:
+	No issues identified.
+
+Code scanned:
+	Total lines of code: 18103
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 2
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 22
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 5
+		High: 17
+Files skipped (0):
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	using config: pyproject.toml
+[main]	INFO	running on Python 3.12.10
+
+[OK en 3.0 s]

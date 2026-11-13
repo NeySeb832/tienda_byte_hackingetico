@@ -1,0 +1,37 @@
+$ docker run --rm -v C:\Users\seb83\Documentos\Universidad\Hacking etico\Tienda Videojuegos IA:/src -w /src semgrep/semgrep:1.184.0@sha256:cc1b68266f267878b39739373ea9985b9a78e5d64497dd875c8de100b22695ed semgrep scan --config p/django --config p/python --error --metrics=off --exclude tests
+
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 703 files tracked by git with 152 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  python          151     321          Community     152                                                                
+  <multilang>       1      93                                                                                           
+                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 0 (0 blocking)
+ • Rules run: 152
+ • Targets scanned: 414
+ • Parsed lines: ~100.0%
+ • Scan skipped: 
+   ◦ Matching --exclude patterns: 69
+   ◦ Files larger than  files 1.0 MB: 6
+   ◦ Files matching .semgrepignore patterns: 4
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 152 rules on 414 files: 0 findings.
+(need more rules? `semgrep login` for additional free Semgrep Registry rules)
+
+If Semgrep missed a finding, please send us feedback to let us know!
+See https://semgrep.dev/docs/reporting-false-negatives/
+
+[OK en 562.3 s]
