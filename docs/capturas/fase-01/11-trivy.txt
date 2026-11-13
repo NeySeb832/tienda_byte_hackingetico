@@ -156,19 +156,19 @@ Legend:
 - '-': Not scanned
 - '0': Clean (no security findings detected)
 
-2026-11-13T03:57:06Z	INFO	[vulndb] Need to update DB
-2026-11-13T03:57:06Z	INFO	[vulndb] Downloading vulnerability DB...
-2026-11-13T03:57:06Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
-2026-11-13T03:57:26Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
-2026-11-13T03:57:26Z	INFO	[vuln] Vulnerability scanning is enabled
-2026-11-13T03:57:26Z	INFO	[secret] Secret scanning is enabled
-2026-11-13T03:57:26Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
-2026-11-13T03:57:26Z	INFO	[secret] Please see https://trivy.dev/docs/v0.76/guide/scanner/secret#recommendation for faster secret detection
-2026-11-13T03:57:33Z	INFO	[python] Licenses acquired from one or more METADATA files may be subject to additional terms. Use `--debug` flag to see all affected packages.
-2026-11-13T03:57:35Z	INFO	Detected OS	family="debian" version="13.7"
-2026-11-13T03:57:35Z	INFO	[debian] Detecting vulnerabilities...	os_version="13" pkg_num=87
-2026-11-13T03:57:35Z	INFO	Number of language-specific files	num=1
-2026-11-13T03:57:35Z	INFO	[python-pkg] Detecting vulnerabilities...
-2026-11-13T03:57:35Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/docs/v0.76/guide/scanner/vulnerability#severity-selection for details.
+2026-11-13T04:04:52Z	INFO	[vulndb] Need to update DB
+2026-11-13T04:04:52Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-11-13T04:04:52Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-11-13T04:05:10Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-11-13T04:05:10Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-11-13T04:05:10Z	INFO	[secret] Secret scanning is enabled
+2026-11-13T04:05:10Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+2026-11-13T04:05:10Z	INFO	[secret] Please see https://trivy.dev/docs/v0.76/guide/scanner/secret#recommendation for faster secret detection
+2026-11-13T04:05:18Z	INFO	[python] Licenses acquired from one or more METADATA files may be subject to additional terms. Use `--debug` flag to see all affected packages.
+2026-11-13T04:05:20Z	INFO	Detected OS	family="debian" version="13.7"
+2026-11-13T04:05:20Z	INFO	[debian] Detecting vulnerabilities...	os_version="13" pkg_num=87
+2026-11-13T04:05:20Z	INFO	Number of language-specific files	num=1
+2026-11-13T04:05:20Z	INFO	[python-pkg] Detecting vulnerabilities...
+2026-11-13T04:05:20Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/docs/v0.76/guide/scanner/vulnerability#severity-selection for details.
 
-[OK en 32.2 s]
+[OK en 34.2 s]

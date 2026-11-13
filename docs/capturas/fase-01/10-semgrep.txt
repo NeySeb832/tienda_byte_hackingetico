@@ -5,7 +5,7 @@ $ docker run --rm -v C:\Users\seb83\Documentos\Universidad\Hacking etico\Tienda 
 ┌─────────────┐
 │ Scan Status │
 └─────────────┘
-  Scanning 296 files tracked by git with 152 Code rules:
+  Scanning 299 files tracked by git with 152 Code rules:
                                                                                                                         
   Language      Rules   Files          Origin      Rules                                                                
  ─────────────────────────────        ───────────────────                                                               
@@ -34,4 +34,4 @@ Ran 152 rules on 235 files: 0 findings.
 If Semgrep missed a finding, please send us feedback to let us know!
 See https://semgrep.dev/docs/reporting-false-negatives/
 
-[OK en 428.5 s]
+[OK en 375.4 s]
