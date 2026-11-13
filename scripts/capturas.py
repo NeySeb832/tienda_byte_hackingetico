@@ -59,6 +59,28 @@ PAGES: dict[int, list[tuple[str, ...] | tuple[str, str, bool] | tuple[str, str, 
         ("panel-vendedor", "/panel/", False, "vendedor@byte.test"),
         ("403-vendedor-en-auditoria", "/panel/auditoria/", False, "vendedor@byte.test"),
     ],
+    3: [
+        ("inicio", "/", True),
+        ("catalogo", "/catalogo/", True),
+        ("categoria-playstation", "/categoria/playstation/", False),
+        ("busqueda-con-error-de-tipeo", "/buscar/?q=plaistation", False),
+        (
+            "filtros-nintendo-usados",
+            "/catalogo/?marca=nintendo&condicion=usado&orden=precio-asc",
+            False,
+        ),
+        ("ficha-ps5-slim", "/producto/playstation-5-slim/", True),
+        ("ficha-variante-agotada", "/producto/playstation-5-slim/?sku=PS5S-DIG-30ANIV-N", False),
+        ("ficha-precio-por-modificadores", "/producto/xbox-series-s/?sku=XSS-1TB-N", False),
+        ("ficha-juego", "/producto/astro-bot/", False),
+        ("ficha-sin-foto", "/producto/playstation-5-pro/", False),
+        (
+            "comparador",
+            "/comparar/",
+            True,
+            "comparar:playstation-5-slim,xbox-series-x,nintendo-switch-2",
+        ),
+    ],
 }
 
 
@@ -77,8 +99,18 @@ def session_cookie(email: str) -> dict[str, str]:
 
     from apps.accounts.models import User
 
-    user = User.objects.get(email=email)
     session = SessionStore()
+    if email.startswith("comparar:"):
+        # Anonymous visitor with products already in the comparator.
+        from apps.catalog.models import Product
+        from apps.catalog.services import COMPARE_SESSION_KEY
+
+        slugs = email.split(":", 1)[1].split(",")
+        products = {p.slug: str(p.public_id) for p in Product.objects.filter(slug__in=slugs)}
+        session[COMPARE_SESSION_KEY] = [products[slug] for slug in slugs if slug in products]
+        session.save()
+        return {"name": settings.SESSION_COOKIE_NAME, "value": session.session_key or ""}
+    user = User.objects.get(email=email)
     session[SESSION_KEY] = str(user.pk)
     session[BACKEND_SESSION_KEY] = "allauth.account.auth_backends.AuthenticationBackend"
     session[HASH_SESSION_KEY] = user.get_session_auth_hash()

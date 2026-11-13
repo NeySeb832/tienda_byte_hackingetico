@@ -2,21 +2,41 @@
 
 import re
 
-from apps.catalog.selectors import featured_controllers, featured_products
+import pytest
+
+from apps.catalog.models import Product
 from apps.cms.selectors import image_credits
 from apps.core.money import format_cop
 from apps.services_desk.selectors import technical_services
+from tests.factories import category, make_product
+
+pytestmark = pytest.mark.django_db
 
 
-def test_home_page_shows_the_storefront(client):
+def test_home_page_shows_the_storefront(client, db):
+    tile = category("playstation", "PlayStation", show_on_home=True, image_slug="playstation-5")
+    make_product(
+        "PlayStation 5 Slim",
+        category=tile,
+        is_featured=True,
+        variants=[("PS5-N", {"condition": "Nuevo"}, 2750000)],
+    )
+    make_product(
+        "Control DualSense",
+        category=tile,
+        product_type=Product.Type.ACCESSORY,
+        is_featured=True,
+        variants=[("DS-N", {"condition": "Nuevo"}, 285000)],
+    )
     response = client.get("/")
     assert response.status_code == 200
     html = response.content.decode()
     assert html.count("<h1") == 1
     assert "data-carousel" in html
-    for product in [*featured_products(), *featured_controllers()]:
-        assert product.name in html
-        assert format_cop(product.price) in html
+    assert 'href="/categoria/playstation/"' in html
+    for name, price in (("PlayStation 5 Slim", 2750000), ("Control DualSense", 285000)):
+        assert name in html
+        assert format_cop(price) in html
     for service in technical_services():
         assert service.name in html
 

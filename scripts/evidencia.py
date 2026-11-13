@@ -242,6 +242,9 @@ def run(check: Check) -> tuple[int, str, float]:
     return result.returncode, (result.stdout + result.stderr).rstrip(), time.perf_counter() - start
 
 
+RESULT_RE = re.compile(r"\[(OK|FALLÓ[^\]]*?) en ([0-9.]+) s\]\s*$")
+
+
 def save(out_dir: Path, check: Check, code: int, output: str, seconds: float) -> None:
     status = "OK" if code == 0 else f"FALLÓ (código {code})"
     shown = " ".join(Path(part).name if i == 0 else part for i, part in enumerate(check.command))
@@ -285,10 +288,19 @@ def main() -> int:
         code, output, seconds = run(check)
         save(out_dir, check, code, output, seconds)
         failures += code != 0
+    # The summary covers every check of the phase: with --solo, the others keep their last result.
+    for check in build_checks():
+        saved = out_dir / f"{check.slug}.txt"
+        if not saved.exists():
+            continue
+        match = RESULT_RE.search(saved.read_text(encoding="utf-8"))
+        if match is None:
+            continue
+        ok = match.group(1) == "OK"
         summary.add_row(
             check.title,
-            "[green]OK[/green]" if code == 0 else "[red]FALLÓ[/red]",
-            f"{seconds:.1f} s",
+            "[green]OK[/green]" if ok else "[red]FALLÓ[/red]",
+            f"{match.group(2)} s",
         )
 
     recorder = Console(record=True, width=100, file=io.StringIO(), force_terminal=True)

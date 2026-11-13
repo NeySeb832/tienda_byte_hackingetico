@@ -1,0 +1,55 @@
+<form id="filtros" method="get" action="{{ request.path }}" hx-get="{{ request.path }}" hx-trigger="change, submit" hx-target="#catalogo" hx-push-url="true" hx-indicator="#cargando" class="grid gap-8 lg:grid-cols-[15rem_1fr]">
+  {% if filters.q %}<input type="hidden" name="q" value="{{ filters.q }}">{% endif %}
+  <aside aria-label="Filtros">
+    <details class="filters-panel" open>
+      <summary class="filters-summary">Filtros</summary>
+      <div class="mt-4 space-y-6">
+        {% if facets.types|length > 1 %}<fieldset><legend class="filter-title">Tipo de producto</legend>
+          {% for option in facets.types %}<label class="filter-option"><input type="checkbox" name="tipo" value="{{ option.slug }}" class="form-checkbox"{% if option.selected %} checked{% endif %}><span class="flex-1">{{ option.label }}</span><span class="filter-count">{{ option.count }}</span></label>{% endfor %}
+        </fieldset>{% endif %}
+        {% if facets.brands %}<fieldset><legend class="filter-title">Marca</legend>
+          {% for option in facets.brands %}<label class="filter-option"><input type="checkbox" name="marca" value="{{ option.slug }}" class="form-checkbox"{% if option.selected %} checked{% endif %}><span class="flex-1">{{ option.label }}</span><span class="filter-count">{{ option.count }}</span></label>{% endfor %}
+        </fieldset>{% endif %}
+        {% if facets.platforms %}<fieldset><legend class="filter-title">Plataforma</legend>
+          <div class="max-h-56 space-y-0.5 overflow-y-auto pr-1">{% for option in facets.platforms %}<label class="filter-option"><input type="checkbox" name="plataforma" value="{{ option.slug }}" class="form-checkbox"{% if option.selected %} checked{% endif %}><span class="flex-1">{{ option.label }}</span><span class="filter-count">{{ option.count }}</span></label>{% endfor %}</div>
+        </fieldset>{% endif %}
+        {% if facets.conditions %}<fieldset><legend class="filter-title">Condición</legend>
+          {% for option in facets.conditions %}<label class="filter-option"><input type="checkbox" name="condicion" value="{{ option.slug }}" class="form-checkbox"{% if option.selected %} checked{% endif %}><span class="flex-1">{{ option.label }}</span><span class="filter-count">{{ option.count }}</span></label>{% endfor %}
+        </fieldset>{% endif %}
+        <fieldset><legend class="filter-title">Precio (COP)</legend>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="text-xs text-slate-500 dark:text-slate-400">Desde<input type="number" name="precio_min" min="0" step="10000" inputmode="numeric" value="{{ filters.price_min|default_if_none:'' }}" class="form-input mt-1" placeholder="0"></label>
+            <label class="text-xs text-slate-500 dark:text-slate-400">Hasta<input type="number" name="precio_max" min="0" step="10000" inputmode="numeric" value="{{ filters.price_max|default_if_none:'' }}" class="form-input mt-1" placeholder="Sin límite"></label>
+          </div>
+        </fieldset>
+        <label class="filter-option font-semibold"><input type="checkbox" name="disponible" value="on" class="form-checkbox"{% if filters.in_stock %} checked{% endif %}><span class="flex-1">Solo disponibles</span></label>
+        <div class="flex items-center gap-3">
+          <button type="submit" class="btn-secondary flex-1">Aplicar</button>
+          <a href="{{ request.path }}{% if filters.q %}?q={{ filters.q|urlencode }}{% endif %}" class="text-sm font-semibold text-violet-700 hover:underline dark:text-neon-violet">Limpiar</a>
+        </div>
+      </div>
+    </details>
+  </aside>
+  <section aria-labelledby="resultados-titulo">
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4 dark:border-white/10">
+      <h2 id="resultados-titulo" class="text-sm text-slate-600 dark:text-slate-300" aria-live="polite"><strong class="text-slate-900 dark:text-white">{{ page.paginator.count }}</strong> producto{{ page.paginator.count|pluralize }}<span id="cargando" class="htmx-indicator ml-2 text-xs text-slate-400">Actualizando…</span></h2>
+      <label class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">Ordenar por
+        <select name="orden" class="form-select">{% for key, label in sort_labels.items %}<option value="{{ key }}"{% if filters.sort == key %} selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+      </label>
+    </div>
+    {% if cards %}
+    <div class="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{% for product in cards %}{% include "components/product_card.html" %}{% endfor %}</div>
+    {% if page.has_other_pages %}<nav class="pagination" aria-label="Páginas de resultados">
+      {% if page.has_previous %}<a href="?{% if query_string %}{{ query_string }}&amp;{% endif %}pagina={{ page.previous_page_number }}" hx-get="?{% if query_string %}{{ query_string }}&amp;{% endif %}pagina={{ page.previous_page_number }}" hx-target="#catalogo" hx-push-url="true" class="page-link" rel="prev">Anterior</a>{% endif %}
+      <span class="text-sm text-slate-500 dark:text-slate-400">Página {{ page.number }} de {{ page.paginator.num_pages }}</span>
+      {% if page.has_next %}<a href="?{% if query_string %}{{ query_string }}&amp;{% endif %}pagina={{ page.next_page_number }}" hx-get="?{% if query_string %}{{ query_string }}&amp;{% endif %}pagina={{ page.next_page_number }}" hx-target="#catalogo" hx-push-url="true" class="page-link" rel="next">Siguiente</a>{% endif %}
+    </nav>{% endif %}
+    {% else %}
+    <div class="mt-10 rounded-2xl border border-dashed border-slate-300 p-10 text-center dark:border-white/15">
+      <p class="font-display text-xl font-black text-slate-900 dark:text-white">No encontramos productos{% if filters.q %} para «{{ filters.q }}»{% endif %}</p>
+      <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Prueba con otra palabra o quita algunos filtros.</p>
+      <a href="{% url 'catalog:list' %}" class="btn-primary mt-6">Ver todo el catálogo</a>
+    </div>
+    {% endif %}
+  </section>
+</form>

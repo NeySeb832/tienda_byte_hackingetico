@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{% if mode == "search" and filters.q %}Resultados para «{{ filters.q }}»{% elif category %}{{ category.name }}{% else %}Catálogo{% endif %} · {{ site_name }}{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+  <nav aria-label="Ruta de navegación" class="breadcrumb">
+    <a href="{% url 'core:home' %}">Inicio</a><span aria-hidden="true">/</span>
+    {% if category %}<a href="{% url 'catalog:list' %}">Catálogo</a><span aria-hidden="true">/</span>{% if category.parent %}<a href="{{ category.parent.get_absolute_url }}">{{ category.parent.name }}</a><span aria-hidden="true">/</span>{% endif %}<span aria-current="page">{{ category.name }}</span>
+    {% elif mode == "search" %}<a href="{% url 'catalog:list' %}">Catálogo</a><span aria-hidden="true">/</span><span aria-current="page">Búsqueda</span>
+    {% else %}<span aria-current="page">Catálogo</span>{% endif %}
+  </nav>
+  <header class="mt-4">
+    <h1 class="font-display text-3xl font-black text-slate-900 sm:text-4xl dark:text-white">{% if mode == "search" %}{% if filters.q %}Resultados para «{{ filters.q }}»{% else %}Buscar productos{% endif %}{% elif category %}{{ category.name }}{% else %}Todo el catálogo{% endif %}</h1>
+    {% if category.description %}<p class="mt-2 max-w-2xl text-slate-600 dark:text-slate-300">{{ category.description }}</p>{% endif %}
+    {% if subcategories %}<div class="mt-4 flex flex-wrap gap-2">{% for sub in subcategories %}<a href="{{ sub.get_absolute_url }}" class="chip">{{ sub.name }}</a>{% endfor %}</div>{% endif %}
+  </header>
+  <div id="catalogo" class="mt-8">{% include "catalog/_catalog_body.html" %}</div>
+</div>
+{% endblock %}

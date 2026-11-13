@@ -21,6 +21,16 @@ document.addEventListener("alpine:init", function () {
     };
   });
 
+  // Header search: the HTMX suggestions list opens while typing and closes on Esc / click outside.
+  Alpine.data("searchBox", function () {
+    return {
+      open: false,
+      get expanded() { return this.open ? "true" : "false"; },
+      openList: function () { this.open = true; },
+      close: function () { this.open = false; },
+    };
+  });
+
   Alpine.data("mobileMenu", function () {
     return {
       open: false,

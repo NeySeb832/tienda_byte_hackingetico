@@ -1,0 +1,8 @@
+{% load static money %}{% if results %}<ul class="divide-y divide-slate-100 dark:divide-white/5" role="listbox" aria-label="Sugerencias">
+  {% for item in results %}<li role="option" aria-selected="false"><a href="{{ item.url }}" class="suggest-item">
+    <span class="suggest-thumb">{% if item.image %}<img src="{% static item.image.file %}" width="{{ item.image.width }}" height="{{ item.image.height }}" alt="" loading="lazy" decoding="async">{% else %}<span class="text-[10px] font-black text-slate-400">BYTE</span>{% endif %}</span>
+    <span class="min-w-0 flex-1"><span class="block truncate text-sm font-semibold text-slate-900 dark:text-white">{{ item.name }}</span><span class="block text-xs text-slate-500 dark:text-slate-400">{% if item.price_is_from %}Desde {% endif %}{{ item.price|cop }}</span></span>
+  </a></li>{% endfor %}
+</ul>
+<a href="{% url 'catalog:search' %}?q={{ q|urlencode }}" class="block px-4 py-2.5 text-center text-xs font-bold text-violet-700 hover:bg-slate-50 dark:text-neon-violet dark:hover:bg-white/5">Ver todos los resultados</a>
+{% elif q|length >= 2 %}<p class="px-4 py-3 text-sm text-slate-500 dark:text-slate-400">No encontramos productos para «{{ q }}».</p>{% endif %}

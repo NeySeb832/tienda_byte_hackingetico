@@ -28,3 +28,41 @@ class Store(BaseModel):
 
     def __str__(self) -> str:
         return self.name
+
+
+class StockItem(models.Model):
+    """Units of a variant in one store. ``reserved`` units are held by open carts/orders.
+
+    Changes always go through ``apps.inventory.services`` inside ``transaction.atomic()``
+    with ``select_for_update()``; the CHECK constraints are the last line of defence.
+    """
+
+    variant = models.ForeignKey(
+        "catalog.ProductVariant", on_delete=models.CASCADE, related_name="stock_items"
+    )
+    store = models.ForeignKey(Store, on_delete=models.PROTECT, related_name="stock_items")
+    quantity = models.IntegerField(_("unidades"), default=0)
+    reserved = models.IntegerField(_("reservadas"), default=0)
+    updated_at = models.DateTimeField(_("actualizado"), auto_now=True)
+
+    class Meta:
+        ordering = ["store__name"]
+        verbose_name = _("existencia")
+        verbose_name_plural = _("existencias")
+        constraints = [
+            models.UniqueConstraint(fields=["variant", "store"], name="inventory_stock_unique"),
+            models.CheckConstraint(
+                condition=models.Q(quantity__gte=0), name="inventory_stock_quantity_gte_0"
+            ),
+            models.CheckConstraint(
+                condition=models.Q(reserved__gte=0) & models.Q(reserved__lte=models.F("quantity")),
+                name="inventory_stock_reserved_range",
+            ),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.variant_id} @ {self.store_id}: {self.quantity}"
+
+    @property
+    def available(self) -> int:
+        return self.quantity - self.reserved

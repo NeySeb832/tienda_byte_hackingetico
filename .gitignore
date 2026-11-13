@@ -41,3 +41,4 @@ Thumbs.db
 
 # Local Claude Code tooling
 .claude/
+.cache/

@@ -4,7 +4,7 @@ import re
 
 import pytest
 
-pytestmark = pytest.mark.security
+pytestmark = [pytest.mark.security, pytest.mark.django_db]
 
 NONCE_RE = re.compile(r"'nonce-([A-Za-z0-9+/=_-]+)'")
 

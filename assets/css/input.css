@@ -149,6 +149,54 @@
   .severity-critical { @apply bg-rose-100 text-rose-800; }
   .prose-legal p { @apply mt-4 leading-relaxed text-slate-700 dark:text-slate-300; }
 
+  /* --- Catalogue: listing, filters, product page, comparator --- */
+  .breadcrumb { @apply flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-500 dark:text-slate-400; }
+  .breadcrumb a { @apply hover:text-slate-900 hover:underline dark:hover:text-white; }
+  .chip { @apply inline-flex items-center rounded-full border border-slate-300 px-3 py-1 text-sm font-semibold text-slate-700 transition hover:border-neon-violet hover:text-slate-900 dark:border-white/15 dark:text-slate-200 dark:hover:text-white; }
+  .form-input, .form-select { @apply block w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-neon-violet focus:outline-none focus:ring-2 focus:ring-neon-violet/30 dark:border-white/15 dark:bg-ink-800 dark:text-white; }
+  .form-select { @apply w-auto py-1.5 pr-8; }
+  .form-checkbox { @apply size-4 shrink-0 rounded border-slate-300 accent-violet-600; }
+  .filters-panel { @apply rounded-2xl border border-slate-200 bg-white p-4 lg:sticky lg:top-32 dark:border-white/10 dark:bg-ink-900; }
+  .filters-summary { @apply cursor-pointer select-none font-display text-sm font-black uppercase tracking-widest text-slate-900 dark:text-white; }
+  .filter-title { @apply mb-2 text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400; }
+  .filter-option { @apply flex cursor-pointer items-center gap-2.5 rounded-lg px-1.5 py-1 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-white/5; }
+  .filter-count { @apply text-xs text-slate-400; }
+  .pagination { @apply mt-8 flex items-center justify-center gap-4; }
+  .page-link { @apply rounded-xl border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700 transition hover:border-neon-violet dark:border-white/15 dark:text-slate-200; }
+  .stock-badge { @apply absolute right-3 top-3 rounded-full bg-slate-900/80 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white; }
+  .condition-mixed { @apply bg-violet-100 text-violet-800 dark:bg-violet-400/15 dark:text-violet-200; }
+  .condition-pill { @apply rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider; }
+  .product-cover { @apply relative flex h-full w-full flex-col justify-end overflow-hidden rounded-xl p-4 text-left; }
+  .product-cover-label { @apply text-[10px] font-bold uppercase tracking-[0.25em] text-white/70; }
+  .product-cover-title { @apply mt-1 font-display text-lg font-black leading-tight text-white; }
+  .product-cover-mark { @apply absolute right-3 top-3 font-display text-xs font-black tracking-[0.3em] text-white/40; }
+  .cover-cyan { background-image: linear-gradient(140deg, #062a3a 0%, #0b5170 60%, #22d3ee 140%); }
+  .cover-lime { background-image: linear-gradient(140deg, #0c2412 0%, #1a4a24 60%, #a3e635 150%); }
+  .cover-pink { background-image: linear-gradient(140deg, #2a0a26 0%, #5c1650 60%, #f472b6 150%); }
+  .cover-amber { background-image: linear-gradient(140deg, #2a1806 0%, #5a360c 60%, #fbbf24 150%); }
+  .cover-violet { background-image: linear-gradient(140deg, #140c33 0%, #2e1f73 60%, #a78bfa 150%); }
+  .suggest-panel { @apply absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl empty:hidden dark:border-white/10 dark:bg-ink-900; }
+  .suggest-item { @apply flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 focus:bg-slate-50 focus:outline-none dark:hover:bg-white/5 dark:focus:bg-white/5; }
+  .suggest-thumb { @apply flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-slate-100 p-1 dark:bg-ink-800; }
+  .suggest-thumb img { @apply max-h-full w-auto object-contain; }
+  .product-gallery { @apply flex min-h-[20rem] items-center justify-center rounded-3xl border border-slate-200 bg-gradient-to-b from-slate-100 to-white p-8 sm:min-h-[28rem] dark:border-white/10 dark:from-ink-800 dark:to-ink-900; }
+  .option-btn { @apply inline-flex min-w-[3rem] items-center justify-center rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-neon-violet hover:text-slate-900 dark:border-white/15 dark:text-slate-200 dark:hover:text-white; }
+  .option-selected { @apply border-neon-violet bg-neon-violet/10 text-violet-800 ring-2 ring-neon-violet/40 dark:text-white; }
+  .option-soldout { @apply border-dashed text-slate-400 dark:text-slate-500; }
+  .option-disabled { @apply cursor-not-allowed border-dashed text-slate-300 line-through hover:border-slate-300 hover:text-slate-300 dark:text-slate-600 dark:hover:border-white/15 dark:hover:text-slate-600; }
+  .spec-table { @apply divide-y divide-slate-200 text-sm dark:divide-white/10; }
+  .spec-table > div { @apply grid grid-cols-[9rem_1fr] gap-4 py-2.5; }
+  .spec-table dt { @apply font-semibold text-slate-500 dark:text-slate-400; }
+  .spec-table dd { @apply text-slate-900 dark:text-white; }
+  .esrb-badge { @apply mr-1 inline-flex size-7 items-center justify-center rounded bg-slate-900 text-[11px] font-black text-white dark:bg-white dark:text-ink-950; }
+  .prose-store p { @apply mt-3 leading-relaxed text-slate-700 dark:text-slate-300; }
+  .compare-table { @apply w-full min-w-[40rem] border-collapse text-left text-sm; }
+  .compare-table th, .compare-table td { @apply border-b border-slate-200 p-4 align-top dark:border-white/10; }
+  .compare-table tbody th { @apply font-semibold text-slate-500 dark:text-slate-400; }
+  .compare-table td { @apply text-slate-900 dark:text-white; }
+  .compare-thumb { @apply flex h-32 items-center justify-center rounded-xl bg-slate-100 p-3 dark:bg-ink-800; }
+  .compare-thumb img { @apply max-h-full w-auto object-contain; }
+
   .htmx-indicator { @apply opacity-0 transition-opacity; }
   .htmx-request .htmx-indicator, .htmx-request.htmx-indicator { @apply opacity-100; }
 }

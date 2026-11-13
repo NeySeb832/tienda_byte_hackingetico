@@ -18,5 +18,6 @@ consecuencias trae. Son cortos a propósito. Si una decisión cambia, se crea un
 | [0010](0010-bitacora-de-evidencias.md) | Bitácora de evidencias con capturas | Aceptada |
 | [0011](0011-identificadores-publicos-y-usuario-email.md) | Identificadores públicos UUID y usuario por email | Aceptada |
 | [0012](0012-autenticacion-allauth-axes-turnstile.md) | Autenticación con allauth + MFA, axes, Turnstile y HIBP | Aceptada |
+| [0013](0013-catalogo-busqueda-y-precios-con-historial.md) | Búsqueda en PostgreSQL y precios con historial inmutable | Aceptada |
 
 Plantilla: [`template.md`](template.md).

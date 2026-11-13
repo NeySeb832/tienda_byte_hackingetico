@@ -5,6 +5,31 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 
 ## [Sin publicar]
 
+## [0.3.0] — 2026-11-13 — Fase 3: Catálogo y precios
+
+### Añadido
+- **Catálogo** con marcas, plataformas (con sinónimos de búsqueda), categorías en árbol, géneros, atributos configurables y ficha de videojuego (ESRB, PEGI, idiomas, multijugador).
+- **Variantes con precio dinámico** en dos modos: precio fijo por variante o precio base más modificadores por opción. Las reglas se validan en `create_variant` (un valor por opción, sin combinaciones repetidas) y en la BD con `CHECK` y `UNIQUE`.
+- **Historial de precios** *append-only*: en el ORM y con un trigger de PostgreSQL. Cambios manuales, recálculo por modificadores y **cambios programados** que aplica Celery Beat cada 5 minutos (`SKIP LOCKED`, idempotente). Todo cambio queda en la auditoría.
+- **Precio anterior honesto** (Ley 1480): el precio tachado solo aparece tras una bajada real en los últimos 30 días, y es el más bajo cobrado en los 30 días previos. Se muestra también el precio más bajo de los últimos 30 días y una gráfica (sparkline SVG, sin JavaScript) de los últimos 90.
+- **Búsqueda** en PostgreSQL: texto completo en español sin tildes y trigramas para tolerar errores ("plaistation", "pokemon", "play 5"). **Autocompletado** con HTMX (límite de 60 por minuto por IP).
+- **Listado** con filtros por tipo, marca, plataforma, condición, precio y disponibilidad; conteos por faceta; orden por relevancia, precio, popularidad, recientes y nombre; paginación. Los filtros se actualizan con HTMX y funcionan sin JavaScript.
+- **Ficha de producto** con configurador HTMX: opciones agotadas o inexistentes marcadas o deshabilitadas, foto por variante, garantía según la condición, IVA desglosado, disponibilidad por tienda y SKU.
+- **Comparador** (hasta 4 productos) y **vistos recientemente**, guardados en la sesión solo con identificadores públicos.
+- **Inventario por sede** (`StockItem`) con `select_for_update` y constraints (`quantity ≥ 0`, `0 ≤ reserved ≤ quantity`).
+- **`seed_demo`**: 66 productos y 138 variantes de la lista maestra (sin consolas programadas, copias ni chips), 6 sedes y stock determinista. Idempotente.
+- El inicio muestra categorías y destacados desde la BD; el menú enlaza a las categorías reales y la búsqueda del encabezado al catálogo.
+- 26 fotos nuevas con licencia libre (40 en total); portada genérica para productos sin foto.
+- Admin de Django para catálogo, precios (historial de solo lectura) y existencias.
+- `scripts/evidencia.py --solo` conserva en el resumen el último resultado de los demás chequeos.
+- ADR-0013.
+
+### Corregido
+- El recorte del fondo blanco borraba partes de productos blancos (PS5 Slim, Dreamcast, Wii y dos DualSense): esas fotos conservan su fondo.
+- La descarga de fotos respeta `Retry-After` de Wikimedia, usa miniaturas de 1280 px y guarda caché verificada por SHA-256.
+
+## [0.2.1] — 2026-11-13 — Correcciones de seguridad de la Fase 2
+
 ### Seguridad
 - Hallazgos de semgrep de la Fase 2, que el registro anterior omitió por error:
   - El cierre por inactividad del personal armaba la URL de login concatenando `?next=`, lo que permitía inyectar parámetros. Ahora usa `redirect_to_login()`, que codifica el parámetro, y tiene test de regresión.

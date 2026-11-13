@@ -43,7 +43,7 @@ primer nivel, no un añadido.
 |---|------|--------|
 | 1 | Fundaciones (estructura, settings, Docker, CI, ADRs, modelo de datos) | ✅ en revisión (`fase/01-fundaciones`) |
 | 2 | Usuarios y seguridad base (allauth + MFA, axes, roles, mixins, auditoría, CSP, tests de acceso) | ✅ en revisión (`fase/02-usuarios-seguridad`) |
-| 3 | Catálogo y precios (variantes con precio dinámico, búsqueda, filtros, comparador, historial) | ⏳ |
+| 3 | Catálogo y precios (variantes con precio dinámico, búsqueda, filtros, comparador, historial) | ✅ en revisión (`fase/03-catalogo`) |
 | 4 | Carrito, checkout y pagos (cupones, envíos, Wompi sandbox, webhooks, facturas PDF, correos) | ⏳ |
 | 5 | Panel administrativo (dashboard, inventario multi-sede, compras, pedidos, POS, CRM, reportes) | ⏳ |
 | 6 | Valor agregado (retomas, servicio técnico, fidelidad, preventas, alertas, devoluciones) | ⏳ |
@@ -79,8 +79,15 @@ primer nivel, no un añadido.
   hace con `split_vat()` y el redondeo es `ROUND_HALF_UP` (ADR-0004).
 - **Inventario**: los cambios de stock se hacen siempre en `transaction.atomic()` con
   `select_for_update()`, bloqueando en orden de PK para evitar deadlocks. Hay constraints `CHECK` en la BD.
-- **Registros append-only**: el kardex, los ledgers de puntos y de crédito, y la auditoría solo se
-  agregan; las correcciones se hacen con movimientos inversos.
+- **Registros append-only**: el kardex, los ledgers de puntos y de crédito, el historial de precios
+  (`PriceHistory`, con trigger en la BD) y la auditoría solo se agregan; las correcciones se hacen con movimientos inversos.
+- **Precios**: cambian solo con `apps.pricing.services` (manual, recálculo por modificadores o
+  cambio programado aplicado por Beat). El precio tachado solo aparece tras una bajada real en
+  los últimos 30 días y es el más bajo de los 30 días previos (ADR-0013).
+- **Catálogo**: las variantes se crean con `catalog.services.create_variant` (una opción por
+  atributo, sin combinaciones repetidas). Después de cambiar nombres, plataformas o variantes se
+  llama a `refresh_search_index`. Las listas del visitante (comparador, vistos) guardan solo
+  `public_id` en la sesión.
 - **Snapshots**: los pedidos copian precio, nombre, SKU y dirección. Cambiar el catálogo no altera un pedido.
 - **Control de acceso**: se deniega por defecto. Toda vista del panel exige autenticación y un permiso
   explícito a través de los mixins propios. Los querysets se filtran por dueño o sede (anti-IDOR).
@@ -136,9 +143,12 @@ primer nivel, no un añadido.
   - Se **excluyen** las consolas "programadas" o "copia" y los servicios de chip o liberación de
     juegos, porque implican software sin licencia.
   - No se inventan descuentos "antes/ahora" sin un precio anterior real (Ley 1480).
-- **Contenido estático temporal:** hasta que existan los modelos, el contenido del inicio vive en
-  `cms/selectors.py`, `catalog/selectors.py` y `services_desk/selectors.py`, con la misma forma que
-  tendrán los querysets, para que las plantillas no cambien.
+- **Contenido del inicio:** las categorías y los productos destacados salen de la BD
+  (`catalog/selectors.py`). Los slides (`cms/selectors.py`) y los servicios técnicos
+  (`services_desk/selectors.py`) siguen estáticos hasta que existan sus modelos.
+- **Datos demo:** `seed_demo` carga `apps/catalog/demo_data.py` (66 productos de la lista maestra,
+  sin consolas programadas ni copias). Los juegos usan precios de referencia porque ninguna lista
+  los trae.
 
 ## Comandos
 
@@ -198,9 +208,12 @@ uv run python manage.py setup_roles                  # grupos y permisos (idempo
 uv run python manage.py export_permissions_matrix    # docs/matriz-permisos.md (--check en CI)
 uv run python manage.py verify_audit_chain           # integridad de la bitácora de auditoría
 uv run python manage.py seed_demo_users              # un usuario demo por rol (solo DEBUG)
+
+# Fase 3
+uv run python manage.py seed_demo                    # catálogo demo, sedes y stock (idempotente)
 ```
 
-Comandos que se crearán en sus fases: `seed_demo` (F3/F5), `seed_bigdata` (F7) y los scripts de
+Comandos que se crearán en sus fases: `seed_bigdata` (F7) y los scripts de
 backup y restauración (F9).
 
 ## Dependencias
@@ -230,6 +243,8 @@ backup y restauración (F9).
 - 0009: Celery con JSON y Valkey
 - 0010: bitácora con capturas
 - 0011: identificadores públicos y usuario por email
+- 0012: autenticación con allauth, axes, Turnstile y HIBP
+- 0013: búsqueda en PostgreSQL y precios con historial
 
 ## Parámetros de negocio por defecto
 

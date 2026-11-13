@@ -10,8 +10,8 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 from django.views.generic import TemplateView
 
-from apps.catalog.selectors import featured_controllers, featured_products
-from apps.cms.selectors import home_categories, home_slides, image_credits
+from apps.catalog.selectors import featured_accessories, featured_products, home_categories
+from apps.cms.selectors import home_slides, image_credits
 from apps.core.health import run_health_checks
 from apps.core.logging import current_request_id
 from apps.services_desk.selectors import technical_services
@@ -28,7 +28,7 @@ class HomeView(TemplateView):
             slides=home_slides(),
             categories=home_categories(),
             featured=featured_products(),
-            controllers=featured_controllers(),
+            controllers=featured_accessories(),
             services=technical_services(),
         )
         return context

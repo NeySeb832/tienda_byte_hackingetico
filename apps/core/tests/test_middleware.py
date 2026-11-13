@@ -2,7 +2,11 @@
 
 import re
 
+import pytest
+
 from apps.core.logging import current_request_id
+
+pytestmark = pytest.mark.django_db
 
 
 def test_every_response_has_a_request_id(client):

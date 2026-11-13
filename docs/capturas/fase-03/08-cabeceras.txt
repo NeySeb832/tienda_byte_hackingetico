@@ -1,0 +1,15 @@
+$ python.exe -c import os, django;os.environ['DJANGO_SETTINGS_MODULE']='config.settings.test';django.setup();from django.test import Client;r = Client().get('/');print('GET / ->', r.status_code);[print(f'{h}: {r[h]}') for h in ('Content-Security-Policy','X-Frame-Options','X-Content-Type-Options','Referrer-Policy','Cross-Origin-Opener-Policy','Cross-Origin-Resource-Policy','Permissions-Policy','X-Request-ID')]
+
+GET / -> 200
+Content-Security-Policy: style-src 'self'; base-uri 'self'; worker-src 'self'; img-src 'self' data:; font-src 'self'; frame-src https://challenges.cloudflare.com; script-src 'self' 'nonce-Vq5XWdEaxRwFCOrtvo+TDg==' https://challenges.cloudflare.com; form-action 'self'; default-src 'self'; object-src 'none'; manifest-src 'self'; connect-src 'self'; frame-ancestors 'none'
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Resource-Policy: same-origin
+Permissions-Policy: accelerometer=(), autoplay=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(self), usb=(), browsing-topics=()
+X-Request-ID: a06e104d676e408e80484314e7711ad6
+C:\Users\seb83\Documentos\Universidad\Hacking etico\Tienda Videojuegos IA\.venv\Lib\site-packages\django\core\handlers\base.py:61: UserWarning: No directory at: C:\Users\seb83\Documentos\Universidad\Hacking etico\Tienda Videojuegos IA\staticfiles\
+  mw_instance = middleware(adapted_handler)
+
+[OK en 9.9 s]

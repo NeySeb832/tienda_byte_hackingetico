@@ -114,6 +114,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "apps.core.context_processors.site",
                 "apps.panel.context_processors.panel",
+                "apps.catalog.context_processors.catalog",
             ],
         },
     },
@@ -288,6 +289,13 @@ CELERY_TASK_TIME_LIMIT = 10 * 60
 CELERY_TASK_SOFT_TIME_LIMIT = 9 * 60
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+CELERY_BEAT_SCHEDULE = {
+    # Scheduled price changes (apps.pricing): applied within 5 minutes of their start.
+    "pricing-apply-scheduled": {
+        "task": "pricing.apply_scheduled_price_changes",
+        "schedule": 300.0,
+    },
+}
 CELERY_TASK_ALWAYS_EAGER = env.bool("CELERY_TASK_ALWAYS_EAGER", default=False)
 
 # ---------------------------------------------------------------------------

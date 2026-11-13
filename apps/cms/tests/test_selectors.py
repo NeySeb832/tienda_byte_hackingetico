@@ -4,7 +4,7 @@ from pathlib import Path
 
 from django.conf import settings
 
-from apps.cms.selectors import FREE_LICENSES, home_categories, home_slides, image_credits
+from apps.cms.selectors import FREE_LICENSES, home_slides, image_credits
 
 STATIC_DIR = Path(settings.BASE_DIR) / "static"
 
@@ -33,10 +33,5 @@ def test_home_slides_are_complete():
         assert slide.title
         assert slide.text
         assert slide.cta_label
-        assert slide.cta_href.startswith("#")
+        assert slide.cta_href.startswith("/")
         assert slide.image.alt
-
-
-def test_home_categories_have_unique_keys():
-    keys = [category.key for category in home_categories()]
-    assert len(keys) == len(set(keys)) == 6

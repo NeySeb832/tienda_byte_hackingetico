@@ -1,0 +1,3 @@
+Violaciones de CSP: 0
+Mensajes totales: 0 (esperados: 0, el propio 404 de error-404)
+

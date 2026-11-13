@@ -54,6 +54,23 @@ ALLOWED_LICENSES = {
     "CC BY-SA 4.0",
 }
 WEBP_QUALITY = 82
+THUMB_WIDTH = 1280  # standard Wikimedia thumbnail size
+CACHE_DIR = ROOT / ".cache" / "product-images"  # downloads keyed by SHA-256 (git-ignored)
+
+
+def cached_download(url: str, expected_sha256: str | None = None) -> bytes:
+    """Download once; later runs read the verified copy from the local cache."""
+    if expected_sha256:
+        cached = CACHE_DIR / expected_sha256
+        if cached.exists() and hashlib.sha256(cached.read_bytes()).hexdigest() == expected_sha256:
+            return cached.read_bytes()
+    data = fetch(url)
+    time.sleep(2)  # be polite with Wikimedia between real downloads
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    (CACHE_DIR / hashlib.sha256(data).hexdigest()).write_bytes(data)
+    return data
+
+
 WHITE_TOLERANCE = 18
 LIGHT_BACKGROUND_MIN = 200
 NEUTRAL_SPREAD = 16
@@ -67,16 +84,18 @@ def _open_https(request: urllib.request.Request, timeout: float) -> Any:
 def fetch(url: str) -> bytes:
     if not url.startswith("https://"):
         raise ValueError(f"Refusing non-HTTPS URL: {url}")
-    for attempt in range(5):
+    for attempt in range(6):
         try:
             request = urllib.request.Request(url, headers=HEADERS)  # noqa: S310
             with _open_https(request, 90) as response:
                 data: bytes = response.read()
                 return data
         except urllib.error.HTTPError as exc:
-            if exc.code != 429 or attempt == 4:
+            if exc.code != 429 or attempt == 5:
                 raise
-            time.sleep(5 * (attempt + 1))  # polite back-off when rate limited
+            # Polite back-off: honour Retry-After when Wikimedia sends it.
+            retry_after = exc.headers.get("Retry-After", "")
+            time.sleep(int(retry_after) if retry_after.isdigit() else 10 * (attempt + 1))
     raise RuntimeError("unreachable")
 
 
@@ -90,7 +109,8 @@ def lock(entries: list[dict[str, Any]], refresh: bool) -> None:
         "format": "json",
         "titles": "|".join(f"File:{e['commons_title']}" for e in pending),
         "prop": "imageinfo",
-        "iiprop": "url|sha1|extmetadata",
+        "iiprop": "url|size|sha1|extmetadata",
+        "iiurlwidth": str(THUMB_WIDTH),
         "iiextmetadatafilter": "LicenseShortName|LicenseUrl|Artist",
     }
     data = json.loads(fetch(f"{API}?{urllib.parse.urlencode(params)}"))
@@ -106,17 +126,19 @@ def lock(entries: list[dict[str, Any]], refresh: bool) -> None:
             raise SystemExit(f"No existe en Commons: {entry['commons_title']}")
         meta = info.get("extmetadata", {})
         artist = re.sub(r"<[^>]+>", "", meta.get("Artist", {}).get("value", "")).strip()
+        # Wikimedia asks automated clients to use standard thumbnail sizes, not originals.
+        use_thumb = info.get("width", 0) > THUMB_WIDTH and info.get("thumburl")
         entry.update(
-            url=info["url"],
+            url=info["thumburl"] if use_thumb else info["url"],
             page=info["descriptionurl"],
             sha1=info["sha1"],
             license=meta.get("LicenseShortName", {}).get("value", ""),
             license_url=meta.get("LicenseUrl", {}).get("value", ""),
             author=re.sub(r"\s+", " ", artist),
         )
-        entry["sha256"] = hashlib.sha256(fetch(entry["url"])).hexdigest()
+        entry["sha256"] = hashlib.sha256(cached_download(entry["url"])).hexdigest()
         print(f"fijada {entry['slug']}: {entry['license']} · {entry['author'][:50]}")
-        time.sleep(0.5)
+        time.sleep(2)
     MANIFEST.write_text(
         json.dumps(entries, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
@@ -159,7 +181,7 @@ def build(entries: list[dict[str, Any]]) -> None:
     for entry in entries:
         if entry.get("license") not in ALLOWED_LICENSES:
             raise SystemExit(f"Licencia no permitida para {entry['slug']}: {entry.get('license')}")
-        data = fetch(entry["url"])
+        data = cached_download(entry["url"], entry["sha256"])
         if hashlib.sha256(data).hexdigest() != entry["sha256"]:
             raise SystemExit(f"SHA-256 no coincide para {entry['slug']}: el original cambió")
         image = process(data, entry)
@@ -180,7 +202,6 @@ def build(entries: list[dict[str, Any]]) -> None:
             }
         )
         print(f"+ {target.relative_to(ROOT)} {image.width}x{image.height} ({entry['license']})")
-        time.sleep(0.5)
     CREDITS.parent.mkdir(parents=True, exist_ok=True)
     CREDITS.write_text(
         json.dumps(credits, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
@@ -190,7 +211,7 @@ def build(entries: list[dict[str, Any]]) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Imágenes de producto con licencia libre")
-    parser.add_argument("--bloquear", action="store_true", help="fijar SHA-1 y licencias")
+    parser.add_argument("--bloquear", action="store_true", help="fijar SHA-256 y licencias")
     parser.add_argument("--refrescar", action="store_true", help="con --bloquear: rehacer todas")
     args = parser.parse_args()
     entries: list[dict[str, Any]] = json.loads(MANIFEST.read_text(encoding="utf-8"))

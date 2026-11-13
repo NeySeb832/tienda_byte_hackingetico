@@ -1,0 +1,61 @@
+{% load static money %}<div class="grid gap-8 lg:grid-cols-2">
+  <div class="product-gallery">
+    {% if config.image %}<img src="{% static config.image.file %}" width="{{ config.image.width }}" height="{{ config.image.height }}" alt="{{ config.image.alt }}" decoding="async" class="max-h-[26rem] w-auto object-contain">{% else %}{% include "components/product_cover.html" with name=product.name label=config.cover_label theme="violet" %}{% endif %}
+  </div>
+  <div>
+    {% if product.brand %}<p class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">{{ product.brand.name }}</p>{% endif %}
+    <h1 class="mt-1 font-display text-3xl font-black leading-tight text-slate-900 sm:text-4xl dark:text-white">{{ product.name }}</h1>
+    {% if product.short_description %}<p class="mt-2 text-slate-600 dark:text-slate-300">{{ product.short_description }}</p>{% endif %}
+
+    <div class="mt-5 flex flex-wrap items-center gap-2">
+      {% if config.condition %}<span class="condition-pill condition-{{ config.condition.slug }}">{{ config.condition.value }}</span>{% if config.condition.meta.warranty_months %}<span class="text-sm text-slate-600 dark:text-slate-300">Garantía de {{ config.condition.meta.warranty_months }} mes{{ config.condition.meta.warranty_months|pluralize:"es" }}</span>{% endif %}{% endif %}
+    </div>
+
+    <div class="mt-5">
+      {% if insight.reference %}<p class="text-sm text-slate-500 dark:text-slate-400"><span class="line-through">{{ insight.reference|cop }}</span> <span class="ml-1 rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-bold text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-300">-{{ insight.saving_pct }} %</span></p>{% endif %}
+      <p class="font-display text-4xl font-black text-slate-900 dark:text-white">{{ config.variant.price|cop }}</p>
+      <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">IVA incluido{% if vat %} ({{ vat|cop }}){% endif %}{% if config.variant.price >= free_shipping_from %} · <strong class="text-emerald-700 dark:text-emerald-300">Envío gratis</strong>{% endif %}</p>
+      {% if insight.reference %}<p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Precio anterior: el más bajo de los 30 días previos a la rebaja.</p>{% elif insight.lowest_30d < config.variant.price %}<p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Precio más bajo de los últimos 30 días: {{ insight.lowest_30d|cop }}</p>{% endif %}
+    </div>
+
+    {% for option in config.options %}
+    <fieldset class="mt-6">
+      <legend class="text-sm font-semibold text-slate-700 dark:text-slate-200">{{ option.name }}: <span class="font-normal text-slate-500 dark:text-slate-400">{{ option.selected }}</span></legend>
+      <div class="mt-2 flex flex-wrap gap-2">
+        {% for choice in option.choices %}
+        {% if choice.state == "selected" %}<span class="option-btn option-selected" aria-current="true">{{ choice.label }}</span>
+        {% elif choice.sku %}<a href="?sku={{ choice.sku|urlencode }}" hx-get="?sku={{ choice.sku|urlencode }}" hx-target="#configurador" hx-push-url="true" class="option-btn{% if choice.state == 'out_of_stock' %} option-soldout{% endif %}"{% if choice.state == "out_of_stock" %} title="Agotado"{% endif %}>{{ choice.label }}</a>
+        {% else %}<span class="option-btn option-disabled" aria-disabled="true" title="No disponible con la selección actual">{{ choice.label }}</span>{% endif %}
+        {% endfor %}
+      </div>
+    </fieldset>
+    {% endfor %}
+
+    <div class="mt-6 rounded-2xl border border-slate-200 p-4 dark:border-white/10">
+      {% if config.available %}
+      <p class="flex items-center gap-2 text-sm font-semibold text-emerald-700 dark:text-emerald-300"><span class="size-2 rounded-full bg-emerald-500" aria-hidden="true"></span>Disponible{% if config.available <= 3 %} · ¡últimas {{ config.available }} unidad{{ config.available|pluralize:"es" }}!{% endif %}</p>
+      {% else %}
+      <p class="flex items-center gap-2 text-sm font-semibold text-rose-700 dark:text-rose-300"><span class="size-2 rounded-full bg-rose-500" aria-hidden="true"></span>Agotado en este momento</p>
+      {% endif %}
+      {% if stores %}<details class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+        <summary class="cursor-pointer font-semibold">Disponibilidad por tienda</summary>
+        <ul class="mt-2 space-y-1">{% for line in stores %}<li class="flex justify-between gap-4"><span>{{ line.store }} · {{ line.city }}</span><span class="{% if line.available %}text-emerald-700 dark:text-emerald-300{% else %}text-slate-400{% endif %}">{% if line.available %}{{ line.available }} disp.{% else %}Sin unidades{% endif %}</span></li>{% endfor %}</ul>
+      </details>{% endif %}
+      <div class="mt-4 flex flex-wrap gap-3">
+        <button type="button" class="btn-primary flex-1 justify-center"{% if not config.available %} disabled aria-disabled="true"{% endif %}>Agregar al carrito</button>
+        <form method="post" action="{% url 'catalog:compare_toggle' product.slug %}">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.get_full_path }}">
+          {% if in_compare %}<input type="hidden" name="accion" value="quitar"><button type="submit" class="btn-ghost">Quitar del comparador</button>
+          {% else %}<button type="submit" class="btn-ghost">Comparar</button>{% endif %}
+        </form>
+      </div>
+      <p class="mt-3 text-xs text-slate-500 dark:text-slate-400">SKU: {{ config.variant.sku }}</p>
+    </div>
+
+    <figure class="mt-6">
+      {% if not sparkline.is_flat %}<svg viewBox="0 0 {{ sparkline.width }} {{ sparkline.height }}" class="h-12 w-full text-neon-violet" preserveAspectRatio="none" role="img" aria-label="Evolución del precio en los últimos {{ sparkline.days }} días"><polyline points="{{ sparkline.points }}" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>{% endif %}
+      <figcaption class="mt-1 text-xs text-slate-500 dark:text-slate-400">{% if sparkline.is_flat %}Precio estable desde el {{ sparkline.since|date:"j \d\e F \d\e Y" }}.{% else %}Últimos {{ sparkline.days }} días: entre {{ sparkline.low|cop }} y {{ sparkline.high|cop }} ({{ sparkline.changes }} cambio{{ sparkline.changes|pluralize }}).{% endif %}</figcaption>
+    </figure>
+  </div>
+</div>

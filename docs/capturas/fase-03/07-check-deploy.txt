@@ -1,0 +1,5 @@
+$ python.exe manage.py check --deploy --fail-level WARNING
+
+System check identified no issues (0 silenced).
+
+[OK en 5.3 s]

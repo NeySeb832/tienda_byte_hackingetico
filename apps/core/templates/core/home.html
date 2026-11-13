@@ -76,13 +76,13 @@
   </ul>
 </section>
 
-<section id="categorias" class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="categorias-titulo">
+{% if categories %}<section id="categorias" class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="categorias-titulo">
   <div class="section-head">
     <h2 id="categorias-titulo" class="section-title">Compra por categoría</h2>
   </div>
   <div class="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
     {% for category in categories %}
-    <a id="cat-{{ category.key }}" href="#destacados" class="category-tile group tile-{{ category.theme }}">
+    <a id="cat-{{ category.key }}" href="{{ category.url }}" class="category-tile group tile-{{ category.theme }}">
       <img src="{% static category.image.file %}" width="{{ category.image.width }}" height="{{ category.image.height }}" alt="" loading="lazy" decoding="async">
       <span class="relative">
         <span class="block font-display text-lg font-black text-slate-900 dark:text-white">{{ category.name }}</span>
@@ -91,17 +91,17 @@
     </a>
     {% endfor %}
   </div>
-</section>
+</section>{% endif %}
 
-<section id="destacados" class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="destacados-titulo">
+{% if featured %}<section id="destacados" class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="destacados-titulo">
   <div class="section-head">
     <h2 id="destacados-titulo" class="section-title">Consolas destacadas</h2>
-    <p class="text-sm text-slate-500 dark:text-slate-400">Precios con IVA incluido</p>
+    <a href="{% url 'catalog:list' %}?tipo=console" class="text-sm font-semibold text-violet-700 hover:underline dark:text-neon-violet">Ver todas las consolas</a>
   </div>
   <div class="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
     {% for product in featured %}{% include "components/product_card.html" %}{% endfor %}
   </div>
-</section>
+</section>{% endif %}
 
 <section id="retoma" class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="retoma-titulo">
   <div class="promo-banner">
@@ -119,15 +119,15 @@
   </div>
 </section>
 
-<section id="controles" class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="controles-titulo">
+{% if controllers %}<section id="controles" class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="controles-titulo">
   <div class="section-head">
     <h2 id="controles-titulo" class="section-title">Controles y accesorios</h2>
-    <p class="text-sm text-slate-500 dark:text-slate-400">Originales y usados revisados</p>
+    <a href="{% url 'catalog:category' 'controles' %}" class="text-sm font-semibold text-violet-700 hover:underline dark:text-neon-violet">Ver todos los controles</a>
   </div>
   <div class="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
     {% for product in controllers %}{% include "components/product_card.html" %}{% endfor %}
   </div>
-</section>
+</section>{% endif %}
 
 <section id="servicios" class="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="servicios-titulo">
   <div class="service-panel">

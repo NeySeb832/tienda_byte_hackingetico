@@ -7,6 +7,7 @@ from django.urls import include, path
 urlpatterns = [
     path("", include("apps.core.urls")),
     path("", include("apps.cms.urls")),
+    path("", include("apps.catalog.urls")),
     path("cuenta/", include("apps.accounts.urls")),
     path("cuenta/", include("allauth.urls")),  # login, registro, MFA, sesiones...
     path("panel/", include("apps.panel.urls")),
