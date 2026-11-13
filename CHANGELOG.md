@@ -5,6 +5,14 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 
 ## [Sin publicar]
 
+## [0.8.0] — 2026-11-13 — Fase 8: Endurecimiento de seguridad
+
+### Añadido
+- Matriz OWASP Top 10:2025 (control → evidencia) y modelo de amenazas STRIDE en `docs/seguridad/`.
+- Suite `tests/security/test_owasp_2025.py` con una garantía transversal por categoría.
+- SBOM CycloneDX de producción y OWASP ZAP 2.17 baseline (fijado por digest) en `scripts/evidencia.py`. Resultado de ZAP: 0 fallos.
+
+
 ## [0.7.0] — 2026-11-13 — Fase 7: Big Data / BI
 
 ### Añadido

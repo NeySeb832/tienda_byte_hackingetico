@@ -1,0 +1,5 @@
+$ python.exe -m cyclonedx_py requirements requirements/prod.txt --of JSON -o docs/seguridad/sbom.cdx.json
+
+
+
+[OK en 10.0 s]

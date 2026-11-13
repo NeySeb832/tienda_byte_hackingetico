@@ -41,6 +41,7 @@ SEMGREP_IMAGE = os.environ.get(
 TRIVY_IMAGE = (
     "aquasec/trivy:0.76.2@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb"
 )
+ZAP_IMAGE = "ghcr.io/zaproxy/zaproxy:stable@sha256:9624669db72f54d86c4b46a7064518bd9bf79d8c61a4c31befa9923489f328af"  # ZAP 2.17.0
 RUNTIME_IMAGE = os.environ.get("BYTE_RUNTIME_IMAGE", "byte:local")  # docker build --target runtime
 
 
@@ -146,7 +147,47 @@ def build_checks() -> list[Check]:
             "Integridad de librerías JS y binario de Tailwind",
             [PY, "scripts/vendor_assets.py", "--check"],
         ),
+        Check(
+            "14-sbom",
+            "SBOM CycloneDX de las dependencias de producción",
+            [
+                PY,
+                "-m",
+                "cyclonedx_py",
+                "requirements",
+                "requirements/prod.txt",
+                "--of",
+                "JSON",
+                "-o",
+                "docs/seguridad/sbom.cdx.json",
+            ],
+        ),
     ]
+    zap_target = os.environ.get("BYTE_ZAP_TARGET", "")
+    if zap_target and shutil.which("docker"):
+        # OWASP ZAP baseline (passive scan + spider) against a running instance.
+        checks.append(
+            Check(
+                "15-zap",
+                f"DAST pasivo (OWASP ZAP baseline) sobre {zap_target}",
+                [
+                    "docker",
+                    "run",
+                    "--rm",
+                    "-v",
+                    f"{ROOT / 'docs' / 'seguridad'}:/zap/wrk:rw",
+                    ZAP_IMAGE,
+                    "zap-baseline.py",
+                    "-t",
+                    zap_target,
+                    "-r",
+                    "zap-baseline.html",
+                    "-w",
+                    "zap-baseline.md",
+                    "-I",
+                ],
+            )
+        )
     semgrep = shutil.which("semgrep")
     if semgrep:
         checks.append(
