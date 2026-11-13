@@ -1,0 +1,289 @@
+0. Rol, contexto y reglas de trabajo
+
+Actúa como arquitecto de software senior y desarrollador full-stack Django, con experiencia en e-commerce, ingeniería de datos y seguridad de aplicaciones (AppSec). Vas a construir desde cero una aplicación web de producción para Byte, una tienda de videojuegos, consolas y accesorios en Colombia (moneda COP, IVA 19 %, envíos nacionales por departamento/ciudad).
+
+Reglas de trabajo obligatorias:
+
+Trabaja por fases (sección 11). Al final de cada fase: ejecuta los tests, el linter y el análisis de seguridad, actualiza CHANGELOG.md, haz un commit con mensaje convencional (feat:, fix:, sec:, docs:…) y detente para que yo revise.
+Antes de escribir código, crea CLAUDE.md con las convenciones del proyecto, los comandos (correr, testear, migrar, sembrar datos, desplegar) y las decisiones de arquitectura. Mantenlo actualizado.
+Nunca pongas secretos en el código ni en el repo. Todo va por variables de entorno (.env.example documentado, .env en .gitignore).
+Si una decisión tiene varias opciones razonables, elige la más simple y segura, y documéntala como ADR corto en docs/adr/.
+Si una librería o servicio no está disponible o cambió, verifica la versión actual estable antes de fijarla y anota el cambio.
+Código, nombres de modelos y comentarios en inglés; interfaz de usuario, mensajes y documentación en español.
+Todo cambio de lógica de negocio importante debe tener tests.
+1. Stack tecnológico
+Capa	Tecnología
+Backend	Python 3.12+, Django 5.2 LTS (o la LTS vigente), Django REST Framework
+Frontend	Plantillas Django + HTMX + Alpine.js + Tailwind CSS (build con django-tailwind o CLI standalone), diseño responsive, modo oscuro, look "gamer" moderno
+Base de datos	PostgreSQL 16+ (búsqueda full-text + pg_trgm)
+Caché / colas	Redis + Celery + Celery Beat
+Autenticación	django-allauth (incluye MFA/TOTP), django-axes (bloqueo por fuerza bruta)
+Permisos	Grupos/permisos de Django + permisos a nivel de objeto (django-guardian o servicio propio)
+Archivos	django-storages (S3-compatible, p. ej. Cloudflare R2) en producción; disco local en desarrollo
+Big Data / BI	Polars + DuckDB + Parquet (data lake), scikit-learn, statsmodels, mlxtend, gráficas con Apache ECharts o Plotly
+Procesamiento distribuido (opcional/local)	PySpark en contenedor Docker para el notebook de procesamiento masivo
+Pagos	Pasarela colombiana en modo sandbox (Wompi o Mercado Pago) detrás de una interfaz PaymentGateway con implementación FakeGateway para desarrollo y tests
+Correo	SMTP / servicio transaccional vía django-anymail; consola en desarrollo
+Servidor	Gunicorn + WhiteNoise para estáticos
+Calidad	ruff, black, mypy (gradual), pytest-django, factory_boy, coverage (≥ 80 %)
+Seguridad en CI	bandit, pip-audit, semgrep, OWASP ZAP baseline, cyclonedx-py (SBOM)
+Contenedores	Dockerfile multi-stage (usuario no root) + docker-compose.yml (web, worker, beat, postgres, redis)
+Dependencias	uv o pip-tools con lockfile y hashes
+2. Arquitectura y estructura del repositorio
+
+Monolito modular Django con capa de servicios (la lógica de negocio NO vive en las vistas):
+
+/config                 # settings/base.py, dev.py, prod.py, test.py; urls; celery.py; wsgi/asgi
+/apps
+  /accounts             # usuarios, perfiles, direcciones, MFA, roles
+  /catalog              # plataformas, marcas, categorías, productos, variantes, atributos, bundles
+  /pricing              # reglas de precio por configuración, historial de precios, promociones
+  /inventory            # bodegas/sedes, stock, movimientos (kardex), reservas, alertas
+  /purchasing           # proveedores, órdenes de compra, recepciones
+  /cart                 # carrito (sesión + usuario), lista de deseos, comparador
+  /orders               # checkout, pedidos, estados, facturas, devoluciones (RMA)
+  /payments             # interfaz de pasarela, webhooks firmados, idempotencia
+  /shipping             # zonas, tarifas, guías, seguimiento
+  /promotions           # cupones, descuentos, flash sales, puntos de fidelidad
+  /tradein              # retoma/compra de consolas y juegos usados
+  /services_desk        # servicio técnico: tickets de reparación y garantías
+  /reviews              # reseñas moderadas, preguntas y respuestas
+  /pos                  # punto de venta en mostrador
+  /notifications        # email, notificaciones in-app, alertas de stock/precio
+  /cms                  # banners, páginas estáticas, noticias/lanzamientos
+  /audit                # bitácora de auditoría y eventos de seguridad
+  /analytics            # módulo Big Data / BI (ETL, data lake, modelos, dashboards)
+  /api                  # DRF v1 (versionada)
+/templates  /static  /docs  /scripts  /tests  /notebooks
+Cada app: models.py, services.py (lógica), selectors.py (consultas), forms.py, views.py, permissions.py, tests/.
+Identificadores públicos en URLs y API: UUID o slug, nunca el ID autoincremental.
+Precios en DecimalField (o enteros en pesos), nunca float.
+Genera el diagrama entidad-relación en Mermaid en docs/modelo-datos.md.
+3. Usuarios, roles y control de acceso
+3.1 Roles
+Rol	Descripción
+Invitado	Navega catálogo, usa carrito de sesión
+Cliente	Compra, gestiona su cuenta, pedidos, retomas, tickets, reseñas
+Cliente VIP	Cliente con nivel de fidelidad alto (precios/promos exclusivas) — es un atributo, no un rol administrativo
+Vendedor / Cajero	POS, consulta de stock, creación de pedidos en tienda, aplicar cupones permitidos
+Bodeguero	Inventario, movimientos, recepciones, traslados entre sedes
+Técnico de soporte	Tickets de reparación, garantías, evaluación de retomas
+Gerente de tienda	Todo lo operativo de su(s) sede(s), aprobaciones (descuentos altos, devoluciones, ajustes de inventario), reportes
+Analista de datos	Solo lectura sobre el módulo de analítica; exportaciones anonimizadas; sin acceso a PII completa
+Administrador	Gestión completa de la tienda y usuarios internos (excepto superadmins)
+Superadmin	Configuración del sistema, roles y permisos, bitácora de seguridad
+3.2 Requisitos de control de acceso
+Denegar por defecto: toda vista del panel exige autenticación + permiso explícito. Crea mixins/decoradores propios (RoleRequiredMixin, ObjectPermissionMixin) y úsalos en TODAS las vistas y endpoints.
+Permisos a nivel de objeto: un cliente solo ve sus pedidos, direcciones, tickets y retomas; un gerente solo ve las sedes asignadas.
+Separación de funciones: quien crea un ajuste de inventario o un descuento > [X] % no puede aprobarlo.
+Matriz rol × permiso generada automáticamente en docs/matriz-permisos.md a partir del código (comando de gestión export_permissions_matrix).
+Comando setup_roles idempotente que crea grupos y permisos.
+Tests que prueban, para cada endpoint sensible, que los roles sin permiso reciben 403/404 (incluye pruebas de IDOR cambiando UUIDs).
+El panel de administración personalizado vive en /panel/. El django.contrib.admin queda solo para superadmin, en una ruta no predecible configurable por variable de entorno y con MFA obligatorio.
+4. Módulo Tienda (cliente final)
+4.1 Catálogo y configuraciones de consolas
+Tipos de producto: consolas, videojuegos (físicos y digitales/códigos), accesorios, coleccionables, tarjetas de regalo, servicios (garantía extendida, instalación).
+Variantes con atributos configurables que cambian precio, SKU, stock e imágenes:
+Modelo/versión (p. ej. estándar, slim, digital, pro, OLED, lite…)
+Almacenamiento (GB/TB)
+Color / edición (estándar, edición especial, bundle con juego)
+Condición: nuevo, usado, reacondicionado (con grado A/B/C y garantía distinta)
+Región / tipo de enchufe
+Precio según configuración: precio base + modificadores por atributo, o precio fijo por variante; el selector de la ficha de producto actualiza precio, disponibilidad, SKU e imagen en vivo (HTMX), y deshabilita combinaciones que no existen.
+Bundles / "arma tu setup": consola + juegos + accesorios con descuento por combo y validación de compatibilidad.
+Verificador de compatibilidad: cada accesorio/juego declara plataformas compatibles; advertencia en carrito si algo no es compatible.
+Ficha de videojuego: plataforma, género, clasificación ESRB/PEGI, idiomas, multijugador, desarrollador, fecha de lanzamiento, formato.
+Preventas con fecha de lanzamiento, reserva con abono y notificación al llegar.
+Historial de precios visible (gráfica pequeña en la ficha) y etiqueta "precio más bajo en 30 días".
+4.2 Descubrimiento
+Búsqueda full-text con tolerancia a errores (pg_trgm) y autocompletado.
+Filtros facetados: plataforma, precio, condición, marca, género, clasificación, disponibilidad, almacenamiento.
+Orden: relevancia, precio, novedad, más vendidos, mejor calificados.
+Comparador de hasta 4 productos (tabla de especificaciones).
+Recomendaciones: "comprados juntos frecuentemente" y "también te puede gustar" alimentadas por el módulo de analítica (sección 6).
+Vistos recientemente, lanzamientos, más vendidos, ofertas flash con contador.
+4.3 Carrito y checkout
+Carrito de invitado que se fusiona al iniciar sesión; reserva temporal de stock (TTL configurable).
+Lista de deseos con alerta de bajada de precio y alerta de reposición de stock.
+Checkout en pasos: dirección → envío (tarifa por zona o recoger en tienda) → pago → confirmación.
+El servidor recalcula siempre precios, descuentos, impuestos y envío; jamás confía en valores del cliente.
+Cupones (porcentaje, valor fijo, envío gratis, por categoría, primer pedido, uso único por usuario, vigencia, tope).
+Puntos de fidelidad: acumulación por compra y redención en checkout.
+Pagos con pasarela en sandbox; webhooks con verificación de firma e idempotencia; nunca almacenar datos de tarjeta (solo tokens/referencias de la pasarela).
+Factura/recibo en PDF descargable (factura electrónica simulada con los campos que exige la DIAN, marcada como "documento de prueba").
+4.4 Cuenta de cliente
+Registro con verificación de correo, login, MFA opcional (TOTP), recuperación de contraseña segura.
+Perfil, direcciones múltiples, preferencias de notificación, consentimiento de tratamiento de datos (Ley 1581 de 2012, Habeas Data) con fecha y versión de la política aceptada.
+Historial de pedidos con seguimiento por estados (pendiente de pago → pagado → en preparación → enviado → entregado / cancelado / devuelto) y línea de tiempo.
+Solicitud de devolución/RMA dentro de la ventana permitida.
+Retoma (trade-in): el cliente cotiza su consola/juego usado (modelo, estado, accesorios incluidos) → obtiene oferta estimada → agenda revisión → el técnico confirma → crédito en tienda o pago.
+Servicio técnico: abrir ticket de reparación o garantía, adjuntar fotos (validadas), seguir estado.
+Reseñas con calificación (solo compradores verificados), preguntas y respuestas en producto.
+Exportar y eliminar mis datos (derecho de supresión con anonimización de pedidos históricos).
+5. Panel de administración (/panel/)
+
+Interfaz propia (no el admin de Django) con menú según el rol del usuario.
+
+Dashboard operativo: ventas del día/semana/mes, ticket promedio, pedidos por estado, productos con stock bajo, tickets abiertos, retomas pendientes, alertas de seguridad (solo superadmin).
+Catálogo: CRUD de productos, variantes, atributos, plataformas, marcas, categorías, bundles; carga masiva por CSV/Excel con validación y vista previa de errores; galería de imágenes con optimización automática (WebP, miniaturas).
+Precios y promociones: reglas de precio por configuración, cambios masivos por porcentaje, programación de precios futuros, flash sales, cupones, niveles de fidelidad.
+Inventario: multi-sede/bodega, stock disponible/reservado/en tránsito, kardex de movimientos (entrada, salida, ajuste, traslado, devolución) con usuario y motivo, stock mínimo y punto de reorden, conteos cíclicos, ajustes con aprobación, control de seriales/IMEI para consolas.
+Compras: proveedores, órdenes de compra, recepción parcial/total que actualiza inventario y costo promedio.
+Ventas y pedidos: listado con filtros, detalle, cambio de estado con reglas de transición válidas, notas internas, reembolsos, devoluciones, impresión de guía/factura.
+POS (punto de venta): venta rápida en mostrador con búsqueda/lector de código de barras, cliente opcional, varios medios de pago, apertura y cierre de caja con arqueo.
+Clientes (CRM): ficha 360° (pedidos, valor de vida, segmento RFM, tickets, retomas), etiquetas, notas.
+Retomas y servicio técnico: bandeja de evaluaciones y reparaciones, asignación a técnicos, estados, costos, garantías.
+Moderación: reseñas y preguntas (aprobar, rechazar, responder).
+Contenido: banners del home, páginas, noticias de lanzamientos.
+Usuarios internos y roles: alta/baja de empleados, asignación de rol y sede, forzar MFA, revocar sesiones.
+Reportes: ventas, inventario valorizado, rotación, márgenes, comisiones de vendedores; exportación CSV/Excel/PDF (con protección contra inyección de fórmulas en CSV).
+Auditoría: quién hizo qué, cuándo, desde qué IP, valor anterior y nuevo, en todas las operaciones del panel.
+Configuración: datos de la empresa, impuestos, zonas de envío, sedes, plantillas de correo.
+6. Módulo Big Data / Inteligencia de Negocio (/panel/analytics/)
+
+Objetivo: que la gerencia tome decisiones basadas en datos. Debe funcionar con volumen realista, no con 20 registros.
+
+6.1 Generación de datos
+Comando seed_bigdata --orders 500000 --customers 50000 --years 3 que use Faker (locale es_CO) para generar datos sintéticos coherentes: estacionalidad (diciembre, Black Friday, lanzamientos, prima de junio), ciudades colombianas, mezcla de canales (web/POS), devoluciones, retomas, visitas y eventos de navegación.
+Inserción por lotes (bulk_create/COPY) para que sea rápida.
+6.2 Pipeline de datos (arquitectura medallón)
+Captura de eventos: modelo Event (vista de producto, búsqueda, agregar al carrito, inicio de checkout, compra) registrado de forma asíncrona y sin PII cruda (ID de usuario seudonimizado).
+Bronze: extracción incremental desde PostgreSQL a archivos Parquet particionados por fecha.
+Silver: limpieza, deduplicación y tipado con Polars.
+Gold: modelo estrella (fact_sales, fact_inventory_snapshot, fact_events, dim_product, dim_customer, dim_date, dim_store, dim_channel) consultado con DuckDB.
+Orquestado con Celery Beat (ejecución nocturna + botón "recalcular ahora" para analista/gerente), con registro de cada corrida (duración, filas, errores) y validaciones de calidad de datos (nulos, duplicados, rangos).
+Notebook notebooks/procesamiento_spark.ipynb que hace el mismo procesamiento con PySpark sobre los Parquet, para demostrar escalamiento horizontal (corre en local con Docker; no se despliega).
+6.3 Analítica y modelos
+Análisis	Pregunta de negocio que responde
+KPIs y tendencias (ventas, margen, ticket promedio, unidades, conversión)	¿Cómo va el negocio y hacia dónde?
+Pronóstico de demanda por producto/categoría (statsmodels / Holt-Winters o SARIMA)	¿Cuánto debo comprar y cuándo?
+Punto de reorden sugerido y riesgo de quiebre de stock	¿Qué se va a agotar?
+Análisis ABC / rotación de inventario y stock muerto	¿Qué productos inmovilizan capital?
+Segmentación RFM + K-Means de clientes	¿A quién dirigir cada campaña?
+Análisis de canasta (Apriori / reglas de asociación)	¿Qué bundles armar? Alimenta "comprados juntos"
+Elasticidad de precio por categoría	¿Qué pasa si subo/bajo precios?
+Embudo de conversión y abandono de carrito	¿Dónde pierdo ventas?
+Cohortes y retención, valor de vida del cliente (CLV)	¿Los clientes vuelven?
+Probabilidad de abandono (churn) — clasificación con scikit-learn	¿Qué clientes estoy por perder?
+Detección de anomalías en ventas y devoluciones	¿Hay fraude o errores?
+Rendimiento por sede, vendedor, canal y ciudad (mapa de Colombia)	¿Qué sede o canal rinde más?
+Valor de retomas vs reventa de usados	¿Es rentable el programa de retoma?
+6.4 Visualización y toma de decisiones
+Dashboards interactivos con filtros globales (rango de fechas, sede, categoría, plataforma, canal) y comparación contra periodo anterior.
+Cada tablero muestra un bloque "Insights y acciones recomendadas" generado por reglas (p. ej. "El producto X se agotará en ~9 días según el pronóstico; sugerido pedir 40 unidades").
+Constructor simple de reportes (elegir métricas y dimensiones) y exportación.
+Las métricas pesadas se calculan en segundo plano y se cachean en Redis; el dashboard nunca bloquea la petición web.
+Documenta en docs/big-data.md: arquitectura del pipeline (diagrama Mermaid), modelo estrella, descripción de cada modelo, métricas de evaluación (MAPE, silhouette, precisión/recall) y cómo interpretar cada tablero.
+7. Seguridad — OWASP Top 10:2025 (obligatorio)
+
+Genera docs/seguridad.md con una matriz de trazabilidad: categoría OWASP → riesgo en esta app → control implementado → archivo/código → test que lo verifica. Incluye también la equivalencia con la edición 2021 por si la rúbrica la pide.
+
+A01:2025 — Pérdida de control de acceso (incluye SSRF)
+Denegar por defecto, mixins de rol y permisos a nivel de objeto (sección 3).
+UUIDs públicos; tests automáticos de IDOR y escalamiento horizontal/vertical.
+CORS restringido (django-cors-headers solo para orígenes permitidos).
+SSRF: si se importan imágenes por URL, validar esquema, resolver DNS y bloquear IPs privadas/locales; lista blanca de dominios.
+Rate limiting en endpoints sensibles (django-ratelimit).
+A02:2025 — Configuración de seguridad incorrecta
+DEBUG=False, ALLOWED_HOSTS, CSRF_TRUSTED_ORIGINS por entorno; SECRET_KEY fuerte desde variable de entorno.
+Cabeceras: HSTS (con preload), X-Content-Type-Options, Referrer-Policy, Permissions-Policy, X-Frame-Options: DENY, CSP estricta con nonces (CSP nativa de Django si la versión la trae, si no django-csp); sin scripts inline sin nonce.
+Cookies Secure, HttpOnly, SameSite=Lax/Strict; SECURE_SSL_REDIRECT.
+python manage.py check --deploy sin advertencias como paso de CI.
+Páginas 400/403/404/500 propias; sin listados de directorios; admin de Django en ruta oculta.
+A03:2025 — Fallas en la cadena de suministro de software
+Dependencias fijadas con hashes; pip-audit y Dependabot/Renovate; SBOM CycloneDX en cada release.
+GitHub Actions fijadas por SHA, permisos mínimos del GITHUB_TOKEN.
+Imagen Docker base oficial y slim, escaneada (Trivy); librerías de frontend con versión fija y SRI si vienen de CDN (preferible servirlas localmente).
+A04:2025 — Fallas criptográficas
+Hash de contraseñas con Argon2 (argon2-cffi) como primer hasher.
+HTTPS en todo; cifrado de campos sensibles (teléfono, documento) en reposo con una clave gestionada por entorno.
+No almacenar datos de tarjetas; tokens de pasarela solamente.
+Tokens de recuperación y verificación de un solo uso y con expiración.
+A05:2025 — Inyección
+Solo ORM; si hay SQL crudo, siempre parametrizado (y revisado por semgrep/bandit).
+Autoescapado de plantillas; prohibido |safe y mark_safe sobre datos de usuario; reseñas sanitizadas con nh3.
+Validación de todos los formularios y serializers en servidor (tipos, rangos, longitudes, listas blancas).
+Subida de archivos: validar tamaño, extensión y tipo real (magic bytes), re-procesar imágenes con Pillow, nombres aleatorios, almacenar fuera del webroot o en bucket privado.
+Exportaciones CSV/Excel: neutralizar celdas que empiezan por = + - @ (CSV injection).
+Consultas DuckDB del módulo de analítica: nunca concatenar filtros del usuario; usar parámetros y listas blancas de columnas.
+A06:2025 — Diseño inseguro
+Modelo de amenazas (STRIDE) del checkout, pagos, retomas y panel en docs/modelo-amenazas.md.
+Concurrencia de stock con select_for_update() y transacciones atómicas (sin sobreventa).
+Límites de negocio: máximo de unidades por pedido en preventas/ofertas, un cupón por usuario, anti-abuso de cupones y puntos.
+Flujos de aprobación para descuentos altos, reembolsos y ajustes de inventario.
+A07:2025 — Fallas de autenticación
+django-allauth con verificación de correo, MFA TOTP (obligatorio para todo el personal), códigos de recuperación.
+django-axes: bloqueo progresivo por usuario+IP; CAPTCHA (Cloudflare Turnstile o hCaptcha) tras intentos fallidos y en registro.
+Validadores de contraseña (longitud ≥ 12 para personal, comunes, similitud) y verificación contra contraseñas filtradas (API k-anonymity de Have I Been Pwned).
+Rotación de sesión al iniciar sesión y al cambiar privilegios; expiración por inactividad en el panel; listado y cierre de sesiones activas.
+Mensajes de error genéricos ("credenciales inválidas") para no enumerar usuarios.
+A08:2025 — Fallas de integridad de software o datos
+Webhooks de pago verificados por firma HMAC + marca de tiempo + idempotencia por ID de evento.
+Celery con serializador JSON (nunca pickle); nada de pickle/yaml.load inseguro sobre datos externos.
+Firmar datos que viajan por el cliente (django.core.signing) cuando sea necesario.
+Despliegue solo desde la rama principal tras pasar CI.
+A09:2025 — Fallas de registro y alertas de seguridad
+App audit: registro de inicios de sesión (éxitos y fallos), cambios de rol/permisos, operaciones del panel, exportaciones de datos, cambios de precio y ajustes de inventario.
+Logs estructurados JSON, sin contraseñas, tokens ni datos personales completos (enmascarar).
+Alertas (correo/notificación al superadmin) ante: fuerza bruta, muchos 403 seguidos, cambio de rol a administrador, exportaciones masivas.
+Integración opcional con Sentry (con depuración de PII).
+A10:2025 — Manejo inadecuado de condiciones excepcionales
+Manejo de errores centralizado: el usuario ve un mensaje genérico con ID de correlación; el detalle va solo al log.
+Fallar de forma cerrada: si falla la verificación de permisos, la pasarela o el antifraude, se niega la operación.
+Timeouts y reintentos con backoff en llamadas externas; transacciones atómicas para que un error a mitad de proceso no deje pedidos o stock inconsistentes.
+Tests de casos límite: pago rechazado, webhook duplicado, stock agotado durante el checkout, archivo corrupto, entrada vacía o gigante.
+Protección de formularios (transversal)
+CSRF en todos los formularios y peticiones HTMX (token en cabecera X-CSRFToken).
+Validación en cliente solo como ayuda; la validación real es en servidor.
+Honeypot + CAPTCHA en registro, contacto y recuperación de contraseña.
+Límite de tamaño de petición y de archivos (DATA_UPLOAD_MAX_MEMORY_SIZE, FILE_UPLOAD_MAX_MEMORY_SIZE).
+Pruebas de seguridad
+Suite tests/security/ con pruebas de acceso por rol, IDOR, CSRF, XSS almacenado en reseñas, inyección en búsqueda y filtros de analítica, subida de archivos maliciosos y rate limiting.
+En CI: bandit, semgrep --config p/django, pip-audit, manage.py check --deploy, y OWASP ZAP baseline contra el entorno de staging o un contenedor levantado en el pipeline. El pipeline falla con hallazgos altos.
+8. API REST (/api/v1/)
+DRF con autenticación por sesión para el frontend y por token/JWT de corta duración para integraciones.
+Endpoints de catálogo (público, solo lectura), carrito, pedidos del cliente, y endpoints internos de inventario/analítica protegidos por rol.
+Paginación, throttling por usuario/IP, filtros con lista blanca de campos.
+Documentación OpenAPI con drf-spectacular (Swagger UI solo para usuarios autenticados del personal en producción).
+9. Calidad, rendimiento y experiencia
+Tests: unitarios (servicios), integración (vistas/API), e2e básicos del flujo de compra (Playwright opcional). Cobertura ≥ 80 % en services.py.
+Evitar N+1 (select_related/prefetch_related), índices en campos de filtro, caché de fragmentos del catálogo.
+Accesibilidad básica (contraste, etiquetas, navegación con teclado), SEO (metadatos, sitemap, datos estructurados de producto).
+Internacionalización preparada (gettext), formato de moneda COP.
+Datos de demostración: comando seed_demo con catálogo realista (consolas actuales y retro, juegos, accesorios con sus variantes y precios), usuarios de prueba por cada rol (credenciales solo en README de desarrollo y nunca en producción).
+10. Despliegue en [PLATAFORMA_DE_DESPLIEGUE] y disponibilidad
+
+Plataforma por defecto: Render. Si uso otra (Railway, Fly.io, un VPS con Docker, etc.), adapta esta sección y documenta el cambio.
+
+Archivo de infraestructura como código (render.yaml Blueprint o equivalente) con: servicio web (Gunicorn), worker de Celery, Celery Beat (o cron de la plataforma), PostgreSQL gestionado y Redis/Key-Value gestionado.
+Antes de desplegar, verifica los límites actuales del plan elegido (gratuito o de pago): si el plan no admite worker en segundo plano, implementa un modo alternativo (tareas programadas vía cron job de la plataforma o ejecución síncrona controlada) y documéntalo.
+Script de build: instalar dependencias desde lockfile, compilar Tailwind, collectstatic; comando de release: migrate y setup_roles.
+Variables de entorno documentadas en .env.example y en docs/despliegue.md (sin valores reales).
+Endpoint /healthz (base de datos + Redis) para el health check de la plataforma.
+Archivos de usuario en bucket S3-compatible privado con URLs firmadas.
+HTTPS forzado, dominio personalizado opcional.
+CI/CD con GitHub Actions: lint → tests → seguridad → build de imagen → despliegue automático solo si todo pasa.
+Respaldos: documentar la política de backups de la base de datos y un script de restauración.
+Al final, despliega la aplicación, ejecuta seed_demo (y un seed_bigdata reducido acorde al plan) en producción, verifica manualmente el flujo completo (registro → compra → panel → analítica) y entrégame la URL pública y el usuario demo de cada rol.
+11. Plan de fases (detente al final de cada una)
+Fase	Entregable
+1. Fundaciones	Estructura, settings por entorno, Docker Compose, CI básico, CLAUDE.md, ADRs iniciales, modelo de datos y diagrama ER
+2. Usuarios y seguridad base	Auth con allauth + MFA, axes, roles y permisos, mixins, auditoría, cabeceras/CSP, tests de acceso
+3. Catálogo y precios	Productos, variantes y configuraciones con precio dinámico, búsqueda, filtros, comparador, historial de precios
+4. Carrito, checkout y pagos	Carrito, cupones, envíos, pasarela sandbox, webhooks firmados, pedidos, facturas PDF, correos
+5. Panel administrativo	Dashboard, inventario multi-sede y kardex, compras, pedidos, POS, CRM, moderación, reportes
+6. Módulos de valor agregado	Retomas, servicio técnico, fidelidad, preventas, alertas de precio/stock, devoluciones
+7. Big Data / BI	Generador de datos, pipeline medallón, modelo estrella, modelos analíticos, dashboards con insights, notebook PySpark
+8. Endurecimiento de seguridad	Matriz OWASP completa, modelo de amenazas, suite de seguridad, ZAP, SBOM, revisión de hallazgos
+9. Despliegue	Infraestructura como código, CI/CD, despliegue, datos demo, verificación end-to-end
+10. Documentación final	README, manual de usuario por rol (con capturas), manual técnico, docs/seguridad.md, docs/big-data.md, guion de sustentación
+12. Criterios de aceptación finales
+ La app está desplegada y accesible por HTTPS con una URL pública.
+ Existe al menos un usuario demo por rol y cada rol solo ve lo que le corresponde.
+ Un cliente puede configurar una consola (versión/almacenamiento/condición), ver el precio cambiar, comprar con la pasarela sandbox y seguir su pedido.
+ El inventario se descuenta correctamente y no hay sobreventa bajo concurrencia (test que lo demuestre).
+ El panel permite gestionar catálogo, inventario, ventas, compras, POS, clientes, retomas y reportes.
+ El módulo de analítica procesa ≥ 500.000 pedidos en local y muestra pronóstico, RFM, canasta, embudo y recomendaciones accionables.
+ manage.py check --deploy sin advertencias; bandit, pip-audit y ZAP sin hallazgos altos.
+ docs/seguridad.md mapea las 10 categorías OWASP 2025 a controles y tests concretos.
+ Cobertura de tests ≥ 80 % en la capa de servicios y CI en verde.

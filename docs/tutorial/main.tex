@@ -1,0 +1,1109 @@
+% =====================================================================
+%  Tutorial: construcción de una app web con vibe coding (caso Byte)
+%  Formato APA 7 (clase apa7, modo estudiante) + biblatex-apa.
+%
+%  Compilar desde docs/tutorial/:
+%      latexmk -xelatex main.tex
+%  (o: xelatex main && biber main && xelatex main && xelatex main)
+%
+%  Las figuras salen de docs/capturas/ con:
+%      uv run python docs/tutorial/preparar_figuras.py
+% =====================================================================
+\documentclass[stu,12pt,floatsintext]{apa7}
+
+% ---------- Datos de la portada (completar) ----------
+\newcommand{\autor}{[Nombre completo del estudiante]}
+\newcommand{\programa}{[Programa académico], [Nombre de la universidad]}
+\newcommand{\curso}{Hacking ético}
+\newcommand{\docente}{[Nombre del docente]}
+\newcommand{\fecha}{13 de noviembre de 2026}
+
+% ---------- Idioma y fuentes ----------
+\usepackage[spanish,es-tabla,es-noshorthands,es-nolists]{babel}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setmonofont{Consolas}[Scale=0.88]
+\usepackage{csquotes}
+\usepackage[style=apa,backend=biber]{biblatex}
+\addbibresource{referencias.bib}
+\DefineBibliographyStrings{spanish}{nodate={s.\,f\adddot}}
+
+% ---------- Paquetes ----------
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fvextra}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{ragged2e}
+\usepackage{xurl}
+\hypersetup{hidelinks}
+
+\graphicspath{{figuras/}}
+
+% APA 7: texto alineado a la izquierda (sin justificar) con sangría de 0,5 in.
+\setlength{\RaggedRightParindent}{0.5in}
+% APA 7: sin división de palabras al final de línea.
+\setlength{\RaggedRightRightskip}{0pt plus 1fil}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\AtBeginDocument{\def\keywordname{Palabras clave}\def\notelabel{Nota}}
+
+% Código y salidas de terminal: interlineado sencillo y cortes de línea.
+\fvset{breaklines=true,breakanywhere=true,fontsize=\small,frame=single,
+  rulecolor=\color{gray!60},framesep=6pt,tabsize=4,
+  formatcom=\linespread{1}\selectfont}
+
+% Fragmentos citados del prompt maestro.
+\definecolor{promptborde}{HTML}{3B4B8C}
+\definecolor{promptfondo}{HTML}{F2F4FB}
+\newtcolorbox[auto counter]{fragmento}[2][]{%
+  breakable, enhanced, colback=promptfondo, colframe=promptborde,
+  boxrule=0.6pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  before skip balanced=12pt, after skip balanced=12pt,
+  fonttitle=\bfseries\small, coltitle=white,
+  title={Fragmento \thetcbcounter\ del prompt maestro. #2},
+  fontupper=\small, before upper={\linespread{1}\selectfont\setlength{\parskip}{0.35em}\raggedright},
+  #1}
+
+% Cuadro de "lección" del tutorial.
+\newtcolorbox{leccion}{%
+  breakable, enhanced, colback=gray!5, colframe=gray!45, boxrule=0.5pt, arc=2pt,
+  fonttitle=\bfseries\small, coltitle=black, colbacktitle=gray!18,
+  title={Lección para replicar}, fontupper=\small,
+  before upper={\linespread{1}\selectfont\raggedright}}
+
+% Figura en formato APA: número en negrita, título en cursiva arriba, nota abajo.
+% \figura{archivo}{ancho}{título}{nota}{etiqueta}
+\newcommand{\figura}[5]{%
+  \begin{figure}[H]
+    \caption{#3}\label{#5}
+    \centering
+    \fbox{\includegraphics[width=#2\linewidth]{#1}}
+    \notatabla{#4}
+  \end{figure}}
+
+% Nota de tabla en formato APA.
+\newcommand{\notatabla}[1]{\par\vspace{2pt}{\small\raggedright\linespread{1}\selectfont\textit{Nota.} #1\par}}
+
+\newcommand{\ruta}[1]{{\urlstyle{tt}\nolinkurl{#1}}}
+
+% ---------- Portada (modo estudiante) ----------
+\title{Construcción de una tienda en línea segura con \textit{vibe coding}: tutorial paso a paso del caso Byte}
+\authorsnames{\autor}
+\authorsaffiliations{{\programa}}
+\course{\curso}
+\professor{\docente}
+\duedate{\fecha}
+
+\abstract{Este documento es un tutorial, basado en un caso real, sobre cómo construir una aplicación web de
+producción mediante \textit{vibe coding}, es decir, programando a través de instrucciones en lenguaje
+natural a un agente de inteligencia artificial. El caso es Byte, una tienda en línea y punto de venta de
+videojuegos, consolas y accesorios para Colombia, construida con Django 5.2, PostgreSQL 17, Celery y un
+módulo de inteligencia de negocio, y desplegada en Render. Toda la construcción partió de un único
+prompt maestro que fijó el rol de la inteligencia artificial, las reglas de trabajo, la arquitectura,
+los requisitos funcionales y de seguridad, el plan de diez fases y los criterios de aceptación. El
+tutorial explica cómo está construido ese prompt y recorre las fases mostrando, para cada una, el
+fragmento del prompt que la gobernó, la forma en que se implementó y las evidencias que se generaron:
+bitácoras, capturas de pantalla y resultados de las verificaciones automáticas. La aplicación terminó
+con 727 pruebas, una cobertura del 93~\%, cero hallazgos de semgrep y cero fallos en OWASP ZAP baseline.
+El documento deja preparada la continuación, dedicada a las pruebas de penetración sobre la aplicación
+construida.}
+\keywords{vibe coding, prompt maestro, desarrollo asistido por inteligencia artificial, Django, seguridad de aplicaciones, OWASP Top 10}
+
+\begin{document}
+\maketitle
+\RaggedRight
+
+% =====================================================================
+% Introducción (APA: sin título "Introducción"; se repite el título del trabajo)
+% =====================================================================
+Construir una tienda en línea completa (catálogo, carrito, pagos, panel administrativo, inventario
+multisede, punto de venta y analítica) suele requerir un equipo y varios meses. Este tutorial muestra
+cómo se construyó una aplicación de ese tamaño con \textit{vibe coding}: el autor no escribió el código
+línea a línea, sino que lo especificó en un prompt maestro y supervisó a un agente de inteligencia
+artificial (IA) que trabaja directamente sobre el repositorio, ejecuta comandos y verifica sus propios
+resultados.
+
+El trabajo se hizo para el curso de Hacking ético. Por eso la seguridad no fue un añadido final: fue un
+requisito del prompt maestro desde la primera línea, alineado con el OWASP Top 10:2025
+\parencite{owasp2025}. La aplicación resultante, llamada Byte, será además el objetivo de la segunda
+parte del proyecto, dedicada a las pruebas de penetración.
+
+El documento tiene dos propósitos. El primero es enseñar un método replicable: cómo redactar un prompt
+maestro, qué preparar antes de enviarlo y cómo verificar lo que la IA entrega en cada fase. El segundo
+es dejar constancia de lo que ocurrió en este caso, con los fragmentos del prompt que guiaron cada fase
+y las evidencias que se recogieron, incluidos los errores y su corrección.
+
+El tutorial se organiza así. Primero se presentan el marco de referencia y el caso. Luego se describen
+la preparación del entorno, la anatomía del prompt maestro, la aprobación del plan y las reglas
+persistentes del proyecto. Después se recorre la construcción fase por fase y se resumen los
+resultados, las decisiones que tomó la IA donde el prompt dejaba opciones y las lecciones aprendidas.
+Al final se deja planteada la continuación con las pruebas de penetración. El Apéndice~A contiene el
+prompt maestro completo y el Apéndice~B, un índice de las evidencias.
+
+% =====================================================================
+\section{Marco de referencia}
+% =====================================================================
+
+\subsection{Qué es el \textit{vibe coding}}
+
+El término fue propuesto por \textcite{karpathy2025} para describir una forma de programar en la que la
+persona se entrega a la conversación con un modelo de lenguaje, acepta sus cambios y casi olvida que el
+código existe. En su forma más pura, el \textit{vibe coding} sirve para prototipos rápidos: se pide algo,
+se prueba si funciona y se pide el siguiente cambio, sin leer en detalle lo que la IA escribió.
+
+Para una aplicación que maneja dinero, datos personales e inventario, esa versión pura no es
+suficiente. Una IA puede producir código que funciona en la demostración y aun así tiene fallas de
+control de acceso, secretos expuestos o dependencias vulnerables. Por eso, en este proyecto se usó una
+variante guiada por especificación: la persona no escribe el código, pero define con precisión qué debe
+construirse, cómo debe trabajar la IA y cómo se demuestra que el resultado funciona.
+
+\subsection{El prompt maestro como especificación}
+
+El eje del método es un prompt maestro: un único mensaje extenso que cumple el papel de un documento de
+requisitos y, a la vez, de un contrato de trabajo con la IA. A diferencia de una cadena de pedidos
+sueltos, el prompt maestro fija desde el inicio cuatro cosas:
+
+\begin{enumerate}[leftmargin=0.5in]
+  \item \textbf{El rol y las reglas de la IA}: con qué experiencia debe actuar y qué debe hacer siempre
+        (probar, analizar, documentar, hacer commits, detenerse).
+  \item \textbf{El alcance}: tecnologías, arquitectura, roles, módulos y requisitos de seguridad, con un
+        nivel de detalle verificable.
+  \item \textbf{El plan}: diez fases con su entregable y la obligación de detenerse al final de cada una
+        para la revisión humana.
+  \item \textbf{La definición de terminado}: criterios de aceptación que se pueden comprobar uno a uno.
+\end{enumerate}
+
+El agente usado fue Claude Code \parencite{anthropic-claudecode}, en su aplicación de escritorio para
+Windows. Este tipo de agente no solo genera texto: lee y edita archivos del proyecto, ejecuta comandos
+en la terminal, levanta contenedores, corre las pruebas y opera un navegador para tomar capturas. Esa
+capacidad de ejecutar y verificar es la que permite que un prompt maestro se convierta en una
+aplicación funcionando.
+
+\subsection{El caso: Byte}
+
+Byte es la tienda en línea y punto de venta de una cadena ficticia de videojuegos, consolas y
+accesorios en Colombia. Maneja precios en pesos colombianos con IVA del 19~\% incluido, envíos por
+departamento y ciudad, y obligaciones legales locales: el Estatuto del Consumidor \parencite{ley1480},
+que prohíbe anunciar descuentos sobre precios que no se cobraron y fija el derecho de retracto, y la ley
+de protección de datos personales \parencite{ley1581}. La Tabla~\ref{tab:modulos} resume sus módulos.
+
+\begin{table}[H]
+\caption{Módulos de la aplicación Byte}\label{tab:modulos}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}p{3.6cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Módulo & Funciones principales \\
+\midrule
+Tienda & Catálogo con variantes configurables y precio dinámico, búsqueda tolerante a errores, comparador, carrito de invitado, checkout con cupones y envío, pagos en modo de pruebas, factura en PDF. \\
+Cuenta del cliente & Pedidos, devoluciones, retomas de consolas usadas, servicio técnico, puntos y saldo a favor, alertas de precio y disponibilidad, privacidad (descarga y eliminación de datos). \\
+Panel (\ruta{/panel/}) & Resumen por rol, pedidos, inventario multisede con kardex, ajustes y traslados, compras, punto de venta con arqueo, clientes, precios, cupones, reportes, auditoría y eventos de seguridad. \\
+Inteligencia de negocio & Histórico sintético, flujo de datos bronce, plata y oro, modelo estrella, segmentación RFM, pronóstico de ventas y tablero interactivo. \\
+API (\ruta{/api/v1/}) & API versionada que deniega por defecto; esquema OpenAPI solo para el personal. \\
+\bottomrule
+\end{tabularx}
+\notatabla{Elaboración propia a partir del prompt maestro y del código del repositorio.}
+\end{table}
+
+% =====================================================================
+\section{Preparación del entorno}
+% =====================================================================
+
+Antes de enviar el prompt maestro conviene tener listo el entorno, porque la IA ejecuta comandos reales
+y se detiene cuando falta una herramienta. La Tabla~\ref{tab:entorno} lista lo que se usó.
+
+\begin{table}[H]
+\caption{Herramientas del entorno de construcción}\label{tab:entorno}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}p{4.4cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Herramienta & Uso en el proyecto \\
+\midrule
+Claude Code (aplicación de escritorio) & Agente de IA que edita el repositorio, ejecuta comandos, opera el navegador y toma capturas. \\
+Windows 11 + Python 3.12 & Sistema operativo y lenguaje base. \\
+uv \parencite{astral-uv} & Gestor de dependencias con archivo de bloqueo, \textit{hashes} y cuarentena de 7 días para paquetes recién publicados. \\
+Docker Desktop + WSL2 & Contenedores para PostgreSQL, Valkey, el worker de Celery y la imagen de producción. \\
+Git y GitHub & Control de versiones con una rama por fase y repositorio remoto para el despliegue. \\
+Playwright \parencite{playwright} & Capturas de pantalla automáticas y prueba de extremo a extremo de la compra. \\
+semgrep, bandit, pip-audit, Trivy y ZAP \parencite{semgrep,zap} & Análisis estático, auditoría de dependencias, escaneo de la imagen y escaneo dinámico. \\
+Render \parencite{render-blueprint} & Plataforma de despliegue definida como código. \\
+\bottomrule
+\end{tabularx}
+\notatabla{Las versiones exactas de las librerías se verificaron en PyPI y npm el día en que se fijaron y quedaron registradas en el ADR-0005 y en el archivo \ruta{uv.lock}.}
+\end{table}
+
+\begin{leccion}
+Instale y pruebe la infraestructura (Docker con WSL2, base de datos, Git) antes de enviar el prompt. En
+este caso Docker no estaba instalado: la IA lo detectó al intentar correr las pruebas contra
+PostgreSQL, y su instalación reinició el equipo a mitad de la Fase~1. Lo que ya estaba confirmado en Git
+sobrevivió; lo que solo estaba en la conversación hubo que reconstruirlo.
+\end{leccion}
+
+% =====================================================================
+\section{Paso 1: redactar el prompt maestro}
+% =====================================================================
+
+El paso más importante del método es la especificación. En este caso fue un prompt de unos 28\,000
+caracteres, organizado en trece secciones numeradas del 0 al 12 (Tabla~\ref{tab:anatomia}). El texto
+completo está en el Apéndice~A.
+
+\begin{table}[H]
+\caption{Estructura del prompt maestro}\label{tab:anatomia}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}p{4.6cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Sección & Para qué sirve \\
+\midrule
+0. Rol, contexto y reglas & Define el papel de la IA (arquitecto y desarrollador sénior con experiencia en seguridad) y las reglas no negociables: fases, commits, secretos, idioma, pruebas. \\
+1. Stack tecnológico & Fija las tecnologías por capa para que la IA no improvise. \\
+2. Arquitectura & Monolito modular con capa de servicios, lista de apps, identificadores públicos UUID y dinero en decimales. \\
+3. Usuarios y roles & Diez roles, denegación por defecto, permisos por objeto, separación de funciones y matriz de permisos generada desde el código. \\
+4--6. Tienda, panel y analítica & Requisitos funcionales de cada módulo, con el nivel de detalle de un documento de requisitos. \\
+7. Seguridad OWASP 2025 & Controles obligatorios por cada categoría del Top 10, protección de formularios y suite de pruebas de seguridad. \\
+8--10. API, calidad y despliegue & Reglas de la API, metas de calidad y cobertura, e infraestructura como código. \\
+11. Plan de fases & Diez fases con su entregable; la IA debe detenerse al final de cada una. \\
+12. Criterios de aceptación & Lista verificable de lo que debe cumplirse al terminar. \\
+\bottomrule
+\end{tabularx}
+\notatabla{Elaboración propia a partir del prompt maestro (Apéndice~A).}
+\end{table}
+
+\subsection{Sección 0: el rol y las reglas}
+
+La sección~0 es la que gobierna el comportamiento de la IA durante toda la obra
+(Fragmento~\ref{f:reglas}). Cada regla responde a un riesgo concreto del desarrollo con IA: perder el
+control del avance (fases y commits), olvidar las convenciones entre sesiones (\ruta{CLAUDE.md}),
+filtrar secretos (variables de entorno), decidir de forma opaca (ADR), usar versiones inventadas u
+obsoletas (verificación de versiones) y romper la lógica de negocio sin notarlo (pruebas obligatorias).
+
+\begin{fragmento}[label=f:reglas]{Rol, contexto y reglas de trabajo}
+Actúa como arquitecto de software senior y desarrollador full-stack Django, con experiencia en
+e-commerce, ingeniería de datos y seguridad de aplicaciones (AppSec). Vas a construir desde cero una
+aplicación web de producción para Byte, una tienda de videojuegos, consolas y accesorios en Colombia
+(moneda COP, IVA 19~\%, envíos nacionales por departamento/ciudad).
+
+Reglas de trabajo obligatorias:
+
+Trabaja por fases (sección 11). Al final de cada fase: ejecuta los tests, el linter y el análisis de
+seguridad, actualiza CHANGELOG.md, haz un commit con mensaje convencional (feat:, fix:, sec:, docs:…) y
+detente para que yo revise.
+
+Antes de escribir código, crea CLAUDE.md con las convenciones del proyecto, los comandos (correr,
+testear, migrar, sembrar datos, desplegar) y las decisiones de arquitectura. Mantenlo actualizado.
+
+Nunca pongas secretos en el código ni en el repo. Todo va por variables de entorno (.env.example
+documentado, .env en .gitignore).
+
+Si una decisión tiene varias opciones razonables, elige la más simple y segura, y documéntala como ADR
+corto en docs/adr/.
+
+Si una librería o servicio no está disponible o cambió, verifica la versión actual estable antes de
+fijarla y anota el cambio.
+
+Código, nombres de modelos y comentarios en inglés; interfaz de usuario, mensajes y documentación en
+español.
+
+Todo cambio de lógica de negocio importante debe tener tests.
+\end{fragmento}
+
+\subsection{Secciones 1 a 10: el alcance, escrito para ser verificable}
+
+Las secciones de alcance comparten un rasgo: cada requisito se puede comprobar. El prompt no dice «la
+aplicación debe ser segura», sino qué control se espera y cómo se demuestra. Los requisitos de control
+de acceso del Fragmento~\ref{f:acceso} son un buen ejemplo: cada línea se tradujo después en código y en
+pruebas automáticas.
+
+\begin{fragmento}[label=f:acceso]{Requisitos de control de acceso (sección 3.2)}
+Denegar por defecto: toda vista del panel exige autenticación + permiso explícito. Crea
+mixins/decoradores propios (RoleRequiredMixin, ObjectPermissionMixin) y úsalos en TODAS las vistas y
+endpoints.
+
+Permisos a nivel de objeto: un cliente solo ve sus pedidos, direcciones, tickets y retomas; un gerente
+solo ve las sedes asignadas.
+
+Separación de funciones: quien crea un ajuste de inventario o un descuento > [X] \% no puede aprobarlo.
+
+[…]
+
+Tests que prueban, para cada endpoint sensible, que los roles sin permiso reciben 403/404 (incluye
+pruebas de IDOR cambiando UUIDs).
+\end{fragmento}
+
+El prompt también deja opciones abiertas a propósito: el umbral \texttt{[X]}~\% del descuento, la
+plataforma de despliegue \ruta{[PLATAFORMA_DE_DESPLIEGUE]} y varias parejas de tecnologías
+(«django-guardian o servicio propio», «Wompi o Mercado Pago»). Esas opciones se resuelven con la regla
+de la sección~0: elegir la más simple y segura y documentarla como ADR. La Tabla~\ref{tab:opciones}, más
+adelante, muestra cómo se resolvió cada una.
+
+\subsection{Secciones 11 y 12: el plan y la definición de terminado}
+
+El plan de fases (Fragmento~\ref{f:fases}) divide la obra en entregables revisables, y los criterios de
+aceptación permiten saber, al final, qué se cumplió y qué no.
+
+\begin{fragmento}[label=f:fases]{Plan de fases (sección 11)}
+\begin{tabular}{@{}p{4.6cm}p{9.6cm}@{}}
+1. Fundaciones & Estructura, settings por entorno, Docker Compose, CI básico, CLAUDE.md, ADRs iniciales, modelo de datos y diagrama ER \\
+2. Usuarios y seguridad base & Auth con allauth + MFA, axes, roles y permisos, mixins, auditoría, cabeceras/CSP, tests de acceso \\
+3. Catálogo y precios & Productos, variantes y configuraciones con precio dinámico, búsqueda, filtros, comparador, historial de precios \\
+4. Carrito, checkout y pagos & Carrito, cupones, envíos, pasarela sandbox, webhooks firmados, pedidos, facturas PDF, correos \\
+5. Panel administrativo & Dashboard, inventario multi-sede y kardex, compras, pedidos, POS, CRM, moderación, reportes \\
+6. Módulos de valor agregado & Retomas, servicio técnico, fidelidad, preventas, alertas de precio/stock, devoluciones \\
+7. Big Data / BI & Generador de datos, pipeline medallón, modelo estrella, modelos analíticos, dashboards con insights, notebook PySpark \\
+8. Endurecimiento de seguridad & Matriz OWASP completa, modelo de amenazas, suite de seguridad, ZAP, SBOM, revisión de hallazgos \\
+9. Despliegue & Infraestructura como código, CI/CD, despliegue, datos demo, verificación end-to-end \\
+10. Documentación final & README, manual de usuario por rol (con capturas), manual técnico, docs/seguridad.md, docs/big-data.md, guion de sustentación \\
+\end{tabular}
+\end{fragmento}
+
+El título de la sección~11 repite la instrucción clave: «detente al final de cada una». Junto con la
+regla de la sección~0 («detente para que yo revise»), convierte cada fase en una puerta de aprobación:
+la IA no avanza a la siguiente hasta que la persona revisa la anterior.
+
+\begin{leccion}
+Al redactar su propio prompt maestro: (1) dé a la IA un rol con experiencia en seguridad; (2) escriba
+reglas de trabajo que obliguen a probar, documentar y detenerse; (3) formule cada requisito de forma
+que se pueda comprobar; (4) marque con corchetes los valores que deban decidirse y pida que cada
+decisión quede en un ADR; (5) cierre con criterios de aceptación que permitan saber cuándo está
+terminado.
+\end{leccion}
+
+% =====================================================================
+\section{Paso 2: revisar y aprobar el plan}
+% =====================================================================
+
+Antes de escribir código conviene pedir a la IA el plan de la primera fase y revisarlo. En este caso la
+IA presentó tres entregables: el árbol de carpetas, el modelo de datos en Mermaid que pedía la
+sección~2 y la lista de dependencias. Cada dependencia venía con
+la versión estable verificada ese día en PyPI y npm, como exigía la sección~0. Por ejemplo, propuso
+Django 5.2.19, la versión LTS, en lugar de la 6.1.3, que era la más reciente, porque la sección~1 pedía
+«Django 5.2 LTS (o la LTS vigente)» y la LTS tiene soporte durante todo el proyecto
+\parencite{django2025}. Tras revisar el plan, la persona lo aprobó y comenzó la Fase~1.
+
+% =====================================================================
+\section{Paso 3: convertir las reglas en archivos del repositorio}
+% =====================================================================
+
+Una conversación con la IA se pierde cuando se reinicia la sesión o cuando el contexto se resume. Por
+eso la sección~0 pide crear \ruta{CLAUDE.md} antes de escribir código. En este caso las reglas quedaron
+en tres lugares:
+
+\begin{enumerate}[leftmargin=0.5in]
+  \item \textbf{\ruta{CLAUDE.md}}: convenciones, comandos y reglas de trabajo que el agente lee al iniciar
+        cada sesión. Se actualizó en el mismo commit cada vez que cambió una convención.
+  \item \textbf{Registros de decisiones de arquitectura} (ADR) en \ruta{docs/adr/}: diecisiete decisiones
+        cortas con su contexto, alternativas y consecuencias.
+  \item \textbf{La bitácora} en \ruta{docs/bitacora/}: un archivo por fase con las secciones \textit{Qué,
+        Cómo, Por qué, Evidencias} y \textit{Pendientes}, acompañado de capturas en \ruta{docs/capturas/}.
+\end{enumerate}
+
+El fragmento siguiente, tomado de \ruta{CLAUDE.md}, muestra cómo las reglas del prompt maestro quedaron
+convertidas en instrucciones permanentes.
+
+\begin{Verbatim}
+## Reglas de trabajo (obligatorias)
+
+1. **Fases**: se trabaja por las fases de la tabla de abajo. Al cerrar cada fase
+   se sigue este orden: tests, linters y análisis de seguridad → CHANGELOG.md →
+   bitácora con capturas → commit convencional → **detenerse para revisión**.
+2. **Ramas**: cada fase vive en `fase/NN-nombre` y se fusiona a `main` solo
+   cuando el usuario la aprueba.
+4. **Secretos**: nunca en el código ni en el repositorio. Todo va por variables
+   de entorno (`.env.example` documentado y `.env` ignorado por git).
+5. **Decisiones**: cuando haya varias opciones razonables, se elige la más
+   simple y segura y se documenta como ADR en `docs/adr/`.
+\end{Verbatim}
+
+La regla «ejecuta los tests, el linter y el análisis de seguridad» quedó automatizada en
+\ruta{scripts/evidencia.py}, que corre todas las verificaciones y guarda su salida como texto y como
+imagen de terminal. Un segundo script, \ruta{scripts/capturas.py}, abre la aplicación con Playwright y
+toma capturas en escritorio y móvil, en modo claro y oscuro, revisando además la consola del navegador
+en busca de violaciones de la política de seguridad de contenido (CSP). La
+Tabla~\ref{tab:verificaciones} resume las verificaciones, que son las mismas que corre el pipeline de
+integración continua que pide la sección~7.
+
+\begin{table}[H]
+\caption{Verificaciones automáticas ejecutadas al cerrar cada fase}\label{tab:verificaciones}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}p{1.1cm}>{\raggedright}p{4.4cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+N.º & Verificación & Qué detecta \\
+\midrule
+01 & pytest con cobertura & Regresiones funcionales y de seguridad, contra PostgreSQL real. \\
+02--04 & ruff, black, mypy & Errores de estilo, formato y tipos. \\
+05 & bandit & Patrones inseguros en Python (SAST). \\
+06 & pip-audit & Dependencias con vulnerabilidades conocidas. \\
+07 & \texttt{manage.py check --deploy} & Configuración insegura de Django en producción. \\
+08 & Cabeceras de \texttt{GET /} & CSP con \textit{nonce}, HSTS, X-Frame-Options, COOP, CORP y Permissions-Policy. \\
+09 & Integridad de librerías JS & Que htmx, Alpine, ECharts y Tailwind coincidan con sus \textit{hashes} publicados. \\
+10 & semgrep & Inyección, redirecciones abiertas, criptografía débil y otros patrones. \\
+11 & Trivy & Vulnerabilidades altas o críticas en la imagen Docker. \\
+12 & Matriz de permisos & Que la matriz rol × permiso documentada coincida con el código. \\
+13 & Cadena de auditoría & Que la bitácora de auditoría encadenada por \textit{hash} esté íntegra. \\
+14--15 & SBOM y ZAP baseline & Inventario de componentes y escaneo dinámico pasivo (desde la Fase~8). \\
+\bottomrule
+\end{tabularx}
+\notatabla{Elaboración propia a partir de \ruta{scripts/evidencia.py} y \ruta{.github/workflows/ci.yml}.}
+\end{table}
+
+% =====================================================================
+\section{Paso 4: construir por fases}
+% =====================================================================
+
+Con el plan aprobado y las reglas fijadas, la obra avanzó en las diez fases de la sección~11. Cada una
+siguió el mismo ciclo (Figura~\ref{fig:ciclo}): el entregable definido en el prompt maestro, la
+implementación por parte de la IA, las verificaciones automáticas, la bitácora con capturas, el commit
+en la rama de la fase y la revisión humana antes de pasar a la siguiente.
+
+\begin{figure}[H]
+\caption{Ciclo de trabajo de cada fase}\label{fig:ciclo}
+\centering
+\begin{tikzpicture}[
+  nodo/.style={draw=promptborde, fill=promptfondo, rounded corners=3pt, align=center,
+               minimum width=3.2cm, minimum height=1.05cm, font=\small\linespread{1}\selectfont},
+  flecha/.style={-{Stealth[length=2.2mm]}, thick, draw=promptborde}]
+  \node[nodo] (p) {Entregable de la\\fase (prompt)};
+  \node[nodo, right=1.1cm of p] (i) {Implementación\\por la IA};
+  \node[nodo, right=1.1cm of i] (v) {Verificaciones\\automáticas};
+  \node[nodo, below=1.1cm of v] (e) {Bitácora y\\capturas};
+  \node[nodo, left=1.1cm of e] (c) {Commit en\\la rama de fase};
+  \node[nodo, left=1.1cm of c] (r) {Revisión\\humana};
+  \draw[flecha] (p) -- (i);
+  \draw[flecha] (i) -- (v);
+  \draw[flecha] (v) -- (e);
+  \draw[flecha] (e) -- (c);
+  \draw[flecha] (c) -- (r);
+  \draw[flecha] (r) -- node[left, font=\footnotesize, align=right]{siguiente\\fase} (p);
+  \draw[flecha, dashed] (v.north) .. controls +(0,0.9) and +(0,0.9) .. node[above, font=\footnotesize]{si algo falla, se corrige y se repite} (i.north);
+\end{tikzpicture}
+\notatabla{Elaboración propia a partir de la regla de trabajo de la sección~0 del prompt maestro.}
+\end{figure}
+
+La Tabla~\ref{tab:fases} resume el número de pruebas y la cobertura medidos al cerrar cada fase.
+
+\begin{table}[H]
+\caption{Pruebas y cobertura al cerrar cada fase}\label{tab:fases}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}p{0.6cm}>{\raggedright}X>{\RaggedLeft}p{1.5cm}>{\RaggedLeft\arraybackslash}p{1.9cm}@{}}
+\toprule
+N.º & Fase & Pruebas & Cobertura \\
+\midrule
+1 & Fundaciones & 323 & 99,8~\% \\
+2 & Usuarios y seguridad base & 448 & 93,0~\% \\
+3 & Catálogo y precios & 530 & 94,6~\% \\
+4 & Carrito, checkout y pagos & 582 & 94~\% \\
+5 & Panel administrativo & 679 & 94~\% \\
+6 & Módulos de valor agregado & 699 & 93~\% \\
+7 & Big data e inteligencia de negocio & 713 & 93~\% \\
+8 & Endurecimiento de seguridad & 724 & 93~\% \\
+9 & Despliegue & 727 & 93~\% \\
+10 & Documentación final & 727 & 93~\% \\
+\bottomrule
+\end{tabularx}
+\notatabla{Datos tomados de las bitácoras \ruta{docs/bitacora/fase-NN.md}. La Fase~9 incluye las pruebas agregadas al corregir el despliegue; la Fase~10 no cambió código. La meta del prompt maestro era una cobertura de al menos 80~\%.}
+\end{table}
+
+% ---------------------------------------------------------------------
+\subsection{Fase 1: fundaciones}
+
+\begin{fragmento}{Arquitectura (sección 2)}
+Monolito modular Django con capa de servicios (la lógica de negocio NO vive en las vistas) […]
+
+Cada app: models.py, services.py (lógica), selectors.py (consultas), forms.py, views.py, permissions.py,
+tests/.
+
+Identificadores públicos en URLs y API: UUID o slug, nunca el ID autoincremental.
+
+Precios en DecimalField (o enteros en pesos), nunca float.
+
+Genera el diagrama entidad-relación en Mermaid en docs/modelo-datos.md.
+\end{fragmento}
+
+\textbf{Cómo se implementó.} La IA generó veintiuna apps de Django con la misma estructura en capas y
+una prueba (\ruta{tests/test_structure.py}) que impide que una app nueva rompa la convención. Configuró
+los ajustes por entorno, Docker multietapa con usuario sin privilegios, Docker Compose con web, worker,
+beat, PostgreSQL y Valkey, la integración continua, \ruta{CLAUDE.md}, los primeros ADR y el modelo de
+datos en Mermaid. La seguridad de base (CSP con \textit{nonce}, cabeceras, cookies seguras, Argon2,
+Celery con JSON, errores genéricos con identificador de correlación) se configuró desde esta fase.
+
+La sección~1 pedía un «look “gamer” moderno» y la sección~9, un catálogo realista. La página de inicio
+se construyó como la de una tienda en línea completa, con carrusel, beneficios, categorías con foto,
+productos destacados, retoma, servicio técnico y marcas (Figuras~\ref{fig:inicio} y
+\ref{fig:iniciomovil}). Las fotos de producto se tomaron de Wikimedia Commons, solo con licencia libre
+verificable \parencite{wikimedia}: un script fija cada archivo por su \textit{hash} SHA-256, quita el
+fondo de estudio, genera WebP sin metadatos y publica los créditos.
+
+\figura{f01-inicio.jpg}{0.92}{Página de inicio de Byte en escritorio, modo oscuro}{Captura tomada con
+Playwright al cerrar la Fase~1 (\ruta{docs/capturas/fase-01/inicio-escritorio-oscuro.jpg}), recortada a
+la parte visible de la pantalla. Las fotos de producto provienen de Wikimedia Commons con licencia
+libre.}{fig:inicio}
+
+\figura{f01-inicio-movil.jpg}{0.36}{Página de inicio en un teléfono, modo claro}{Captura de la Fase~1
+(\ruta{docs/capturas/fase-01/inicio-movil-claro.jpg}), recortada.}{fig:iniciomovil}
+
+\textbf{Qué encontraron las verificaciones.} Al probar la imagen real en contenedores aparecieron
+problemas que no se veían sin ellos. La IA los detectó con las verificaciones y los corrigió antes del
+commit (Tabla~\ref{tab:hallazgos1}). La Figura~\ref{fig:resumen1} muestra el resumen de las once
+verificaciones de la fase.
+
+\begin{table}[H]
+\caption{Hallazgos de la verificación con contenedores en la Fase 1}\label{tab:hallazgos1}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Hallazgo & Corrección \\
+\midrule
+Los archivos estáticos quedaban ilegibles para el usuario sin privilegios: la tienda habría salido sin estilos ni imágenes. & Permisos propios para los estáticos y prueba de regresión. \\
+La imagen de producción incluía las herramientas de seguridad (978 MB). & Exportar solo las dependencias de la aplicación: la imagen bajó a 472 MB. \\
+semgrep señaló el uso de SHA-1 para verificar las fotos. & Cada foto se fija por SHA-256. \\
+Trivy encontró dos CVE altas en \ruta{zlib1g} de la imagen base. & La etapa base aplica las actualizaciones de seguridad de Debian. \\
+El worker de Celery no registraba la ejecución de tareas. & Se aplicó la configuración de registro de Django al worker. \\
+\bottomrule
+\end{tabularx}
+\notatabla{Resumen de la bitácora \ruta{docs/bitacora/fase-01.md}.}
+\end{table}
+
+\figura{f01-resumen.png}{0.85}{Resumen de las verificaciones automáticas de la Fase 1}{Imagen de terminal
+generada por \ruta{scripts/evidencia.py} (\ruta{docs/capturas/fase-01/00-resumen.svg}). Resultado: 323
+pruebas aprobadas con cobertura del 99,83~\% y cero hallazgos en los análisis de seguridad.}{fig:resumen1}
+
+% ---------------------------------------------------------------------
+\subsection{Fase 2: usuarios y seguridad base}
+
+\begin{fragmento}{Fallas de autenticación (sección 7, A07:2025)}
+django-allauth con verificación de correo, MFA TOTP (obligatorio para todo el personal), códigos de
+recuperación.
+
+django-axes: bloqueo progresivo por usuario+IP; CAPTCHA (Cloudflare Turnstile o hCaptcha) tras intentos
+fallidos y en registro.
+
+[…]
+
+Mensajes de error genéricos (“credenciales inválidas”) para no enumerar usuarios.
+\end{fragmento}
+
+\textbf{Cómo se implementó.} La IA usó allauth para registro, verificación, MFA y sesiones, y axes para
+el bloqueo progresivo por usuario e IP. Definió los roles en un solo archivo y generó desde el código la
+matriz de permisos, como pedía la sección~3.2. La auditoría quedó encadenada por \textit{hash} y
+protegida con un disparador de PostgreSQL que impide modificar o borrar registros. El área «Mi cuenta»
+incluye el consentimiento, la descarga y la eliminación de datos que exige la ley de datos personales
+\parencite{ley1581}. La Figura~\ref{fig:login} muestra el inicio de sesión y la Figura~\ref{fig:403}, la
+respuesta cuando un vendedor intenta entrar a la auditoría.
+
+\figura{f02-login.jpg}{0.85}{Inicio de sesión}{Captura de la Fase~2
+(\ruta{docs/capturas/fase-02/login-escritorio-oscuro.jpg}).}{fig:login}
+
+\figura{f02-403.jpg}{0.85}{Un vendedor intenta abrir la auditoría y recibe «Acceso denegado»}{Captura
+de la Fase~2 tomada con la sesión real del usuario demo del rol vendedor
+(\ruta{docs/capturas/fase-02/403-vendedor-en-auditoria-escritorio-oscuro.jpg}).}{fig:403}
+
+\textbf{Un error de la IA, y por qué importa.} El commit de evidencias de esta fase afirmó «semgrep sin
+hallazgos», pero esa ejecución había reportado tres: una posible redirección abierta en el
+\textit{middleware} del personal y dos usos de SHA-1. Se detectó al revisar la salida guardada, se
+corrigió en el commit siguiente y la bitácora lo registra con una nota de transparencia. La
+Figura~\ref{fig:semgrep} muestra la ejecución posterior, ya sin hallazgos.
+
+\figura{f02-semgrep.png}{0.85}{Ejecución de semgrep tras corregir los hallazgos de la Fase 2}{Imagen de
+terminal de \ruta{docs/capturas/fase-02/10-semgrep.svg}: cero hallazgos en 152 reglas.}{fig:semgrep}
+
+\begin{leccion}
+La IA puede resumir mal un resultado aunque la herramienta lo haya reportado bien. Guarde siempre la
+salida completa de cada verificación (no solo el resumen que escribe la IA) y contrástela antes de dar
+por cerrada una fase.
+\end{leccion}
+
+% ---------------------------------------------------------------------
+\subsection{Fase 3: catálogo y precios}
+
+\begin{fragmento}{Catálogo y descubrimiento (secciones 4.1 y 4.2)}
+Precio según configuración: precio base + modificadores por atributo, o precio fijo por variante; el
+selector de la ficha de producto actualiza precio, disponibilidad, SKU e imagen en vivo (HTMX), y
+deshabilita combinaciones que no existen.
+
+[…]
+
+Búsqueda full-text con tolerancia a errores (pg\_trgm) y autocompletado.
+\end{fragmento}
+
+\textbf{Cómo se implementó.} La búsqueda usa las capacidades nativas de PostgreSQL (texto completo y
+similitud por trigramas) en lugar de un motor externo, para no agregar un servicio más que desplegar y
+asegurar \parencite{postgresql2024}. Un ajuste fino salió de las propias pruebas: con un umbral de
+similitud de 0,45, la búsqueda «timon» encontraba «verde limón»; con 0,55 dejó de hacerlo y siguió
+encontrando «plaistation» (Figura~\ref{fig:busqueda}). La ficha de producto actualiza precio,
+disponibilidad y SKU al cambiar la configuración y deshabilita las combinaciones que no existen
+(Figura~\ref{fig:ficha}). El historial de precios es de solo inserción y el «precio más bajo en 30 días»
+se calcula a partir de él, de modo que no se puede inflar un descuento, en línea con el Estatuto del
+Consumidor \parencite{ley1480}.
+
+\figura{f03-busqueda.jpg}{0.85}{Búsqueda con error de digitación: «plaistation»}{Captura de la Fase~3
+(\ruta{docs/capturas/fase-03/busqueda-con-error-de-tipeo-escritorio-oscuro.jpg}).}{fig:busqueda}
+
+\figura{f03-ficha.jpg}{0.85}{Ficha de producto con configurador de variantes}{Captura de la Fase~3
+(\ruta{docs/capturas/fase-03/ficha-ps5-slim-escritorio-oscuro.jpg}), recortada.}{fig:ficha}
+
+% ---------------------------------------------------------------------
+\subsection{Fase 4: carrito, checkout y pagos}
+
+\begin{fragmento}{Carrito y checkout (sección 4.3)}
+El servidor recalcula siempre precios, descuentos, impuestos y envío; jamás confía en valores del
+cliente.
+
+[…]
+
+Pagos con pasarela en sandbox; webhooks con verificación de firma e idempotencia; nunca almacenar datos
+de tarjeta (solo tokens/referencias de la pasarela).
+\end{fragmento}
+
+\textbf{Cómo se implementó.} El pedido se crea en un único servicio transaccional que recalcula en el
+servidor precios, cupón, envío e IVA, y reserva el inventario «todo o nada» bloqueando las filas en orden
+para evitar interbloqueos, lo que cubre también el requisito de concurrencia de la sección~7 (A06). La
+pasarela Wompi \parencite{wompi-docs} quedó detrás de la interfaz \ruta{PaymentGateway} que pedía la
+sección~1, con un simulador para desarrollo que emite eventos firmados por el mismo camino que un webhook
+real. El enlace de pago lleva la firma de integridad que exige la pasarela:
+
+\begin{Verbatim}
+firma = SHA-256( referencia + monto_en_centavos + "COP" + secreto_de_integridad )
+\end{Verbatim}
+
+Un pago solo se aplica con firma válida, referencia existente y monto exacto; si no, se rechaza y se
+registra un evento de seguridad. Las Figuras~\ref{fig:checkout} y \ref{fig:pasarela} muestran el
+checkout y la pasarela de pruebas.
+
+\figura{f04-checkout.jpg}{0.85}{Checkout con envío, cupón y aviso de pagos de prueba}{Captura de la
+Fase~4 (\ruta{docs/capturas/fase-04/checkout-escritorio-oscuro.jpg}), recortada.}{fig:checkout}
+
+\figura{f04-pasarela.jpg}{0.85}{Pasarela de pruebas del simulador de pagos}{Captura de la Fase~4
+(\ruta{docs/capturas/fase-04/pasarela-de-pruebas-escritorio-oscuro.jpg}).}{fig:pasarela}
+
+% ---------------------------------------------------------------------
+\subsection{Fase 5: panel administrativo}
+
+\begin{fragmento}{Panel de administración (sección 5)}
+Inventario: multi-sede/bodega, stock disponible/reservado/en tránsito, kardex de movimientos (entrada,
+salida, ajuste, traslado, devolución) con usuario y motivo, […] ajustes con aprobación […].
+
+POS (punto de venta): venta rápida en mostrador con búsqueda/lector de código de barras, cliente
+opcional, varios medios de pago, apertura y cierre de caja con arqueo.
+\end{fragmento}
+
+\textbf{Cómo se implementó.} La IA aplicó la separación de funciones de la sección~3.2, con el umbral
+\texttt{[X]} fijado en 15~\% y configurable por entorno: quien solicita un ajuste de inventario, una orden
+de compra o un cupón con descuento alto no puede aprobarlo, y la base de datos lo garantiza con
+restricciones \texttt{CHECK} aunque alguien salte el servicio (Figura~\ref{fig:ajustes}). Cada vista del
+panel declara sus permisos y filtra por las sedes asignadas al usuario: un objeto de otra sede responde
+404. El punto de venta reutiliza el mismo flujo de pedidos y reservas de la web, de modo que todas las
+salidas de inventario quedan en el mismo kardex (Figura~\ref{fig:pos}).
+
+\figura{f05-ajustes.jpg}{0.85}{Un bodeguero solicita un ajuste de inventario pero no puede aprobarlo}{Captura
+de la Fase~5 (\ruta{docs/capturas/fase-05/panel-ajustes-bodega-no-aprueba-escritorio-oscuro.jpg}).}{fig:ajustes}
+
+\figura{f05-pos.jpg}{0.85}{Punto de venta con turno de caja abierto}{Captura de la Fase~5
+(\ruta{docs/capturas/fase-05/panel-pos-escritorio-claro.jpg}).}{fig:pos}
+
+% ---------------------------------------------------------------------
+\subsection{Fase 6: módulos de valor agregado}
+
+\begin{fragmento}{Cuenta de cliente (sección 4.4)}
+Retoma (trade-in): el cliente cotiza su consola/juego usado (modelo, estado, accesorios incluidos) →
+obtiene oferta estimada → agenda revisión → el técnico confirma → crédito en tienda o pago.
+
+Servicio técnico: abrir ticket de reparación o garantía, adjuntar fotos (validadas), seguir estado.
+\end{fragmento}
+
+\textbf{Cómo se implementó.} La retoma calcula una oferta estimada a partir del precio de la consola
+usada y del estado declarado, y la oferta final la confirma el técnico en tienda
+(Figura~\ref{fig:retomas}). El servicio técnico tiene órdenes con código de seguimiento, cotización que
+aprueba el cliente y garantía (Figura~\ref{fig:servicio}). Los puntos de fidelidad y el saldo a favor se
+modelaron como libros contables de solo inserción, en los que cada movimiento tiene origen, autor y
+fecha, y un bloqueo por usuario evita que dos operaciones simultáneas calculen mal el saldo. Las
+devoluciones respetan los plazos de retracto de la Ley~1480 y el reembolso necesita la aprobación de una
+persona distinta de quien recibió el producto, según los flujos de aprobación de la sección~7 (A06).
+
+\figura{f06-retomas.jpg}{0.85}{Cotización de una retoma desde la cuenta del cliente}{Captura de la Fase~6
+(\ruta{docs/capturas/fase-06/cuenta-retomas-escritorio-oscuro.jpg}), recortada.}{fig:retomas}
+
+\figura{f06-servicio.jpg}{0.85}{Bandeja de servicio técnico en el panel}{Captura de la Fase~6
+(\ruta{docs/capturas/fase-06/panel-servicio-tecnico-escritorio-oscuro.jpg}).}{fig:servicio}
+
+% ---------------------------------------------------------------------
+\subsection{Fase 7: big data e inteligencia de negocio}
+
+\begin{fragmento}{Pipeline de datos (sección 6.2)}
+Captura de eventos: modelo Event […] registrado de forma asíncrona y sin PII cruda (ID de usuario
+seudonimizado).
+
+Bronze: extracción incremental desde PostgreSQL a archivos Parquet particionados por fecha.
+
+Silver: limpieza, deduplicación y tipado con Polars.
+
+Gold: modelo estrella (fact\_sales, fact\_inventory\_snapshot, fact\_events, dim\_product, dim\_customer,
+dim\_date, dim\_store, dim\_channel) consultado con DuckDB.
+\end{fragmento}
+
+\textbf{Cómo se implementó.} La IA construyó el lago de datos con capas bronce, plata y oro sobre
+archivos Parquet, sin servidores nuevos, y seudonimizó a los clientes antes de extraerlos, de modo que
+el lago no contiene datos personales. Usó DuckDB también para la capa de plata, en lugar de Polars, y lo
+documentó en el ADR-0017: con el volumen del proyecto, una sola herramienta embebida bastaba. bandit
+señaló que el SQL de DuckDB se armaba con cadenas formateadas; en lugar de silenciar la alerta, la IA
+reescribió las consultas con SQL constante sobre vistas registradas, como pedía la sección~7 (A05). El
+tablero (Figura~\ref{fig:bi}) muestra ventas mensuales con pronóstico, categorías, sedes, canales y
+segmentos RFM.
+
+\figura{f07-bi.jpg}{0.85}{Tablero de inteligencia de negocio}{Captura de la Fase~7
+(\ruta{docs/capturas/fase-07/panel-inteligencia-de-negocio-escritorio-oscuro.jpg}), recortada. Los datos
+son sintéticos.}{fig:bi}
+
+% ---------------------------------------------------------------------
+\subsection{Fase 8: endurecimiento de seguridad}
+
+\begin{fragmento}{Seguridad (sección 7)}
+Genera docs/seguridad.md con una matriz de trazabilidad: categoría OWASP → riesgo en esta app → control
+implementado → archivo/código → test que lo verifica. […]
+
+En CI: bandit, semgrep --config p/django, pip-audit, manage.py check --deploy, y OWASP ZAP baseline contra
+el entorno de staging o un contenedor levantado en el pipeline. El pipeline falla con hallazgos altos.
+\end{fragmento}
+
+\textbf{Cómo se implementó.} La IA escribió la matriz control por control en
+\ruta{docs/seguridad/owasp-top10-2025.md}, el modelo de amenazas STRIDE con su riesgo residual y una
+prueba automática por categoría OWASP. Agregó al script de evidencias la generación del SBOM CycloneDX
+y un escaneo ZAP baseline \parencite{zap} contra la aplicación levantada en local. El resultado fue cero
+fallos en ZAP (55 reglas superadas y 13 advertencias, todas analizadas en la bitácora), cero hallazgos de
+semgrep en 414 archivos y cero vulnerabilidades altas o críticas corregibles en Trivy
+(Figura~\ref{fig:resumen8}).
+
+\figura{f08-resumen.png}{0.85}{Resumen de las quince verificaciones de la Fase 8}{Imagen de terminal
+generada por \ruta{scripts/evidencia.py} (\ruta{docs/capturas/fase-08/00-resumen.svg}).}{fig:resumen8}
+
+Conviene precisar el alcance de esta fase: son verificaciones defensivas y automáticas, hechas desde el
+código y con escaneo pasivo. No sustituyen una prueba de penetración, que intenta explotar la aplicación
+desde la perspectiva de un atacante. Esa es la continuación de este trabajo.
+
+% ---------------------------------------------------------------------
+\subsection{Fase 9: despliegue en Render}
+
+\begin{fragmento}{Despliegue y disponibilidad (sección 10)}
+Archivo de infraestructura como código (render.yaml Blueprint o equivalente) con: servicio web
+(Gunicorn), worker de Celery, Celery Beat (o cron de la plataforma), PostgreSQL gestionado y
+Redis/Key-Value gestionado.
+
+[…]
+
+Al final, despliega la aplicación, ejecuta seed\_demo (y un seed\_bigdata reducido acorde al plan) en
+producción, verifica manualmente el flujo completo (registro → compra → panel → analítica) y entrégame
+la URL pública y el usuario demo de cada rol.
+\end{fragmento}
+
+\textbf{Cómo se implementó.} La IA definió los cinco servicios en un Blueprint
+\parencite{render-blueprint}: base de datos, Valkey, servicio web, worker y programador de tareas, con la
+base de datos y Valkey sin acceso público. Para cumplir la regla de la sección~0 sobre secretos, todos
+los secretos los genera la propia plataforma (\ruta{generateValue}), de modo que nadie los escribió ni
+quedaron en el repositorio:
+
+\begin{Verbatim}
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: BYTE_FIELD_ENCRYPTION_KEYS
+        generateValue: true # se deriva una clave Fernet (apps/core/crypto.py)
+      - key: BYTE_PAYMENT_GATEWAY
+        value: fake # cambiar a wompi al cargar las llaves del sandbox
+      - key: BYTE_DEMO_PASSWORD
+        generateValue: true # visible en el panel de Render (usuarios demo)
+\end{Verbatim}
+
+El primer despliegue falló, y los dos siguientes también. La IA leyó los registros de Render, encontró
+la causa de cada fallo y lo corrigió con un commit (Tabla~\ref{tab:render}).
+
+\begin{table}[H]
+\caption{Fallos del despliegue en Render y su corrección}\label{tab:render}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}p{3.2cm}>{\raggedright}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Síntoma & Causa & Corrección \\
+\midrule
+El pre-despliegue salió con estado 2. & Render ejecuta el comando sin \textit{shell}: el \texttt{\&\&} llegó a \texttt{manage.py migrate} como argumento. & Envolver el comando en \texttt{sh -c}. \\
+Salió con estado 127. & Render tampoco interpreta comillas: \ruta{sh} recibió la cadena con las comillas literales. & Mover los comandos a scripts en la carpeta \ruta{deploy/}. \\
+Error de gunicorn al arrancar (no fatal). & Su \textit{socket} de control intentaba escribir en un directorio de solo lectura. & Desactivar el \textit{socket} de control, que no se usa. \\
+\bottomrule
+\end{tabularx}
+\notatabla{Commits \ruta{645ae51}, \ruta{a7f82a2} y \ruta{31e5cc6} del repositorio.}
+\end{table}
+
+El script final de pre-despliegue quedó así:
+
+\begin{Verbatim}
+#!/bin/sh
+# Render pre-deploy: migrations, roles and demo data (idempotent).
+set -eu
+python manage.py migrate --noinput
+python manage.py bootstrap_demo --sin-bi
+\end{Verbatim}
+
+Antes del despliegue, la prueba de extremo a extremo con Playwright recorrió la compra completa en siete
+pasos sin errores: inicio, búsqueda, ficha, carrito de invitado, inicio de sesión con fusión del carrito,
+checkout, pasarela de pruebas, pago aprobado, pedido y factura (Figuras~\ref{fig:e2epago} y
+\ref{fig:e2epedido}). Ya en Render, la aplicación quedó disponible en
+\url{https://byte-web-v9h4.onrender.com} (Figura~\ref{fig:render}), con las cabeceras de seguridad
+activas y los servicios de base de datos, Valkey, worker y programador en funcionamiento.
+
+\figura{f09-e2e-pago.jpg}{0.8}{Pago aprobado durante la prueba de extremo a extremo}{Captura tomada por
+\ruta{scripts/e2e.py} (\ruta{docs/capturas/fase-09/e2e-06-pago-aprobado.jpg}).}{fig:e2epago}
+
+\figura{f09-e2e-pedido.jpg}{0.8}{Detalle del pedido pagado en la cuenta del cliente}{Captura tomada por
+\ruta{scripts/e2e.py} (\ruta{docs/capturas/fase-09/e2e-07-pedido.jpg}).}{fig:e2epedido}
+
+\figura{f09-render-en-vivo.jpg}{0.8}{La aplicación desplegada en Render}{Captura de
+\url{https://byte-web-v9h4.onrender.com} tomada con Playwright después del despliegue.}{fig:render}
+
+% ---------------------------------------------------------------------
+\subsection{Fase 10: documentación final}
+
+\begin{fragmento}{Entregable de la Fase 10 (sección 11)}
+README, manual de usuario por rol (con capturas), manual técnico, docs/seguridad.md, docs/big-data.md,
+guion de sustentación
+\end{fragmento}
+
+La última fase produjo el README, los manuales del cliente y del personal por rol, el manual técnico y
+el guion de sustentación, todos en \ruta{docs/}. Como la regla de la sección~0 obligaba a documentar al
+cerrar cada fase, esta fase consistió sobre todo en consolidar, no en reconstruir.
+
+% =====================================================================
+\section{Resultados}
+% =====================================================================
+
+\subsection{Pruebas y verificaciones}
+
+La Figura~\ref{fig:pruebas} muestra cómo creció la suite de pruebas fase a fase. La cobertura se mantuvo
+por encima del 93~\% desde la Fase~2, muy por encima de la meta del 80~\% que fijó el prompt maestro.
+
+\begin{figure}[H]
+\caption{Número de pruebas automáticas al cerrar cada fase}\label{fig:pruebas}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.92\linewidth, height=6.2cm,
+  ybar, bar width=14pt, ymin=0, ymax=820,
+  xlabel={Fase}, ylabel={Pruebas que pasan},
+  symbolic x coords={1,2,3,4,5,6,7,8,9},
+  xtick=data, nodes near coords, nodes near coords style={font=\footnotesize},
+  every axis plot/.append style={fill=promptborde!70, draw=promptborde},
+  ymajorgrids, grid style={gray!25},
+  tick label style={font=\small}, label style={font=\small}]
+\addplot coordinates {(1,323) (2,448) (3,530) (4,582) (5,679) (6,699) (7,713) (8,724) (9,727)};
+\end{axis}
+\end{tikzpicture}
+\notatabla{Elaboración propia con los datos de la Tabla~\ref{tab:fases}. La Fase~10 no agregó pruebas.}
+\end{figure}
+
+La Tabla~\ref{tab:final} consolida las cifras finales del repositorio y de las verificaciones.
+
+\begin{table}[H]
+\caption{Cifras finales del proyecto}\label{tab:final}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}X>{\raggedright\arraybackslash}p{6.2cm}@{}}
+\toprule
+Indicador & Valor \\
+\midrule
+Pruebas automáticas y cobertura & 727 pruebas; 93~\% de cobertura \\
+Código Python (apps, configuración, scripts y pruebas) & 388 archivos; unas 25\,800 líneas \\
+Apps de Django, plantillas y migraciones & 21 apps; 93 plantillas; 40 migraciones \\
+Decisiones de arquitectura & 17 ADR \\
+Historia del repositorio & 28 commits en 10 ramas de fase \\
+semgrep & 0 hallazgos en 152 reglas y 414 archivos \\
+OWASP ZAP baseline & 0 fallos; 55 reglas superadas; 13 advertencias analizadas \\
+Trivy y pip-audit & 0 vulnerabilidades altas o críticas corregibles; 0 dependencias vulnerables \\
+Prueba de extremo a extremo & 7 pasos sin errores \\
+Despliegue & \url{https://byte-web-v9h4.onrender.com} \\
+\bottomrule
+\end{tabularx}
+\notatabla{Conteos obtenidos con \texttt{git ls-files} y \texttt{git log} sobre la rama \ruta{main}; resultados de seguridad tomados de la bitácora de la Fase~8.}
+\end{table}
+
+\subsection{Cómo resolvió la IA las opciones abiertas del prompt}
+
+Donde el prompt maestro ofrecía alternativas, la IA aplicó la regla «elige la más simple y segura, y
+documéntala como ADR». La Tabla~\ref{tab:opciones} resume esas decisiones.
+
+\begin{table}[H]
+\caption{Opciones abiertas del prompt maestro y decisión tomada}\label{tab:opciones}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}p{4.4cm}>{\raggedright}p{3.4cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Opción en el prompt & Decisión & Motivo (ADR) \\
+\midrule
+Django 5.2 LTS «o la LTS vigente» & Django 5.2.19 LTS & Soporte durante todo el proyecto (ADR-0002). \\
+CSP nativa de Django o django-csp & django-csp & Django 5.2 no trae CSP nativa (ADR-0002). \\
+django-guardian o servicio propio & Servicio propio & El alcance es por dueño o por sede; los \textit{querysets} filtrados deniegan por defecto sin tablas de permisos por fila (ADR-0003). \\
+uv o pip-tools & uv & \textit{Hashes} y cuarentena de 7 días contra paquetes recién publicados (ADR-0005). \\
+django-tailwind o CLI standalone & CLI standalone & Sin Node; menos superficie de ataque (ADR-0006). \\
+Wompi o Mercado Pago & Wompi & Más directo para Colombia; queda detrás de una interfaz intercambiable (ADR-0007). \\
+Redis & Valkey 8 & Compatible con Redis y es el servicio gestionado de Render (ADR-0009). \\
+Turnstile o hCaptcha & Turnstile & No rastrea al usuario y casi nunca le pide resolver un reto (ADR-0012). \\
+Polars para la capa de plata & DuckDB & Una sola herramienta embebida basta para el volumen del proyecto (ADR-0017). \\
+Descuento > [X]~\% con aprobación & 15~\%, configurable & Variable \ruta{BYTE_HIGH_DISCOUNT_APPROVAL_PCT}. \\
+\ruta{[PLATAFORMA_DE_DESPLIEGUE]} & Render & Plataforma por defecto del propio prompt. \\
+\bottomrule
+\end{tabularx}
+\notatabla{Elaboración propia a partir de \ruta{docs/adr/}.}
+\end{table}
+
+\subsection{Criterios de aceptación}
+
+El prompt maestro terminaba con nueve criterios de aceptación. La Tabla~\ref{tab:criterios} los
+contrasta con lo logrado, sin maquillar los que quedaron parciales.
+
+\begin{table}[H]
+\caption{Criterios de aceptación del prompt maestro}\label{tab:criterios}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}X>{\raggedright}p{2.2cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Criterio & Estado & Observación \\
+\midrule
+Desplegada y accesible por HTTPS con URL pública & Cumplido & En Render, con HSTS y TLS 1.2/1.3. \\
+Un usuario demo por rol, cada uno con su alcance & Cumplido & Ocho usuarios; la contraseña la genera Render. \\
+Configurar una consola, ver el precio cambiar, comprar y seguir el pedido & Cumplido con matiz & Se paga con el simulador; Wompi requiere cargar las llaves del sandbox. \\
+Inventario sin sobreventa bajo concurrencia, con prueba & Cumplido & Reserva todo o nada con bloqueo de filas. \\
+Panel con catálogo, inventario, ventas, compras, POS, clientes, retomas y reportes & Cumplido & Con alcance por sede y separación de funciones. \\
+Analítica con al menos 500\,000 pedidos & Parcial & El histórico sintético tiene unas 70\,000 líneas de venta en dos años. \\
+\texttt{check --deploy}, bandit, pip-audit y ZAP sin hallazgos altos & Cumplido & Ver Figura~\ref{fig:resumen8}. \\
+Matriz OWASP 2025 con controles y pruebas & Cumplido & \ruta{docs/seguridad/owasp-top10-2025.md}. \\
+Cobertura de al menos 80~\% y CI en verde & Cumplido con matiz & Cobertura del 93~\%; el pipeline está configurado y su ejecución en GitHub queda por confirmar. \\
+\bottomrule
+\end{tabularx}
+\notatabla{Criterios tomados de la sección~12 del prompt maestro (Apéndice~A).}
+\end{table}
+
+% =====================================================================
+\section{Lecciones aprendidas}
+% =====================================================================
+
+De la experiencia se desprenden ocho recomendaciones para quien quiera construir una aplicación seria
+con \textit{vibe coding}:
+
+\begin{enumerate}[leftmargin=0.5in]
+  \item \textbf{Invierta en el prompt maestro.} Una especificación larga y concreta reemplazó decenas de
+        conversaciones. Los requisitos verificables («tests que prueban 403/404 cambiando UUID») rinden
+        más que los genéricos («que sea seguro»).
+  \item \textbf{Trabaje por fases con una puerta humana.} La obligación de detenerse al final de cada fase
+        permitió revisar y corregir el rumbo antes de que los errores se acumularan.
+  \item \textbf{Verifique, no confíe.} La IA resumió mal un resultado de semgrep en la Fase~2; la salida
+        completa guardada lo delató. Las pruebas de extremo a extremo y las capturas también encontraron
+        errores que el código no mostraba.
+  \item \textbf{Ponga la seguridad en el prompt, no al final.} Las cabeceras, la CSP, Argon2, la auditoría
+        y la denegación por defecto se configuraron desde la Fase~1 porque el prompt las exigía.
+  \item \textbf{Haga persistentes las reglas.} \ruta{CLAUDE.md}, los ADR y la bitácora sobrevivieron a
+        reinicios y a resúmenes de contexto; la conversación no.
+  \item \textbf{Automatice la evidencia.} Un script que corre todas las verificaciones y toma las capturas
+        convierte el cierre de una fase en un solo comando y produce el material del informe.
+  \item \textbf{Deje opciones abiertas, pero exija que se justifiquen.} Los corchetes y las alternativas
+        del prompt dieron margen a la IA, y la regla de los ADR dejó cada decisión explicada.
+  \item \textbf{Nunca entregue secretos por el chat.} Los secretos de producción los generó la plataforma
+        y las llaves reales las carga la persona en el panel de Render.
+\end{enumerate}
+
+Este trabajo también tiene límites. La IA tomó la mayoría de las decisiones técnicas dentro del marco
+fijado; una persona sin conocimientos de desarrollo y de seguridad habría tenido dificultades para
+evaluar sus propuestas o detectar sus errores. Algunos criterios quedaron parciales, como el volumen de
+datos de la analítica. Además, la aplicación no ha sido probada todavía por un atacante, que es
+precisamente el objeto de la segunda parte.
+
+% =====================================================================
+\section{Continuación: pruebas de penetración}
+% =====================================================================
+
+Con la aplicación construida y desplegada, el proyecto continúa con una segunda parte dedicada a las
+pruebas de penetración. Su propósito es contrastar los controles descritos en este tutorial con los
+intentos de un atacante, siguiendo las fases habituales de un pentest (Tabla~\ref{tab:pentest}).
+
+\begin{table}[H]
+\caption{Plan de la segunda parte: pruebas de penetración}\label{tab:pentest}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}p{4cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Fase del pentest & Objetivo previsto \\
+\midrule
+Alcance y reglas de enfrentamiento & Definir objetivos (la instancia de Render y una copia local con configuración de producción), límites y autorización. \\
+Reconocimiento & Reunir información pública del objetivo: DNS, certificados, tecnologías y archivos expuestos. \\
+Escaneo y enumeración & Identificar servicios, rutas y parámetros de la aplicación. \\
+Análisis de vulnerabilidades & Buscar fallas conocidas con escáneres automáticos y revisión manual. \\
+Explotación & Intentar vulnerar el control de acceso (IDOR, escalamiento de roles), la autenticación, los pagos y las entradas. \\
+Post-explotación & Evaluar el impacto y verificar que la auditoría y las alertas registren los intentos. \\
+Informe & Documentar hallazgos, severidad, evidencias y recomendaciones. \\
+\bottomrule
+\end{tabularx}
+\notatabla{Elaboración propia. Los resultados de cada fase se documentarán en la segunda parte, con
+capturas de la terminal como evidencia.}
+\end{table}
+
+% =====================================================================
+\section{Conclusiones}
+% =====================================================================
+
+El caso Byte muestra que el \textit{vibe coding} puede producir una aplicación web de tamaño y exigencia
+reales cuando parte de un prompt maestro bien construido y no de una conversación improvisada. La persona
+no escribió el código, pero sí decidió el alcance, fijó las reglas, revisó cada entrega y exigió
+evidencias; la IA escribió, probó, verificó y documentó.
+
+El factor que más pesó en el resultado no fue la capacidad del modelo, sino la calidad de la
+especificación y la disciplina de verificación que esa especificación imponía: cada fase cerró con las
+mismas comprobaciones, y los errores, incluidos los de la propia IA, quedaron registrados y corregidos.
+Ese registro es, a la vez, la mejor defensa ante una revisión y el punto de partida de la segunda parte,
+en la que la aplicación será sometida a pruebas de penetración.
+
+Por último, este documento se redactó siguiendo las normas APA en su séptima edición
+\parencite{apa2020}, con apoyo en la guía de citas y referencias de \textcite{menendez2020}.
+
+% =====================================================================
+\printbibliography
+
+% =====================================================================
+\appendix
+
+\section{Prompt maestro completo}
+\label{ap:prompt}
+
+A continuación se transcribe, sin cambios, el prompt maestro con el que comenzó la construcción. Las
+tablas del original estaban separadas por tabulaciones.
+
+{\linespread{1}\selectfont
+\VerbatimInput[fontsize=\footnotesize]{prompt-maestro.txt}
+}
+
+\section{Índice de evidencias}
+\label{ap:evidencias}
+
+Todas las evidencias están versionadas en el repositorio
+\url{https://github.com/NeySeb832/tienda_byte_hackingetico}. La Tabla~\ref{tab:evidencias} indica dónde
+encontrar las de cada fase.
+
+\begin{table}[H]
+\caption{Ubicación de las evidencias por fase}\label{tab:evidencias}
+\small\linespread{1}\selectfont
+\begin{tabularx}{\linewidth}{@{}p{0.8cm}>{\raggedright}X>{\raggedright}p{4.3cm}>{\raggedright\arraybackslash}p{1.8cm}@{}}
+\toprule
+Fase & Bitácora & Capturas & Commit \\
+\midrule
+1 & \ruta{docs/bitacora/fase-01.md} & \ruta{docs/capturas/fase-01/} & \ruta{47dd77a} \\
+2 & \ruta{docs/bitacora/fase-02.md} & \ruta{docs/capturas/fase-02/} & \ruta{ca3cd9b} \\
+3 & \ruta{docs/bitacora/fase-03.md} & \ruta{docs/capturas/fase-03/} & \ruta{78ce40e} \\
+4 & \ruta{docs/bitacora/fase-04.md} & \ruta{docs/capturas/fase-04/} & \ruta{4f692c8} \\
+5 & \ruta{docs/bitacora/fase-05.md} & \ruta{docs/capturas/fase-05/} & \ruta{373a861} \\
+6 & \ruta{docs/bitacora/fase-06.md} & \ruta{docs/capturas/fase-06/} & \ruta{78c400b} \\
+7 & \ruta{docs/bitacora/fase-07.md} & \ruta{docs/capturas/fase-07/} & \ruta{6b81d3d} \\
+8 & \ruta{docs/bitacora/fase-08.md} & \ruta{docs/capturas/fase-08/} & \ruta{66a1c2d} \\
+9 & \ruta{docs/bitacora/fase-09.md} & \ruta{docs/capturas/fase-09/} & \ruta{015be4d} \\
+10 & \ruta{README.md}, \ruta{docs/manuales/} & — & \ruta{c464a1e} \\
+\bottomrule
+\end{tabularx}
+\notatabla{Cada carpeta de capturas contiene la salida de texto de cada verificación (\ruta{NN-*.txt}), su
+imagen de terminal (\ruta{NN-*.svg}), el resumen (\ruta{00-resumen.svg}) y las capturas de pantalla.}
+\end{table}
+
+\end{document}
