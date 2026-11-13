@@ -315,7 +315,7 @@ requires-dist = [
     { name = "celery", specifier = ">=5.5,<5.8" },
     { name = "cryptography", specifier = ">=45,<51" },
     { name = "django", specifier = ">=5.2.19,<5.3" },
-    { name = "django-allauth", extras = ["mfa"], specifier = ">=65.10,<66" },
+    { name = "django-allauth", extras = ["mfa"], specifier = ">=65.21.1,<66" },
     { name = "django-anymail", specifier = ">=13,<16" },
     { name = "django-axes", specifier = ">=8,<10" },
     { name = "django-celery-beat", specifier = ">=2.8,<3" },
