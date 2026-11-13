@@ -28,6 +28,7 @@ from apps.inventory.models import (
     StockTransfer,
     Store,
 )
+from apps.notifications import services as alerts
 
 
 class OutOfStockError(ValidationError):
@@ -84,6 +85,8 @@ def set_stock(
         return item
     item.quantity = quantity
     item.save(update_fields=["quantity", "updated_at"])
+    if quantity > previous:
+        alerts.stock_became_available(variant.pk)
     _movement(item, quantity - previous, reason, actor=actor, note=note)
     record_event(
         "inventory.stock_set",
@@ -229,6 +232,8 @@ def move_stock(
         raise OutOfStockError(variant, max(item.available, 0))
     item.quantity += delta
     item.save(update_fields=["quantity", "updated_at"])
+    if delta > 0:
+        alerts.stock_became_available(variant.pk)
     _movement(item, delta, reason, actor=actor, reference=reference, note=note)
     return item
 

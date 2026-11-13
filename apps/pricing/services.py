@@ -23,6 +23,7 @@ from django.utils import timezone
 from apps.audit.services import record_event
 from apps.catalog.models import Product, ProductOptionValue, ProductVariant
 from apps.core.money import MoneyInput, to_money
+from apps.notifications import services as alerts
 from apps.pricing.models import PriceHistory, ScheduledPriceChange
 
 Reason = PriceHistory.Reason
@@ -95,6 +96,8 @@ def _apply_price(
         note=note[:200],
         changed_by=actor if getattr(actor, "pk", None) else None,
     )
+    if new_price < previous:
+        alerts.price_changed(locked.pk)
     record_event(
         "pricing.price_changed",
         actor=actor,

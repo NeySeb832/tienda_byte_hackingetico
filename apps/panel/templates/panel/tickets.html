@@ -1,0 +1,10 @@
+{% extends "panel/base.html" %}
+{% block title %}Servicio técnico{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black">Servicio técnico</h1>
+<form method="post" class="stat-card mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{% csrf_token %}{% include "panel/_form.html" %}<div class="self-end"><button class="btn-primary" type="submit">Recibir equipo</button></div></form>
+<div class="mt-6 overflow-x-auto"><table class="data-table">
+  <thead><tr><th>Código</th><th>Fecha</th><th>Cliente</th><th>Equipo</th><th>Sede</th><th>Técnico</th><th>Estado</th></tr></thead>
+  <tbody>{% for t in tickets %}<tr><td><a class="font-semibold underline" href="{% url 'panel:ticket' t.public_id %}">{{ t.code }}</a></td><td>{{ t.created_at|date:"Y-m-d" }}</td><td>{{ t.customer_name }}</td><td>{{ t.device }}</td><td>{{ t.store.name }}</td><td>{{ t.technician.email|default:"—" }}</td><td><span class="badge">{{ t.get_status_display }}</span></td></tr>{% empty %}<tr><td colspan="7">Sin órdenes.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% endblock %}

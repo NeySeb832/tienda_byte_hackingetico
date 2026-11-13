@@ -1,0 +1,18 @@
+{% extends "accounts/base.html" %}
+{% load money %}
+{% block title %}Puntos y saldo · {{ site_name }}{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black text-slate-900 dark:text-white">Byte Puntos y saldo a favor</h1>
+<div class="mt-6 grid gap-4 sm:grid-cols-2">
+  <div class="stat-card"><p class="stat-label">Puntos</p><p class="stat-value">{{ points }}</p><p class="text-xs text-slate-500">Ganas 1 punto por cada $ 1.000 pagados.</p></div>
+  <div class="stat-card"><p class="stat-label">Saldo a favor</p><p class="stat-value">{{ credit|cop }}</p><p class="text-xs text-slate-500">Úsalo en cualquier tienda Byte.</p></div>
+</div>
+<form method="post" class="mt-6 flex flex-wrap items-end gap-3">{% csrf_token %}
+  <label class="text-sm">Bloques de {{ block }} puntos ({{ block_value|cop }} cada uno)<input class="form-input mt-1 w-32" type="number" name="bloques" min="1" value="1"></label>
+  <button class="btn-primary" type="submit"{% if points < block %} disabled aria-disabled="true"{% endif %}>Canjear por saldo</button>
+</form>
+<div class="mt-8 grid gap-6 lg:grid-cols-2">
+  <section><h2 class="font-display text-lg font-black">Movimientos de puntos</h2><ul class="mt-2 space-y-1 text-sm">{% for e in points_entries %}<li>{{ e.created_at|date:"Y-m-d" }} · {{ e.get_reason_display }} {{ e.reference }} · <strong>{% if e.delta > 0 %}+{% endif %}{{ e.delta }}</strong></li>{% empty %}<li class="text-slate-500">Sin movimientos.</li>{% endfor %}</ul></section>
+  <section><h2 class="font-display text-lg font-black">Movimientos de saldo</h2><ul class="mt-2 space-y-1 text-sm">{% for e in credit_entries %}<li>{{ e.created_at|date:"Y-m-d" }} · {{ e.get_reason_display }} · <strong>{% if e.delta > 0 %}+{% endif %}{{ e.delta|cop }}</strong></li>{% empty %}<li class="text-slate-500">Sin movimientos.</li>{% endfor %}</ul></section>
+</div>
+{% endblock %}

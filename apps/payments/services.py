@@ -19,6 +19,7 @@ from apps.orders import services as orders
 from apps.orders.models import Order
 from apps.payments.gateways import GatewayResult, InvalidSignatureError, get_gateway, to_cents
 from apps.payments.models import Payment, WebhookEvent
+from apps.promotions import services as promotions
 
 P = Payment.Status
 
@@ -112,6 +113,7 @@ def apply_result(result: GatewayResult) -> str:
         inventory.consume_reservations(order)
         orders.transition(order, Order.Status.PAID, note=f"Pago {payment.reference} aprobado")
         orders.issue_invoice(order)
+        promotions.award_points(order)
         Cart.objects.filter(user=order.user, status=Cart.Status.OPEN).update(
             status=Cart.Status.CONVERTED
         )

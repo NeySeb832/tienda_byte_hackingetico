@@ -1,0 +1,14 @@
+{% extends "panel/base.html" %}
+{% load money %}
+{% block title %}Devoluciones{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black">Devoluciones y reembolsos</h1>
+<p class="mt-1 text-sm text-slate-500">Quien recibe el producto no puede aprobar el reembolso.</p>
+<div class="mt-6 overflow-x-auto"><table class="data-table">
+  <thead><tr><th>Fecha</th><th>Pedido</th><th>Tipo</th><th>Productos</th><th>Motivo</th><th>Estado</th><th>Acción</th></tr></thead>
+  <tbody>{% for r in returns %}<tr><td>{{ r.created_at|date:"Y-m-d" }}</td><td>{{ r.order.number }}</td><td>{{ r.get_kind_display }}<br><span class="text-xs text-slate-500">{{ r.get_refund_method_display }}</span></td><td>{% for rl in r.lines.all %}{{ rl.quantity }} × {{ rl.line.name }}<br>{% endfor %}</td><td>{{ r.reason }}</td><td>{{ r.get_status_display }}{% if r.refund_amount %}<br>{{ r.refund_amount|cop }}{% endif %}</td>
+  <td>{% if r.status == "requested" %}<form method="post" class="flex flex-wrap items-center gap-2">{% csrf_token %}<input type="hidden" name="devolucion" value="{{ r.public_id }}"><select name="sede" class="form-select">{% for s in stores %}<option value="{{ s.code }}">{{ s.name }}</option>{% endfor %}</select><label class="form-check"><input type="checkbox" name="reingresar" checked> Reingresar al stock</label><button class="btn-secondary" name="accion" value="recibir">Recibir</button></form>
+  {% elif r.status == "received" and can_approve and r.received_by_id != user.pk %}<form method="post" class="flex flex-wrap gap-2">{% csrf_token %}<input type="hidden" name="devolucion" value="{{ r.public_id }}"><input class="form-input w-40" name="nota" maxlength="255" placeholder="Nota"><button class="btn-primary" name="accion" value="aprobar">Aprobar reembolso</button><button class="btn-secondary" name="accion" value="rechazar">Rechazar</button></form>
+  {% elif r.status == "received" %}<span class="text-xs text-slate-500">Recibió {{ r.received_by.email }}; aprueba otra persona.</span>{% endif %}</td></tr>{% empty %}<tr><td colspan="7">Sin devoluciones.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% endblock %}

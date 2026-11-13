@@ -1,0 +1,6 @@
+{% load money %}<!doctype html><html lang="es"><body style="font-family:Segoe UI,Arial,sans-serif;color:#0f172a">
+<h1 style="font-size:20px">¡Buenas noticias!</h1>
+<p><strong>{{ variant.product.name }}</strong> {% if alert.kind == "stock" %}ya está disponible{% else %}bajó de precio: ahora <strong>{{ variant.price|cop }}</strong> (antes {{ alert.price_at_signup|cop }}){% endif %}.</p>
+<p><a href="{{ site_url }}{{ variant.product.get_absolute_url }}?sku={{ variant.sku }}">Ver el producto</a></p>
+<p style="font-size:12px;color:#64748b">Recibes este correo porque activaste una alerta en Byte. Solo te escribimos una vez.</p>
+</body></html>

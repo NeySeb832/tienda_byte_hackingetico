@@ -1,0 +1,20 @@
+{% extends "accounts/base.html" %}
+{% load money %}
+{% block title %}Devolución · {{ site_name }}{% endblock %}
+{% block content %}
+<a class="text-sm underline" href="{% url 'orders:detail' order.public_id %}">← Pedido {{ order.number }}</a>
+<h1 class="mt-2 font-display text-2xl font-black text-slate-900 dark:text-white">Solicitar devolución o garantía</h1>
+<ul class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+  <li>Retracto (Ley 1480): hasta el {{ deadlines.withdrawal|date:"d/m/Y"|default:"— (pedido sin entregar)" }}.</li>
+  <li>Devolución comercial: hasta el {{ deadlines.commercial|date:"d/m/Y"|default:"—" }}.</li>
+  <li>Garantía: hasta el {{ deadlines.warranty|date:"d/m/Y"|default:"—" }}.</li>
+</ul>
+<form method="post" class="mt-6 space-y-4">{% csrf_token %}
+  {% for error in form.non_field_errors %}<p class="alert alert-error">{{ error }}</p>{% endfor %}
+  <table class="data-table"><thead><tr><th>Producto</th><th class="text-right">Comprado</th><th>Devolver</th></tr></thead>
+  <tbody>{% for line, left in lines %}<tr><td>{{ line.name }} <span class="text-xs text-slate-500">{{ line.variant_label }}</span></td><td class="text-right">{{ line.quantity }}</td><td><input class="form-input w-20" type="number" name="linea-{{ line.pk }}" min="0" max="{{ left }}" value="0"{% if not left %} disabled{% endif %}></td></tr>{% endfor %}</tbody></table>
+  {% for field in form %}<div class="form-field"><label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<p class="form-error">{{ error }}</p>{% endfor %}</div>{% endfor %}
+  <button class="btn-primary" type="submit">Enviar solicitud</button>
+</form>
+{% if existing %}<h2 class="mt-8 font-display text-lg font-black">Solicitudes de este pedido</h2><ul class="mt-2 text-sm">{% for r in existing %}<li>{{ r.created_at|date:"Y-m-d" }} · {{ r.get_kind_display }} · {{ r.get_status_display }}{% if r.refund_amount %} · {{ r.refund_amount|cop }}{% endif %}</li>{% endfor %}</ul>{% endif %}
+{% endblock %}

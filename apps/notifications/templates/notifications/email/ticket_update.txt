@@ -1,0 +1,6 @@
+{% load money %}Hola {{ ticket.customer_name }}:
+
+Tu orden de servicio {{ ticket.code }} ({{ ticket.device }}) está: {{ ticket.get_status_display }}.
+{% if ticket.status == "quoted" %}Cotización: {{ ticket.quote|cop }}. Apruébala o recházala en Mi cuenta → Servicio técnico.{% endif %}{% if ticket.status == "ready" %}Ya puedes recogerla en {{ ticket.store.name }} ({{ ticket.store.address }}).{% endif %}
+
+Seguimiento: {{ site_url }}{% url 'tradein:track' %}

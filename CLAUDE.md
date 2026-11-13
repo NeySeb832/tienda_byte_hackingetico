@@ -46,7 +46,7 @@ primer nivel, no un añadido.
 | 3 | Catálogo y precios (variantes con precio dinámico, búsqueda, filtros, comparador, historial) | ✅ en revisión (`fase/03-catalogo`) |
 | 4 | Carrito, checkout y pagos (cupones, envíos, Wompi sandbox, webhooks, facturas PDF, correos) | ✅ en revisión (`fase/04-checkout`) |
 | 5 | Panel administrativo (dashboard, inventario multi-sede, compras, pedidos, POS, CRM, reportes) | ✅ en revisión (`fase/05-panel`) |
-| 6 | Valor agregado (retomas, servicio técnico, fidelidad, preventas, alertas, devoluciones) | ⏳ |
+| 6 | Valor agregado (retomas, servicio técnico, fidelidad, preventas, alertas, devoluciones) | ✅ en revisión (`fase/06-valor-agregado`) |
 | 7 | Big Data / BI (seed masivo, pipeline medallón, modelo estrella, modelos, dashboards, PySpark) | ⏳ |
 | 8 | Endurecimiento de seguridad (matriz OWASP, STRIDE, suite de seguridad, ZAP, SBOM) | ⏳ |
 | 9 | Despliegue (Render Blueprint, CI/CD, datos demo, verificación end-to-end) | ⏳ |
@@ -97,6 +97,10 @@ primer nivel, no un añadido.
   `required_permissions` y filtran todo por `stores_for(user)` (objeto de otra sede → 404). El POS
   vende con `pos.services.sell` (pedido canal `pos`, misma reserva y kardex que la web). Los CSV se
   generan con `analytics.selectors.to_csv`, que neutraliza fórmulas.
+- **Puntos y saldo** (ADR-0016): solo con `promotions.services` (`award_points`, `redeem_points`,
+  `add_credit`, `spend_credit`), que agregan filas a libros append-only bajo bloqueo por usuario.
+  Las devoluciones van por `orders.returns` (plazos de Ley 1480) y las alertas por
+  `notifications.services` (se envían una sola vez, después del commit).
 - **Snapshots**: los pedidos copian precio, nombre, SKU y dirección. Cambiar el catálogo no altera un pedido.
 - **Control de acceso**: se deniega por defecto. Toda vista del panel exige autenticación y un permiso
   explícito a través de los mixins propios. Los querysets se filtran por dueño o sede (anti-IDOR).
@@ -113,7 +117,7 @@ primer nivel, no un añadido.
   *blind index*; nunca se filtra sobre el campo cifrado.
 - **Separación de funciones**: quien crea un ajuste, un descuento alto, un reembolso o una orden de
   compra no puede aprobarlo. Se valida en el servicio y con `CHECK` en la BD (ajustes, órdenes de
-  compra y cupones ya lo tienen; reembolsos en la Fase 6).
+  compra, cupones, devoluciones y reembolsos).
 - **Plantillas**: autoescapado siempre. Está prohibido `|safe` y `mark_safe` sobre datos de usuario;
   el HTML de usuarios se sanitiza con `nh3`.
 - **CSP estricta con nonce**: todo `<script>` lleva `nonce="{{ request.csp_nonce }}"`. No se permiten
@@ -257,6 +261,7 @@ backup y restauración (F9).
 - 0013: búsqueda en PostgreSQL y precios con historial
 - 0014: checkout con reserva de stock y pagos que fallan cerrado
 - 0015: panel con separación de funciones y alcance por sede
+- 0016: puntos y saldo append-only; reembolsos con aprobación de otra persona
 
 ## Parámetros de negocio por defecto
 

@@ -2,7 +2,7 @@
   <div class="product-media">
     {% if product.image %}<img src="{% static product.image.file %}" width="{{ product.image.width }}" height="{{ product.image.height }}" alt="{{ product.image.alt }}" loading="lazy" decoding="async">{% else %}{% include "components/product_cover.html" with name=product.name label=product.platform|default:product.brand theme=product.cover_theme %}{% endif %}
     <span class="condition-badge {{ product.condition_class }}">{{ product.condition }}</span>
-    {% if not product.in_stock %}<span class="stock-badge">Agotado</span>{% endif %}
+    {% if product.is_preorder %}<span class="stock-badge bg-violet-600">Preventa</span>{% elif not product.in_stock %}<span class="stock-badge">Agotado</span>{% endif %}
   </div>
   <div class="flex flex-1 flex-col p-4">
     <p class="text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">{{ product.brand }}</p>

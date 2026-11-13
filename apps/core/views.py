@@ -29,7 +29,7 @@ class HomeView(TemplateView):
             categories=home_categories(),
             featured=featured_products(),
             controllers=featured_accessories(),
-            services=technical_services(),
+            services=technical_services()[:4],
         )
         return context
 

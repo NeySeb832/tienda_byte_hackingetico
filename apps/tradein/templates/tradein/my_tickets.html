@@ -1,0 +1,13 @@
+{% extends "accounts/base.html" %}
+{% load money %}
+{% block title %}Servicio técnico · {{ site_name }}{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black text-slate-900 dark:text-white">Mis órdenes de servicio técnico</h1>
+<ul class="mt-6 space-y-4">{% for t in tickets %}<li class="rounded-xl border border-slate-200 p-4 text-sm dark:border-white/10">
+  <p class="font-semibold">{{ t.code }} · {{ t.device }} <span class="badge ml-2">{{ t.get_status_display }}</span></p>
+  <p class="text-slate-500">{{ t.store.name }} · recibido el {{ t.created_at|date:"Y-m-d" }}</p>
+  {% if t.diagnosis %}<p class="mt-2">Diagnóstico: {{ t.diagnosis }}</p>{% endif %}
+  {% if t.status == "quoted" %}<form method="post" class="mt-3 flex flex-wrap items-center gap-2">{% csrf_token %}<input type="hidden" name="orden" value="{{ t.public_id }}"><span>Cotización: <strong>{{ t.quote|cop }}</strong></span><button class="btn-primary" name="respuesta" value="aprobar">Aprobar reparación</button><button class="btn-secondary" name="respuesta" value="rechazar">Rechazar</button></form>{% endif %}
+  {% if t.warranty_until %}<p class="mt-2 text-emerald-600">Garantía de la reparación hasta el {{ t.warranty_until|date:"d/m/Y" }}.</p>{% endif %}
+</li>{% empty %}<li class="text-sm text-slate-500">No tienes órdenes de servicio. ¿Tienes el código? <a class="underline" href="{% url 'tradein:track' %}">Consúltalo aquí</a>.</li>{% endfor %}</ul>
+{% endblock %}

@@ -5,6 +5,20 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 
 ## [Sin publicar]
 
+## [0.6.0] — 2026-11-13 — Fase 6: Valor agregado
+
+### Añadido
+- **Retomas**: cotización en línea por consola y estado (con o sin caja y control), oferta final en tienda por otra persona y pago en efectivo o en saldo a favor con 10 % adicional.
+- **Byte Puntos**: 1 punto por cada $ 1.000 pagados (web y POS con cliente identificado), canje de 1.000 puntos por $ 10.000 de saldo y reversa proporcional en devoluciones.
+- **Saldo a favor** con libro contable append-only (trigger y `CHECK` de saldo no negativo) y pago con saldo en el POS.
+- **Servicio técnico**: catálogo de servicios con precios de la lista maestra (ahora desde la BD), recepción de equipos con código de seguimiento, diagnóstico, cotización que aprueba el cliente desde su cuenta, reparación, entrega con 90 días de garantía, correos en cada hito y seguimiento público con código y correo (límite de tasa).
+- **Alertas** "Avísame cuando llegue" y "Avísame si baja de precio", procesadas por Celery después del commit y enviadas una sola vez.
+- **Devoluciones (RMA)**: retracto de 5 días hábiles (Ley 1480), devolución comercial de 30 días y garantía; recepción con reingreso al kardex y reembolso (medio original o saldo) aprobado por una persona distinta de quien recibió.
+- **Preventas**: marca de preventa y fecha de lanzamiento en la ficha y en las tarjetas.
+- Panel: retomas, servicio técnico y devoluciones. Mi cuenta: puntos y saldo, retomas, servicio técnico y alertas.
+- ADR-0016.
+
+
 ## [0.5.0] — 2026-11-13 — Fase 5: Panel administrativo
 
 ### Añadido

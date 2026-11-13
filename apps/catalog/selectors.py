@@ -68,6 +68,7 @@ class ProductCard:
     slug: str = ""
     platform: str = ""
     cover_theme: str = "violet"
+    is_preorder: bool = False
 
     @property
     def condition_class(self) -> str:
@@ -168,6 +169,7 @@ def product_cards(products: Iterable[Product]) -> list[ProductCard]:
                 slug=product.slug,
                 platform=platforms[0].name if platforms else "",
                 cover_theme=COVER_THEMES.get(brand_slug, "violet"),
+                is_preorder=product.is_preorder,
             )
         )
     return cards

@@ -15,6 +15,7 @@ from django.db import transaction
 from django.db.models import Sum
 from django.utils import timezone
 
+from apps.accounts.models import User
 from apps.audit.services import record_event
 from apps.catalog.models import Product, ProductVariant
 from apps.core.money import VAT_EXCLUDED, VAT_STANDARD, MoneyInput, split_vat, to_money
@@ -24,10 +25,12 @@ from apps.orders import services as orders
 from apps.orders.models import Order, OrderLine, OrderStatusEvent
 from apps.payments.models import Payment
 from apps.pos.models import CashSession
+from apps.promotions import services as promotions
 
 CASH = "cash"
 CARD = "card_terminal"
-METHODS = {CASH: "Efectivo", CARD: "Datáfono"}
+CREDIT = "store_credit"
+METHODS = {CASH: "Efectivo", CARD: "Datáfono", CREDIT: "Saldo a favor"}
 
 
 @transaction.atomic
@@ -106,9 +109,19 @@ def sell(
         if received < total:
             raise ValidationError("El efectivo recibido no alcanza para el total.")
         change = received - total
+    customer = (
+        User.objects.filter(email=customer_email.strip().lower(), is_staff=False).first()
+        if customer_email
+        else None
+    )
+    if method == CREDIT:
+        if customer is None:
+            raise ValidationError("Para pagar con saldo a favor indica el correo del cliente.")
+        if promotions.credit_balance(customer) < total:
+            raise ValidationError("El cliente no tiene saldo suficiente.")
     order = Order.objects.create(
         number=orders._next_number("orders_order_number_seq", f"POS-{timezone.now():%Y}-"),
-        user=None,
+        user=customer,
         email=customer_email.strip().lower()[:254],
         channel=Order.Channel.POS,
         fulfillment=Order.Fulfillment.PICKUP,
@@ -161,6 +174,9 @@ def sell(
     )
     orders.transition(order, Order.Status.DELIVERED, actor=actor, note="Entregado en mostrador")
     orders.issue_invoice(order)
+    if method == CREDIT and customer is not None:
+        promotions.spend_credit(customer, int(total), actor=actor, reference=order.number)
+    promotions.award_points(order)
     record_event(
         "pos.sale", actor=actor, target=order, changes={"total": str(total), "method": method}
     )

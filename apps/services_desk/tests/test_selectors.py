@@ -2,7 +2,11 @@
 
 from decimal import Decimal
 
+import pytest
+
 from apps.services_desk.selectors import technical_services
+
+pytestmark = pytest.mark.django_db
 
 
 def test_services_have_positive_prices():

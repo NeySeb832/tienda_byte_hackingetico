@@ -37,7 +37,7 @@ def test_home_page_shows_the_storefront(client, db):
     for name, price in (("PlayStation 5 Slim", 2750000), ("Control DualSense", 285000)):
         assert name in html
         assert format_cop(price) in html
-    for service in technical_services():
+    for service in technical_services()[:4]:
         assert service.name in html
 
 

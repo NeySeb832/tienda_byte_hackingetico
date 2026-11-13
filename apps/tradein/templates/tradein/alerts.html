@@ -1,0 +1,11 @@
+{% extends "accounts/base.html" %}
+{% load money %}
+{% block title %}Mis alertas · {{ site_name }}{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black text-slate-900 dark:text-white">Mis alertas</h1>
+<p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Actívalas desde la ficha de cada producto. Te escribimos una sola vez.</p>
+<ul class="mt-6 space-y-3">{% for a in alerts %}<li class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 p-4 text-sm dark:border-white/10">
+  <span><a class="font-semibold underline" href="{{ a.variant.product.get_absolute_url }}?sku={{ a.variant.sku }}">{{ a.variant.product.name }}</a> · {{ a.get_kind_display }}{% if a.kind == "price" %} (hoy {{ a.price_at_signup|cop }}){% endif %}{% if a.notified_at %} · <span class="text-emerald-600">Avisado el {{ a.notified_at|date:"Y-m-d" }}</span>{% endif %}</span>
+  {% if not a.notified_at %}<form method="post">{% csrf_token %}<input type="hidden" name="alerta" value="{{ a.public_id }}"><button class="text-rose-600 hover:underline" name="accion" value="quitar">Quitar</button></form>{% endif %}
+</li>{% empty %}<li class="text-sm text-slate-500">No tienes alertas.</li>{% endfor %}</ul>
+{% endblock %}

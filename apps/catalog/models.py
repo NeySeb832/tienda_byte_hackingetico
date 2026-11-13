@@ -171,6 +171,7 @@ class Product(BaseModel):
     is_featured = models.BooleanField(_("destacado"), default=False)
     popularity = models.PositiveIntegerField(_("popularidad"), default=0)
     release_date = models.DateField(_("fecha de lanzamiento"), null=True, blank=True)
+    is_preorder = models.BooleanField(_("preventa"), default=False)
     max_per_order = models.PositiveSmallIntegerField(_("máximo por pedido"), default=5)
     search_vector = SearchVectorField(null=True, editable=False)
     search_text = models.CharField(max_length=600, blank=True, editable=False)

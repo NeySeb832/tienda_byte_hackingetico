@@ -1,0 +1,18 @@
+{% extends "panel/base.html" %}
+{% load money %}
+{% block title %}{{ ticket.code }}{% endblock %}
+{% block content %}
+<a href="{% url 'panel:tickets' %}" class="text-sm underline">← Servicio técnico</a>
+<div class="mt-2 flex flex-wrap items-center gap-3"><h1 class="font-display text-2xl font-black">{{ ticket.code }}</h1><span class="badge">{{ ticket.get_status_display }}</span></div>
+<p class="mt-1 text-sm text-slate-500">{{ ticket.customer_name }} · {{ ticket.customer_email }} · {{ ticket.store.name }}</p>
+<div class="mt-6 grid gap-6 lg:grid-cols-2">
+  <section class="stat-card text-sm space-y-2"><h2 class="stat-label">Equipo</h2><p>{{ ticket.device }}{% if ticket.serial_number %} · Serial {{ ticket.serial_number }}{% endif %}</p><p><strong>Falla:</strong> {{ ticket.issue }}</p>{% if ticket.diagnosis %}<p><strong>Diagnóstico:</strong> {{ ticket.diagnosis }}</p>{% endif %}{% if ticket.quote is not None %}<p><strong>Cotización:</strong> {{ ticket.quote|cop }}</p>{% endif %}{% if ticket.warranty_until %}<p><strong>Garantía:</strong> hasta {{ ticket.warranty_until|date:"Y-m-d" }}</p>{% endif %}</section>
+  <section class="space-y-4">
+    <div class="stat-card"><h2 class="stat-label">Seguimiento</h2><ol class="mt-2 space-y-1 text-sm">{% for e in ticket.events.all %}<li>{{ e.created_at|date:"Y-m-d H:i" }} · {% for value, label in labels.items %}{% if value == e.status %}{{ label }}{% endif %}{% endfor %}{% if e.note %} <span class="text-slate-500">({{ e.note }})</span>{% endif %}</li>{% endfor %}</ol></div>
+    {% if options %}<form method="post" class="stat-card space-y-3">{% csrf_token %}<h2 class="stat-label">Siguiente paso</h2>
+      <select name="estado" class="form-select">{% for value, label in options %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+      {% if ticket.status == "diagnosing" %}<textarea class="form-input" name="diagnostico" rows="2" maxlength="1000" placeholder="Diagnóstico"></textarea><input class="form-input" name="cotizacion" type="number" min="0" step="1000" placeholder="Cotización (COP)">{% endif %}
+      <input class="form-input" name="nota" maxlength="255" placeholder="Nota (opcional)"><button class="btn-primary" type="submit">Actualizar</button></form>{% elif ticket.status == "quoted" %}<p class="text-sm text-slate-500">Esperando que el cliente apruebe la cotización.</p>{% endif %}
+  </section>
+</div>
+{% endblock %}

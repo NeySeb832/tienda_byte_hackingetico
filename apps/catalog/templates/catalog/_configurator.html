@@ -7,6 +7,7 @@
     <h1 class="mt-1 font-display text-3xl font-black leading-tight text-slate-900 sm:text-4xl dark:text-white">{{ product.name }}</h1>
     {% if product.short_description %}<p class="mt-2 text-slate-600 dark:text-slate-300">{{ product.short_description }}</p>{% endif %}
 
+    {% if product.is_preorder %}<p class="mt-4 rounded-xl bg-violet-50 px-3 py-2 text-sm font-semibold text-violet-800 dark:bg-violet-400/10 dark:text-violet-200">Preventa: lanzamiento el {{ product.release_date|date:"j \\d\\e F \\d\\e Y" }}. Tu pedido se despacha ese día.</p>{% endif %}
     <div class="mt-5 flex flex-wrap items-center gap-2">
       {% if config.condition %}<span class="condition-pill condition-{{ config.condition.slug }}">{{ config.condition.value }}</span>{% if config.condition.meta.warranty_months %}<span class="text-sm text-slate-600 dark:text-slate-300">Garantía de {{ config.condition.meta.warranty_months }} mes{{ config.condition.meta.warranty_months|pluralize:"es" }}</span>{% endif %}{% endif %}
     </div>
@@ -56,6 +57,7 @@
           {% else %}<button type="submit" class="btn-ghost">Comparar</button>{% endif %}
         </form>
       </div>
+      {% if user.is_authenticated %}<form method="post" action="{% url 'tradein:alerts' %}" class="mt-3 flex flex-wrap gap-3 text-sm">{% csrf_token %}<input type="hidden" name="sku" value="{{ config.variant.sku }}">{% if not config.available %}<button class="font-semibold text-violet-700 hover:underline dark:text-neon-violet" name="tipo" value="stock">Avísame cuando llegue</button>{% endif %}<button class="font-semibold text-violet-700 hover:underline dark:text-neon-violet" name="tipo" value="price">Avísame si baja de precio</button></form>{% endif %}
       <p class="mt-3 text-xs text-slate-500 dark:text-slate-400">SKU: {{ config.variant.sku }}</p>
     </div>
 

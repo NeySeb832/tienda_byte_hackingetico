@@ -1,0 +1,7 @@
+{% load money %}¡Buenas noticias!
+
+{{ variant.product.name }} {% if alert.kind == "stock" %}ya está disponible{% else %}bajó de precio: ahora {{ variant.price|cop }} (antes {{ alert.price_at_signup|cop }}){% endif %}.
+
+{{ site_url }}{{ variant.product.get_absolute_url }}?sku={{ variant.sku }}
+
+Recibes este correo porque activaste una alerta en Byte. Solo te escribimos una vez.

@@ -33,7 +33,9 @@
 | Can view existencia (`inventory.view_stockitem`) | — | ✅ | ✅ | — | ✅ | — | ✅ | ✅ |
 | Can view movimiento de inventario (`inventory.view_stockmovement`) | — | ✅ | ✅ | — | ✅ | — | ✅ | ✅ |
 | Can view sede (`inventory.view_store`) | — | ✅ | ✅ | — | ✅ | — | ✅ | ✅ |
+| Puede aprobar reembolsos (`orders.approve_refund`) | — | — | — | — | ✅ | — | ✅ | ✅ |
 | Puede preparar, despachar y entregar pedidos (`orders.manage_fulfillment`) | — | ✅ | — | — | ✅ | — | ✅ | ✅ |
+| Puede recibir productos devueltos (`orders.receive_return`) | — | ✅ | — | — | ✅ | — | ✅ | ✅ |
 | Can view pedido (`orders.view_order`) | — | ✅ | ✅ | — | ✅ | — | ✅ | ✅ |
 | Puede ver los reportes de ventas (`orders.view_sales_report`) | — | — | — | — | ✅ | ✅ | ✅ | ✅ |
 | Puede vender en el punto de venta (`pos.use_pos`) | — | ✅ | — | — | ✅ | — | ✅ | ✅ |
@@ -47,6 +49,8 @@
 | Puede recibir mercancía (`purchasing.receive_purchaseorder`) | — | — | ✅ | — | ✅ | — | ✅ | ✅ |
 | Can view orden de compra (`purchasing.view_purchaseorder`) | — | — | ✅ | — | ✅ | — | ✅ | ✅ |
 | Can view proveedor (`purchasing.view_supplier`) | — | — | ✅ | — | ✅ | — | ✅ | ✅ |
+| Puede gestionar órdenes de servicio técnico (`services_desk.manage_tickets`) | — | ✅ | — | ✅ | ✅ | — | ✅ | ✅ |
+| Puede evaluar retomas y hacer la oferta final (`tradein.inspect_tradein`) | — | ✅ | — | ✅ | ✅ | — | ✅ | ✅ |
 
 Además de los permisos, el código aplica estas reglas:
 - **Alcance por sede:** el personal solo ve sus sedes asignadas; administradores y superadmins ven todas.

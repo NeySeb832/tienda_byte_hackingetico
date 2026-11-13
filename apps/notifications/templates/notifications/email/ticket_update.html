@@ -1,0 +1,7 @@
+{% load money %}<!doctype html><html lang="es"><body style="font-family:Segoe UI,Arial,sans-serif;color:#0f172a">
+<p>Hola {{ ticket.customer_name }}:</p>
+<p>Tu orden de servicio <strong>{{ ticket.code }}</strong> ({{ ticket.device }}) está: <strong>{{ ticket.get_status_display }}</strong>.</p>
+{% if ticket.status == "quoted" %}<p>Cotización: <strong>{{ ticket.quote|cop }}</strong>. Apruébala o recházala en Mi cuenta → Servicio técnico.</p>{% endif %}
+{% if ticket.status == "ready" %}<p>Ya puedes recogerla en {{ ticket.store.name }} ({{ ticket.store.address }}).</p>{% endif %}
+<p><a href="{{ site_url }}{% url 'tradein:track' %}">Consultar el seguimiento</a></p>
+</body></html>

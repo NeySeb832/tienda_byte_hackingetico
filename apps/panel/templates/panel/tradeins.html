@@ -1,0 +1,11 @@
+{% extends "panel/base.html" %}
+{% load money %}
+{% block title %}Retomas{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black">Retomas</h1>
+<div class="mt-6 overflow-x-auto"><table class="data-table">
+  <thead><tr><th>Fecha</th><th>Cliente</th><th>Consola</th><th>Estado declarado</th><th class="text-right">Cotización</th><th>Estado</th><th>Oferta final</th></tr></thead>
+  <tbody>{% for r in requests %}<tr><td>{{ r.created_at|date:"Y-m-d" }}</td><td>{{ r.user.email }}</td><td>{{ r.product.name }}{% if not r.has_box %} · sin caja{% endif %}{% if not r.has_controller %} · sin control{% endif %}</td><td>{{ r.get_condition_display }}</td><td class="text-right">{{ r.estimated_value|cop }}</td><td>{{ r.get_status_display }}</td>
+  <td>{% if r.status == "estimated" and r.user_id != user.pk %}<form method="post" class="flex flex-wrap gap-2">{% csrf_token %}<input type="hidden" name="retoma" value="{{ r.public_id }}"><select name="sede" class="form-select">{% for s in stores %}<option value="{{ s.code }}">{{ s.name }}</option>{% endfor %}</select><input class="form-input w-32" name="oferta" type="number" min="0" step="10000" value="{{ r.estimated_value|floatformat:0 }}"><input class="form-input w-48" name="notas" maxlength="255" placeholder="Diagnóstico"><button class="btn-secondary" type="submit">Ofertar</button></form>{% elif r.final_value is not None %}{{ r.final_value|cop }} · {{ r.inspected_by.email }}{% endif %}</td></tr>{% empty %}<tr><td colspan="7">Sin retomas.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% endblock %}

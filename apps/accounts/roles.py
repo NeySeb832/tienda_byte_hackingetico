@@ -39,10 +39,13 @@ _WAREHOUSE = _STOCK | {
     "purchasing.receive_purchaseorder",
     "purchasing.view_supplier",
 }
+_SERVICE = {"tradein.inspect_tradein", "services_desk.manage_tickets", "orders.receive_return"}
 _MANAGEMENT = (
     _ORDERS
     | _WAREHOUSE
+    | _SERVICE
     | {
+        "orders.approve_refund",
         "inventory.approve_adjustment",
         "purchasing.add_purchaseorder",
         "purchasing.approve_purchaseorder",
@@ -71,10 +74,13 @@ _ADMIN = frozenset(
 ROLE_PERMISSIONS: dict[str, frozenset[str]] = {
     CUSTOMER: frozenset(),
     SELLER: frozenset(
-        {PANEL, "accounts.view_customers", "inventory.view_store", "pos.use_pos"} | _ORDERS | _STOCK
+        {PANEL, "accounts.view_customers", "inventory.view_store", "pos.use_pos"}
+        | _ORDERS
+        | _STOCK
+        | _SERVICE
     ),
     WAREHOUSE: frozenset({PANEL, "inventory.view_store", "orders.view_order"} | _WAREHOUSE),
-    TECHNICIAN: frozenset({PANEL}),
+    TECHNICIAN: frozenset({PANEL, "tradein.inspect_tradein", "services_desk.manage_tickets"}),
     MANAGER: frozenset(
         {PANEL, "accounts.view_customers", "inventory.view_store", "audit.view_auditlog"}
         | _MANAGEMENT

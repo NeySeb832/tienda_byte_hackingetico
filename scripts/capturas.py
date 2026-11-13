@@ -114,6 +114,30 @@ PAGES: dict[int, list[tuple[str, ...] | tuple[str, str, bool] | tuple[str, str, 
         ("panel-reportes", "/panel/reportes/", True, "analista@byte.test"),
         ("403-analista-en-pos", "/panel/pos/", False, "analista@byte.test"),
     ],
+    6: [
+        ("inicio-servicios-y-retoma", "/", False),
+        ("cuenta-retomas", "/cuenta/retomas/", True, "cliente@byte.test"),
+        ("cuenta-puntos-y-saldo", "/cuenta/puntos/", False, "cliente@byte.test"),
+        ("cuenta-servicio-tecnico", "/cuenta/servicio-tecnico/", False, "cliente@byte.test"),
+        ("cuenta-alertas", "/cuenta/alertas/", False, "cliente@byte.test"),
+        (
+            "ficha-con-alertas",
+            "/producto/playstation-5-slim/?sku=PS5S-DIG-30ANIV-N",
+            False,
+            "cliente@byte.test",
+        ),
+        ("cuenta-devolucion", "/cuenta/pedidos/{entregado}/devolucion/", True, "cliente@byte.test"),
+        ("seguimiento-publico", "/servicio-tecnico/seguimiento/", False),
+        ("panel-retomas", "/panel/retomas/", False, "tecnico@byte.test"),
+        ("panel-servicio-tecnico", "/panel/servicio-tecnico/", False, "tecnico@byte.test"),
+        (
+            "panel-orden-de-servicio",
+            "/panel/servicio-tecnico/{ticket}/",
+            False,
+            "tecnico@byte.test",
+        ),
+        ("panel-devoluciones-gerente", "/panel/devoluciones/", False, "gerente@byte.test"),
+    ],
 }
 
 
@@ -188,6 +212,88 @@ def prepare_panel_demo() -> dict[str, str]:
     )
     web = Order.objects.get(public_id=tokens["pedido"])
     return {**tokens, "oc": str(order.public_id), "pedido_web": str(web.public_id)}
+
+
+def prepare_value_added_demo() -> dict[str, str]:
+    """Phase 6: trade-in with final offer, points, a quoted repair, a delivered order with a return."""
+    from apps.accounts.models import StaffStoreAssignment, User
+    from apps.catalog.models import Product
+    from apps.inventory.models import Store
+    from apps.orders import returns
+    from apps.orders import services as orders
+    from apps.orders.models import Order
+    from apps.promotions import services as promotions
+    from apps.services_desk import services as tickets
+    from apps.services_desk.models import ServiceTicket, TechnicalService
+    from apps.tradein import services as tradein
+    from apps.tradein.models import TradeInRequest
+
+    tokens = prepare_panel_demo()
+    customer = User.objects.get(email="cliente@byte.test")
+    technician = User.objects.get(email="tecnico@byte.test")
+    seller = User.objects.get(email="vendedor@byte.test")
+    bog = Store.objects.get(code="BOG-CEN")
+    StaffStoreAssignment.objects.get_or_create(user=technician, store=bog)
+    for order in Order.objects.filter(user=customer, paid_at__isnull=False):
+        promotions.award_points(order)
+    if not TradeInRequest.objects.filter(user=customer).exists():
+        quote = tradein.request_quote(
+            customer,
+            Product.objects.get(slug="playstation-4"),
+            "good",
+            has_box=True,
+            has_controller=True,
+        )
+        tradein.inspect(
+            quote,
+            inspector=technician,
+            store=bog,
+            final_value=quote.estimated_value - 20000,
+            notes="Rayones leves en la carcasa",
+        )
+        tradein.request_quote(
+            customer,
+            Product.objects.get(slug="nintendo-switch-oled"),
+            "excellent",
+            has_box=False,
+            has_controller=True,
+        )
+    ticket = ServiceTicket.objects.filter(customer=customer).first()
+    if ticket is None:
+        ticket = tickets.open_ticket(
+            store=bog,
+            actor=technician,
+            customer_name="Camila Rojas",
+            customer_email=customer.email,
+            device="Control DualSense blanco",
+            issue="Drift en el joystick izquierdo",
+            service=TechnicalService.objects.order_by("sort").first(),
+            customer=customer,
+        )
+        tickets.advance(ticket, ServiceTicket.Status.DIAGNOSING, actor=technician)
+        tickets.advance(
+            ticket,
+            ServiceTicket.Status.QUOTED,
+            actor=technician,
+            diagnosis="Potenciómetro desgastado: cambio de joystick",
+            quote=35000,
+        )
+    paid = Order.objects.get(public_id=tokens["pedido"])
+    if paid.status == Order.Status.PAID:
+        for status in (Order.Status.PREPARING, Order.Status.SHIPPED, Order.Status.DELIVERED):
+            orders.transition(paid, status, actor=seller)
+    if not paid.returns.exists():
+        line = paid.lines.order_by("pk").last()
+        rma = returns.request_return(
+            paid,
+            user=customer,
+            quantities={line.pk: 1},
+            kind="withdrawal",
+            reason="El color no es el que esperaba",
+            refund_method="credit",
+        )
+        returns.receive_return(rma, actor=seller, store=bog, restock=True)
+    return {**tokens, "entregado": str(paid.public_id), "ticket": str(ticket.public_id)}
 
 
 def prepare_checkout_demo(email: str) -> dict[str, str]:
@@ -303,7 +409,11 @@ def main() -> int:
     tokens = (
         prepare_checkout_demo("cliente@byte.test")
         if args.fase == 4
-        else prepare_panel_demo() if args.fase == 5 else {}
+        else (
+            prepare_panel_demo()
+            if args.fase == 5
+            else prepare_value_added_demo() if args.fase == 6 else {}
+        )
     )
 
     with sync_playwright() as playwright:

@@ -1,6 +1,7 @@
 from django.urls import path
 
 from apps.panel import operations as ops
+from apps.panel import value_added as va
 from apps.panel import views
 
 app_name = "panel"
@@ -35,4 +36,8 @@ urlpatterns = [
     path("precios/", ops.PricesView.as_view(), name="prices"),
     path("cupones/", ops.CouponsView.as_view(), name="coupons"),
     path("reportes/", ops.ReportsView.as_view(), name="reports"),
+    path("retomas/", va.TradeInPanelView.as_view(), name="tradeins"),
+    path("servicio-tecnico/", va.TicketListView.as_view(), name="tickets"),
+    path("servicio-tecnico/<uuid:public_id>/", va.TicketDetailView.as_view(), name="ticket"),
+    path("devoluciones/", va.ReturnsPanelView.as_view(), name="returns"),
 ]

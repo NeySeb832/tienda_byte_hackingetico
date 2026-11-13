@@ -200,3 +200,85 @@ class Invoice(models.Model):
 
     def __str__(self) -> str:
         return self.number
+
+
+class ReturnRequest(BaseModel):
+    """RMA: right of withdrawal (5 business days, Ley 1480), warranty or commercial return (30 days).
+
+    Whoever approves the refund cannot be the person who registered the receipt (SoD).
+    """
+
+    class Kind(models.TextChoices):
+        WITHDRAWAL = "withdrawal", _("Retracto (5 días hábiles)")
+        COMMERCIAL = "commercial", _("Cambio o devolución comercial (30 días)")
+        WARRANTY = "warranty", _("Garantía")
+
+    class Status(models.TextChoices):
+        REQUESTED = "requested", _("Solicitada")
+        RECEIVED = "received", _("Producto recibido")
+        APPROVED = "approved", _("Reembolso aprobado")
+        REJECTED = "rejected", _("Rechazada")
+
+    class Refund(models.TextChoices):
+        ORIGINAL = "original", _("Al medio de pago original")
+        CREDIT = "credit", _("Saldo a favor")
+
+    order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name="returns")
+    kind = models.CharField(_("tipo"), max_length=10, choices=Kind.choices)
+    reason = models.CharField(_("motivo"), max_length=500)
+    refund_method = models.CharField(
+        _("reembolso"), max_length=8, choices=Refund.choices, default=Refund.ORIGINAL
+    )
+    status = models.CharField(
+        _("estado"), max_length=10, choices=Status.choices, default=Status.REQUESTED
+    )
+    refund_amount = models.DecimalField(
+        _("valor a reembolsar"), max_digits=14, decimal_places=2, default=0
+    )
+    received_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
+    )
+    decided_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
+    )
+    decided_at = models.DateTimeField(_("decidido"), null=True, blank=True)
+    decision_note = models.CharField(_("nota de la decisión"), max_length=255, blank=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = _("devolución")
+        verbose_name_plural = _("devoluciones")
+        permissions = [
+            ("receive_return", "Puede recibir productos devueltos"),
+            ("approve_refund", "Puede aprobar reembolsos"),
+        ]
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(refund_amount__gte=0), name="orders_return_refund_gte_0"
+            ),
+            models.CheckConstraint(
+                condition=models.Q(decided_by__isnull=True)
+                | models.Q(received_by__isnull=True)
+                | ~models.Q(decided_by=models.F("received_by")),
+                name="orders_return_sod",
+            ),
+        ]
+
+    def __str__(self) -> str:
+        return f"Devolución {self.order_id} ({self.get_status_display()})"
+
+
+class ReturnLine(models.Model):
+    request = models.ForeignKey(ReturnRequest, on_delete=models.CASCADE, related_name="lines")
+    line = models.ForeignKey(OrderLine, on_delete=models.PROTECT, related_name="returns")
+    quantity = models.PositiveSmallIntegerField()
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(quantity__gte=1), name="orders_return_line_qty_gte_1"
+            )
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.quantity} x {self.line_id}"

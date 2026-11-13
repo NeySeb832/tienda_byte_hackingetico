@@ -11,6 +11,7 @@ urlpatterns = [
     path("carrito/", include("apps.cart.urls")),
     path("", include("apps.orders.urls")),
     path("pagos/", include("apps.payments.urls")),
+    path("", include("apps.tradein.urls")),
     path("cuenta/", include("apps.accounts.urls")),
     path("cuenta/", include("allauth.urls")),  # login, registro, MFA, sesiones...
     path("panel/", include("apps.panel.urls")),
