@@ -1,0 +1,10 @@
+{% extends "allauth/layouts/base.html" %}
+{% block main %}
+<div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[16rem_1fr] lg:px-8">
+  {% include "accounts/_nav.html" %}
+  <div class="min-w-0">
+    {% include "partials/messages.html" %}
+    <div class="card">{% block content %}{% endblock %}</div>
+  </div>
+</div>
+{% endblock %}

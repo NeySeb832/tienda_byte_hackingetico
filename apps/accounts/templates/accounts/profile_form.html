@@ -1,0 +1,10 @@
+{% extends "accounts/base.html" %}
+{% block title %}Datos personales · {{ site_name }}{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black text-slate-900 dark:text-white">Datos personales</h1>
+<p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Tu documento y tu celular se guardan cifrados.</p>
+<form method="post" class="mt-6 grid gap-4 sm:grid-cols-2">{% csrf_token %}
+  {% include "partials/form_fields.html" %}
+  <div class="sm:col-span-2"><button type="submit" class="btn-primary">Guardar cambios</button></div>
+</form>
+{% endblock %}

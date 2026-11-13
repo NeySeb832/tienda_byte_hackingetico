@@ -77,6 +77,10 @@ def test_check_deploy_reports_no_warnings():
         "DJANGO_ADMIN_URL": "k7Qp2-Xn9LwZr4Tb/",
         "DATABASE_URL": "postgres://byte:unused@localhost:5432/byte",
         "REDIS_URL": "redis://localhost:6379/0",
+        "BYTE_FIELD_ENCRYPTION_KEYS": "dGVzdC1vbmx5LWRlcGxveS1jaGVjay1rZXktMDAwMDA=",
+        "BYTE_BLIND_INDEX_KEY": "deploy-check-blind-index-key",
+        "TURNSTILE_SITE_KEY": "0x4AAAAAAAdeploycheck",
+        "TURNSTILE_SECRET_KEY": "0x4AAAAAAAdeploycheck-secret",
     }
     result = subprocess.run(
         [sys.executable, "manage.py", "check", "--deploy", "--fail-level", "WARNING"],

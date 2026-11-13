@@ -1,0 +1,23 @@
+{% extends "accounts/base.html" %}
+{% block title %}Direcciones · {{ site_name }}{% endblock %}
+{% block content %}
+<div class="flex flex-wrap items-center justify-between gap-3">
+  <h1 class="font-display text-2xl font-black text-slate-900 dark:text-white">Direcciones</h1>
+  {% if addresses|length < max_addresses %}<a href="{% url 'accounts:address_create' %}" class="btn-primary">Agregar dirección</a>{% endif %}
+</div>
+<ul class="mt-6 grid gap-4 sm:grid-cols-2">
+  {% for address in addresses %}
+  <li class="rounded-xl border border-slate-200 p-4 dark:border-white/10">
+    <p class="font-semibold text-slate-900 dark:text-white">{{ address.label }} {% if address.is_default %}<span class="badge">Predeterminada</span>{% endif %}</p>
+    <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">{{ address.line1 }}{% if address.line2 %}, {{ address.line2 }}{% endif %}<br>{{ address.city.name }}, {{ address.city.department.name }}</p>
+    <p class="text-sm text-slate-500">Recibe: {{ address.recipient_name }}</p>
+    <div class="mt-3 flex gap-3 text-sm font-semibold">
+      <a class="text-cyan-700 hover:underline dark:text-neon-cyan" href="{% url 'accounts:address_update' address.public_id %}">Editar</a>
+      <a class="text-rose-600 hover:underline" href="{% url 'accounts:address_delete' address.public_id %}">Eliminar</a>
+    </div>
+  </li>
+  {% empty %}
+  <li class="text-sm text-slate-600 dark:text-slate-300">Aún no tienes direcciones guardadas.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

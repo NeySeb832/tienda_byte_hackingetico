@@ -1,0 +1,28 @@
+{% load static %}<!doctype html>
+<html lang="es-CO" class="h-full">
+<head>
+  <title>{% block title %}Panel{% endblock %} · {{ site_name }}</title>
+  <meta name="robots" content="noindex, nofollow">
+  {% include "partials/head.html" %}
+</head>
+<body class="min-h-full bg-slate-100 text-slate-900 antialiased dark:bg-ink-950 dark:text-slate-100" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  <div class="lg:grid lg:min-h-screen lg:grid-cols-[15rem_1fr]">
+    <aside class="panel-sidebar">
+      <a href="{% url 'panel:dashboard' %}" class="brand-wordmark block px-3 text-xl">BYTE</a>
+      <p class="mt-1 px-3 text-xs font-semibold uppercase tracking-widest text-slate-500">Panel</p>
+      <nav class="mt-6 space-y-1" aria-label="Panel">
+        {% for item in panel_menu %}<a href="{% url item.url_name %}" class="panel-link{% if request.resolver_match.view_name == item.url_name %} panel-link-active{% endif %}">{{ item.label }}</a>{% endfor %}
+      </nav>
+      <div class="mt-8 space-y-1 border-t border-white/10 pt-4 text-sm">
+        <a href="{% url 'core:home' %}" class="panel-link">Ver tienda</a>
+        <a href="{% url 'accounts:dashboard' %}" class="panel-link">Mi cuenta</a>
+        <form method="post" action="{% url 'account_logout' %}">{% csrf_token %}<button type="submit" class="panel-link w-full text-left">Cerrar sesión</button></form>
+      </div>
+    </aside>
+    <main id="contenido" class="min-w-0 px-4 py-8 sm:px-8">
+      {% include "partials/messages.html" %}
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>

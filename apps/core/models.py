@@ -31,6 +31,39 @@ class PublicIdModel(models.Model):
         abstract = True
 
 
+class Department(models.Model):
+    """Colombian department (DANE DIVIPOLA code)."""
+
+    code = models.CharField(_("código DANE"), max_length=2, unique=True)
+    name = models.CharField(_("nombre"), max_length=80)
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name = _("departamento")
+        verbose_name_plural = _("departamentos")
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class City(models.Model):
+    """Colombian municipality (DANE DIVIPOLA code)."""
+
+    code = models.CharField(_("código DANE"), max_length=5, unique=True)
+    name = models.CharField(_("nombre"), max_length=80)
+    department = models.ForeignKey(
+        Department, on_delete=models.PROTECT, related_name="cities", verbose_name=_("departamento")
+    )
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name = _("ciudad")
+        verbose_name_plural = _("ciudades")
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class BaseModel(PublicIdModel, TimeStampedModel):
     """Convenience base: public id + timestamps."""
 

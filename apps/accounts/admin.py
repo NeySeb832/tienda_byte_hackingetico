@@ -1,11 +1,18 @@
 """Django admin for users (superadmin only; the staff back-office lives in /panel/)."""
 
+# Django admin is superadmin-only and goes through allauth's login (MFA) (A01/A07).
+from allauth.account.decorators import secure_admin_login
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from apps.accounts.forms import UserAdminChangeForm, UserAdminCreationForm
 from apps.accounts.models import User
+
+admin.site.login = secure_admin_login(admin.site.login)  # type: ignore[method-assign]
+admin.site.has_permission = lambda request: bool(  # type: ignore[method-assign]
+    request.user.is_active and request.user.is_superuser
+)
 
 
 @admin.register(User)

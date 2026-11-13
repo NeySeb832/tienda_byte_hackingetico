@@ -1,0 +1,13 @@
+<nav class="account-nav" aria-label="Mi cuenta">
+  <p class="px-3 text-xs font-bold uppercase tracking-widest text-slate-500">Mi cuenta</p>
+  <a href="{% url 'accounts:dashboard' %}">Resumen</a>
+  <a href="{% url 'accounts:profile' %}">Datos personales</a>
+  <a href="{% url 'accounts:addresses' %}">Direcciones</a>
+  <a href="{% url 'account_email' %}">Correo electrónico</a>
+  <a href="{% url 'account_change_password' %}">Contraseña</a>
+  <a href="{% url 'mfa_index' %}">Verificación en dos pasos</a>
+  <a href="{% url 'usersessions_list' %}">Sesiones activas</a>
+  <a href="{% url 'accounts:privacy' %}">Privacidad y datos</a>
+  {% if panel_menu %}<a href="{% url 'panel:dashboard' %}" class="text-violet-700 dark:text-neon-violet">Ir al panel</a>{% endif %}
+  <form method="post" action="{% url 'account_logout' %}" class="px-3 pt-2">{% csrf_token %}<button type="submit" class="text-sm font-semibold text-rose-600 hover:underline dark:text-rose-400">Cerrar sesión</button></form>
+</nav>

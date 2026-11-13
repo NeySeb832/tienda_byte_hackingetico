@@ -1,0 +1,10 @@
+{% load static tailwind_cli %}  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="htmx-config" content='{"includeIndicatorStyles":false,"allowEval":false,"allowScriptTags":false,"selfRequestsOnly":true}'>
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+  <script nonce="{{ request.csp_nonce }}" src="{% static 'js/theme.js' %}"></script>
+  {% tailwind_css %}
+  <script nonce="{{ request.csp_nonce }}" src="{% static 'js/app.js' %}" defer></script>
+  <script nonce="{{ request.csp_nonce }}" src="{% static 'vendor/htmx/htmx.min.js' %}" defer></script>
+  <script nonce="{{ request.csp_nonce }}" src="{% static 'vendor/alpine/alpine-csp.min.js' %}" defer></script>

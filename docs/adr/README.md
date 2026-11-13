@@ -17,5 +17,6 @@ consecuencias trae. Son cortos a propósito. Si una decisión cambia, se crea un
 | [0009](0009-celery-json-valkey.md) | Celery con serializador JSON sobre Valkey/Redis | Aceptada |
 | [0010](0010-bitacora-de-evidencias.md) | Bitácora de evidencias con capturas | Aceptada |
 | [0011](0011-identificadores-publicos-y-usuario-email.md) | Identificadores públicos UUID y usuario por email | Aceptada |
+| [0012](0012-autenticacion-allauth-axes-turnstile.md) | Autenticación con allauth + MFA, axes, Turnstile y HIBP | Aceptada |
 
 Plantilla: [`template.md`](template.md).

@@ -13,6 +13,7 @@ Usage::
 from __future__ import annotations
 
 import argparse
+import base64
 import io
 import os
 import re
@@ -60,6 +61,10 @@ def prod_env() -> dict[str, str]:
         "DJANGO_ADMIN_URL": "k7Qp2-Xn9LwZr4Tb/",
         "DATABASE_URL": "postgres://byte:unused@localhost:5432/byte",
         "REDIS_URL": "redis://localhost:6379/0",
+        "BYTE_FIELD_ENCRYPTION_KEYS": base64.urlsafe_b64encode(secrets.token_bytes(32)).decode(),
+        "BYTE_BLIND_INDEX_KEY": secrets.token_urlsafe(32),
+        "TURNSTILE_SITE_KEY": "evidence-placeholder-site-key",
+        "TURNSTILE_SECRET_KEY": "evidence-placeholder-secret-key",
     }
 
 
@@ -121,6 +126,17 @@ def build_checks() -> list[Check]:
             env=prod_env(),
         ),
         Check("08-cabeceras", "Cabeceras de seguridad de GET /", [PY, "-c", HEADERS_SNIPPET]),
+        Check(
+            "12-matriz-permisos",
+            "Matriz de permisos generada desde el código",
+            [PY, "manage.py", "export_permissions_matrix", "--check"],
+            env={"DJANGO_SETTINGS_MODULE": "config.settings.test"},
+        ),
+        Check(
+            "13-cadena-auditoria",
+            "Integridad de la cadena de auditoría (BD de desarrollo)",
+            [PY, "manage.py", "verify_audit_chain"],
+        ),
         Check(
             "09-vendor",
             "Integridad de librerías JS y binario de Tailwind",
@@ -232,6 +248,7 @@ def save(out_dir: Path, check: Check, code: int, output: str, seconds: float) ->
     (out_dir / f"{check.slug}.txt").write_text(
         f"$ {shown}\n\n{ANSI_RE.sub('', output)}\n\n[{status} en {seconds:.1f} s]\n",
         encoding="utf-8",
+        newline="\n",
     )
     console = Console(record=True, width=118, file=io.StringIO(), force_terminal=True)
     console.print(Text(f"$ {shown}", style="bold cyan"))

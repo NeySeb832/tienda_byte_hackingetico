@@ -1,0 +1,12 @@
+{% extends "accounts/base.html" %}
+{% block title %}Mi cuenta · {{ site_name }}{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black text-slate-900 dark:text-white">Hola{% if user.first_name %}, {{ user.first_name }}{% endif %}</h1>
+<p class="mt-1 text-sm text-slate-600 dark:text-slate-300">{{ user.email }}</p>
+<div class="mt-6 grid gap-4 sm:grid-cols-2">
+  <a href="{% url 'accounts:profile' %}" class="tile-link"><span class="font-semibold">Datos personales</span><span class="text-sm text-slate-500">Nombre, documento y celular</span></a>
+  <a href="{% url 'accounts:addresses' %}" class="tile-link"><span class="font-semibold">Direcciones</span><span class="text-sm text-slate-500">{{ address_count }} guardada{{ address_count|pluralize }}</span></a>
+  <a href="{% url 'mfa_index' %}" class="tile-link"><span class="font-semibold">Verificación en dos pasos</span><span class="text-sm {% if mfa_enabled %}text-emerald-600{% else %}text-amber-600{% endif %}">{% if mfa_enabled %}Activa{% else %}Recomendado: actívala{% endif %}</span></a>
+  <a href="{% url 'accounts:privacy' %}" class="tile-link"><span class="font-semibold">Privacidad y datos</span><span class="text-sm text-slate-500">{% if consent %}Autorización vigente: {{ consent.document }}{% else %}Sin autorización registrada{% endif %}</span></a>
+</div>
+{% endblock %}

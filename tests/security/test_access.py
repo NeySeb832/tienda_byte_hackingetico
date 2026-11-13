@@ -23,7 +23,13 @@ def test_hidden_admin_requires_authentication(client):
 def test_hidden_admin_rejects_customers(client, user):
     client.force_login(user)
     response = client.get(f"{ADMIN}accounts/user/")
-    assert response.status_code == 302
+    assert response.status_code in (302, 403)
+
+
+def test_hidden_admin_rejects_staff_who_are_not_superadmins(client, staff_user):
+    client.force_login(staff_user)
+    response = client.get(f"{ADMIN}accounts/user/")
+    assert response.status_code in (302, 403)
 
 
 def test_superuser_manages_users_in_admin(client, superuser):

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ document.title }} · {{ site_name }}{% endblock %}
+{% block content %}
+<article class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+  <h1 class="font-display text-3xl font-black text-slate-900 dark:text-white">{{ document.title }}</h1>
+  <p class="mt-2 text-sm text-slate-500">Versión {{ document.version }} · publicada el {{ document.published_at|date:"j \d\e F \d\e Y" }}</p>
+  <div class="prose-legal mt-8">{{ document.body|linebreaks }}</div>
+</article>
+{% endblock %}

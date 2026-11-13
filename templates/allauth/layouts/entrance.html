@@ -1,0 +1,9 @@
+{% extends "allauth/layouts/base.html" %}
+{% block main %}
+<section class="auth-shell">
+  <div class="auth-card">
+    {% include "partials/messages.html" %}
+    {% block content %}{% endblock %}
+  </div>
+</section>
+{% endblock %}

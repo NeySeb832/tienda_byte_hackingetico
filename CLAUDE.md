@@ -42,7 +42,7 @@ primer nivel, no un añadido.
 | # | Fase | Estado |
 |---|------|--------|
 | 1 | Fundaciones (estructura, settings, Docker, CI, ADRs, modelo de datos) | ✅ en revisión (`fase/01-fundaciones`) |
-| 2 | Usuarios y seguridad base (allauth + MFA, axes, roles, mixins, auditoría, CSP, tests de acceso) | ⏳ |
+| 2 | Usuarios y seguridad base (allauth + MFA, axes, roles, mixins, auditoría, CSP, tests de acceso) | ✅ en revisión (`fase/02-usuarios-seguridad`) |
 | 3 | Catálogo y precios (variantes con precio dinámico, búsqueda, filtros, comparador, historial) | ⏳ |
 | 4 | Carrito, checkout y pagos (cupones, envíos, Wompi sandbox, webhooks, facturas PDF, correos) | ⏳ |
 | 5 | Panel administrativo (dashboard, inventario multi-sede, compras, pedidos, POS, CRM, reportes) | ⏳ |
@@ -84,6 +84,17 @@ primer nivel, no un añadido.
 - **Snapshots**: los pedidos copian precio, nombre, SKU y dirección. Cambiar el catálogo no altera un pedido.
 - **Control de acceso**: se deniega por defecto. Toda vista del panel exige autenticación y un permiso
   explícito a través de los mixins propios. Los querysets se filtran por dueño o sede (anti-IDOR).
+  - Vistas del panel: heredan de `StaffRequiredMixin` y declaran `required_permissions`. Si no los
+    declaran, falla con `ImproperlyConfigured`.
+  - Vistas de cliente: usan `LoginRequiredMixin` y obtienen el usuario con `authenticated_user(request)`.
+    Los objetos ajenos se cargan con selectors que responden 404.
+  - Los roles y sus permisos solo se definen en `apps/accounts/roles.py`. Después de cambiarlos se
+    ejecutan `setup_roles` y `export_permissions_matrix`; el CI verifica que la matriz esté al día.
+- **Auditoría**: toda operación relevante llama a `apps.audit.services.record_event(...)`. Los
+  incidentes usan `record_security_event(...)`, que alerta a los superadmins por correo en los casos
+  graves. La bitácora es inmutable: tiene un trigger en la BD y se verifica con `verify_audit_chain`.
+- **Datos sensibles**: van en `EncryptedTextField` (`apps.core.crypto`). Para buscarlos se usa un
+  *blind index*; nunca se filtra sobre el campo cifrado.
 - **Separación de funciones**: quien crea un ajuste, un descuento alto, un reembolso o una orden de
   compra no puede aprobarlo. Se valida en el servicio y con `CHECK` en la BD.
 - **Plantillas**: autoescapado siempre. Está prohibido `|safe` y `mark_safe` sobre datos de usuario;
@@ -181,8 +192,16 @@ uv run python scripts/product_images.py --bloquear  # fija SHA-256 y licencia de
 uv run python scripts/product_images.py            # descarga, verifica y genera los WebP + créditos
 ```
 
-Comandos que se crearán en sus fases: `setup_roles` y `export_permissions_matrix` (F2), `seed_demo`
-(F3/F5), `seed_bigdata` (F7) y los scripts de backup y restauración (F9).
+```bash
+# Fase 2
+uv run python manage.py setup_roles                  # grupos y permisos (idempotente)
+uv run python manage.py export_permissions_matrix    # docs/matriz-permisos.md (--check en CI)
+uv run python manage.py verify_audit_chain           # integridad de la bitácora de auditoría
+uv run python manage.py seed_demo_users              # un usuario demo por rol (solo DEBUG)
+```
+
+Comandos que se crearán en sus fases: `seed_demo` (F3/F5), `seed_bigdata` (F7) y los scripts de
+backup y restauración (F9).
 
 ## Dependencias
 

@@ -1,0 +1,9 @@
+{% extends "accounts/base.html" %}
+{% block title %}Dirección · {{ site_name }}{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black text-slate-900 dark:text-white">{% if form.instance.pk %}Editar dirección{% else %}Nueva dirección{% endif %}</h1>
+<form method="post" class="mt-6 grid gap-4 sm:grid-cols-2">{% csrf_token %}
+  {% include "partials/form_fields.html" %}
+  <div class="flex gap-3 sm:col-span-2"><button type="submit" class="btn-primary">Guardar</button><a href="{% url 'accounts:addresses' %}" class="btn-secondary">Cancelar</a></div>
+</form>
+{% endblock %}

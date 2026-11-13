@@ -5,6 +5,39 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 
 ## [Sin publicar]
 
+## [0.2.0] — 2026-11-12 — Fase 2: Usuarios y seguridad base
+
+### Añadido
+- **Autenticación** (django-allauth 65): registro con verificación de correo, login por email, recuperación de contraseña, MFA TOTP con códigos de recuperación, re-autenticación para acciones sensibles y gestión de sesiones activas. Las plantillas usan el estilo de la tienda.
+- **Bloqueo progresivo** con django-axes 9 por usuario + IP (5 fallos → 5 min, 10 → 30 min, 20 → 24 h), con página de bloqueo (HTTP 429).
+- **CAPTCHA Cloudflare Turnstile** en el registro y la recuperación de contraseña, y en el login a partir del tercer fallo. Falla cerrado.
+- **Honeypot** en los formularios públicos.
+- **Validadores de contraseña**: mínimo 12 caracteres para el personal y verificación contra filtraciones (HIBP con k-anonimato).
+- **Roles** (8 grupos) definidos en `apps/accounts/roles.py`, con los comandos `setup_roles` (idempotente) y `export_permissions_matrix` → [`docs/matriz-permisos.md`](docs/matriz-permisos.md), que el CI verifica.
+- **Control de acceso**: `RoleRequiredMixin` (deniega por defecto y falla si una vista no declara permisos), `StaffRequiredMixin` (personal + MFA), `authenticated_user()` y `ensure_segregation_of_duties()`. Querysets filtrados por dueño o sede.
+- **MFA obligatorio y cierre por inactividad (15 min) para el personal** (`StaffSecurityMiddleware`). El admin de Django pasa por el login con MFA y es exclusivo del superadmin.
+- **Cambio de rol** desde el panel: nadie cambia su propio rol, solo un superadmin gestiona superadmins, se cierran las sesiones del afectado y el ascenso a rol privilegiado genera una alerta.
+- **Mi cuenta**: resumen, datos personales (documento y celular **cifrados en reposo** con MultiFernet y *blind index*), direcciones (máximo 10, una predeterminada, protegidas contra IDOR), y privacidad con autorizaciones, **descarga de mis datos** (JSON, con límite de 5 por hora) y **eliminación de la cuenta** con anonimización.
+- **Habeas Data**: política de tratamiento de datos y términos versionados (`LegalDocument` v1.0). Al registrarse se guarda la versión aceptada, la IP y el navegador.
+- **Panel** (`/panel/`): layout propio con menú según los permisos, resumen, personal y roles, bitácora de auditoría y eventos de seguridad.
+- **Auditoría**:
+  - `AuditLog` **encadenado por hash SHA-256**, *append-only* en el ORM y con un **trigger de PostgreSQL** que bloquea UPDATE y DELETE;
+  - comando `verify_audit_chain`;
+  - registro de logins, logouts, registros, cambios de perfil, direcciones, roles, consentimiento, exportación y eliminación de datos.
+- **Eventos de seguridad** con alerta por correo a los superadmins (Celery, al confirmar la transacción) en: bloqueo por fuerza bruta, ráfaga de 403 (10 en 5 min), ascenso a rol privilegiado y exportación masiva.
+- Departamentos y 51 municipios (códigos DANE DIVIPOLA). Modelo `Store` (sedes) y asignación de personal por sede.
+- `seed_demo_users`: un usuario de demostración por rol (solo desarrollo).
+- ADR-0012.
+
+### Seguridad
+- Deploy checks propios: `byte.E002`/`E003` si faltan las claves de cifrado y `byte.W003` si se usan las claves de prueba de Turnstile.
+- Las claves de cifrado se gestionan por entorno y admiten rotación (la primera clave cifra y todas descifran).
+- Los logs de Celery usan el `LOGGING` de Django.
+
+### Corregido
+- La página "Sesiones activas" devolvía 500: faltaba `django.contrib.humanize`, que usan las plantillas de allauth. Ya tiene test de regresión.
+- El contenido de "Mi cuenta" no se mostraba, porque el layout estaba en un `{% include %}`, que no participa en la herencia de bloques. Ahora el layout se hereda y los tests comprueban el contenido de la página, no solo el código 200.
+
 ## [0.1.0] — 2026-11-12 — Fase 1: Fundaciones
 
 ### Añadido

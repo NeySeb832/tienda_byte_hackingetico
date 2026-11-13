@@ -1,0 +1,7 @@
+{% extends "accounts/base.html" %}
+{% block title %}Eliminar dirección · {{ site_name }}{% endblock %}
+{% block content %}
+<h1 class="font-display text-2xl font-black text-slate-900 dark:text-white">¿Eliminar «{{ address.label }}»?</h1>
+<p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{{ address.line1 }}, {{ address.city.name }}</p>
+<form method="post" class="mt-6 flex gap-3">{% csrf_token %}<button type="submit" class="btn-danger">Eliminar</button><a href="{% url 'accounts:addresses' %}" class="btn-secondary">Cancelar</a></form>
+{% endblock %}

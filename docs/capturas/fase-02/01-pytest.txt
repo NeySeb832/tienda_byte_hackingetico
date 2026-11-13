@@ -1,0 +1,77 @@
+$ python.exe -m pytest --cov --cov-report=term -p no:cacheprovider --color=yes
+
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0
+django: version: 5.2.19, settings: config.settings.test (from ini)
+rootdir: C:\Users\seb83\Documentos\Universidad\Hacking etico\Tienda Videojuegos IA
+configfile: pyproject.toml
+testpaths: apps, tests
+plugins: anyio-4.16.0, Faker-40.44.0, platformdirs-4.14.5, cov-7.1.0, django-4.14.0, playwright-0.10.0, xdist-3.8.0
+collected 448 items
+
+apps\accounts\tests\test_addresses.py .......                            [  1%]
+apps\accounts\tests\test_auth_flows.py .........                         [  3%]
+apps\accounts\tests\test_models.py ...........                           [  6%]
+apps\accounts\tests\test_roles.py ....                                   [  6%]
+apps\accounts\tests\test_services.py .............                       [  9%]
+apps\accounts\tests\test_validators.py ......                            [ 11%]
+apps\audit\tests\test_audit.py .....                                     [ 12%]
+apps\cms\tests\test_legal.py ..                                          [ 12%]
+apps\core\tests\test_health.py ....                                      [ 13%]
+tests\security\test_access.py ........                                   [ 15%]
+tests\security\test_access_control.py .................................. [ 22%]
+................                                                         [ 26%]
+apps\catalog\tests\test_selectors.py ..............                      [ 29%]
+apps\cms\tests\test_selectors.py ....                                    [ 30%]
+apps\core\tests\test_checks.py .....                                     [ 31%]
+apps\core\tests\test_crypto.py .....                                     [ 32%]
+apps\core\tests\test_errors.py .....                                     [ 33%]
+apps\core\tests\test_logging.py ...                                      [ 34%]
+apps\core\tests\test_middleware.py ....                                  [ 35%]
+apps\core\tests\test_money.py ................................           [ 42%]
+apps\core\tests\test_templatetags.py ....                                [ 43%]
+apps\core\tests\test_views.py .....                                      [ 44%]
+apps\services_desk\tests\test_selectors.py .                             [ 44%]
+tests\security\test_headers.py .......                                   [ 46%]
+tests\security\test_settings.py .........                                [ 48%]
+tests\test_celery.py ...                                                 [ 49%]
+tests\test_structure.py ................................................ [ 59%]
+........................................................................ [ 75%]
+........................................................................ [ 91%]
+....................................                                     [100%]
+
+=============================== tests coverage ================================
+______________ coverage: platform win32, python 3.12.10-final-0 _______________
+
+Name                                                             Stmts   Miss Branch BrPart  Cover   Missing
+------------------------------------------------------------------------------------------------------------
+apps\accounts\adapters.py                                            9      1      2      1    82%   12
+apps\accounts\forms.py                                             129      9     16      3    92%   102-104, 107-109, 138, 148, 210
+apps\accounts\management\commands\export_permissions_matrix.py      30      3      6      2    86%   63, 66-67
+apps\accounts\management\commands\seed_demo_users.py                51     30     14      0    32%   36, 40-71, 75-96
+apps\accounts\management\commands\setup_roles.py                    22      2      2      0    92%   16-17
+apps\accounts\middleware.py                                         42      3     10      1    92%   62, 65-66
+apps\accounts\models.py                                            115      3      8      1    97%   84->86, 112, 167, 187
+apps\accounts\permissions.py                                        29      4     12      2    80%   17, 31, 53-54
+apps\accounts\security.py                                           16      1      2      1    89%   29
+apps\accounts\services.py                                          119      5     38      8    92%   30, 90, 92->98, 108, 112->exit, 114->exit, 124, 139
+apps\accounts\views.py                                              99      1      0      0    99%   109
+apps\audit\management\commands\verify_audit_chain.py                11      1      2      1    85%   17
+apps\audit\middleware.py                                            25      3      4      0    90%   29-31
+apps\audit\models.py                                                69      2      2      0    97%   59, 108
+apps\audit\services.py                                              57      1     10      1    97%   29
+apps\audit\signals.py                                               21      0      2      1    96%   21->exit
+apps\audit\tasks.py                                                 15      1      4      2    84%   16, 22->35
+apps\core\checks.py                                                 34      0     14      3    94%   66->70, 70->72, 72->76
+apps\core\crypto.py                                                 36      2      8      2    91%   45, 55
+apps\core\models.py                                                 34      2      0      0    94%   46, 64
+apps\inventory\models.py                                            20      1      0      0    95%   30
+apps\panel\views.py                                                 64     11      6      0    81%   62-79
+------------------------------------------------------------------------------------------------------------
+TOTAL                                                             1697     86    206     29    93%
+
+184 files skipped due to complete coverage.
+Required test coverage of 80.0% reached. Total coverage: 93.01%
+============================ 448 passed in 39.31s =============================
+
+[OK en 46.1 s]

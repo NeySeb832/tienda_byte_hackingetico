@@ -39,6 +39,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
+    "django.contrib.humanize",  # used by allauth templates (sessions)
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",
@@ -46,6 +47,11 @@ THIRD_PARTY_APPS = [
     "django_celery_beat",
     "django_htmx",
     "django_tailwind_cli",
+    "allauth",
+    "allauth.account",
+    "allauth.mfa",
+    "allauth.usersessions",
+    "axes",
 ]
 LOCAL_APPS = [
     "apps.core",
@@ -74,17 +80,23 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     "apps.core.middleware.RequestIDMiddleware",
+    "apps.audit.middleware.ForbiddenBurstMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
+    "allauth.usersessions.middleware.UserSessionsMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "apps.accounts.middleware.StaffSecurityMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "csp.middleware.CSPMiddleware",
     "apps.core.middleware.SecurityHeadersMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
+    # Must be last (django-axes): turns lockouts into the lockout response.
+    "axes.middleware.AxesMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -101,6 +113,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.core.context_processors.site",
+                "apps.panel.context_processors.panel",
             ],
         },
     },
@@ -142,6 +155,10 @@ CSRF_COOKIE_SAMESITE = "Lax"
 CSRF_FAILURE_VIEW = "apps.core.views.csrf_failure"
 
 AUTH_USER_MODEL = "accounts.User"
+AUTHENTICATION_BACKENDS = [
+    "axes.backends.AxesStandaloneBackend",  # brute-force protection first (A07)
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.Argon2PasswordHasher",  # A04: Argon2id first
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
@@ -156,6 +173,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    {
+        "NAME": "apps.accounts.validators.StaffMinimumLengthValidator",
+        "OPTIONS": {"min_length": 12},
+    },
+    {"NAME": "apps.accounts.validators.PwnedPasswordValidator"},
 ]
 
 # ---------------------------------------------------------------------------
@@ -206,14 +228,14 @@ BYTE_PERMISSIONS_POLICY = (
 CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
         "default-src": [SELF],
-        "script-src": [SELF, NONCE],
+        "script-src": [SELF, NONCE, "https://challenges.cloudflare.com"],
         "style-src": [SELF],
         "img-src": [SELF, "data:"],
         "font-src": [SELF],
         "connect-src": [SELF],
         "manifest-src": [SELF],
         "worker-src": [SELF],
-        "frame-src": [NONE],
+        "frame-src": ["https://challenges.cloudflare.com"],  # Turnstile CAPTCHA
         "object-src": [NONE],
         "base-uri": [SELF],
         "form-action": [SELF],
@@ -311,6 +333,65 @@ LOGGING: dict[str, Any] = {
         "celery": {"handlers": ["console"], "level": LOG_LEVEL, "propagate": False},
     },
 }
+
+# ---------------------------------------------------------------------------
+# Authentication: django-allauth (+ MFA, sessions), django-axes (ADR-0012)
+# ---------------------------------------------------------------------------
+LOGIN_URL = "account_login"
+LOGIN_REDIRECT_URL = "accounts:dashboard"
+ACCOUNT_LOGOUT_REDIRECT_URL = "core:home"
+ACCOUNT_ADAPTER = "apps.accounts.adapters.AccountAdapter"
+ACCOUNT_FORMS = {
+    "login": "apps.accounts.forms.LoginForm",
+    "signup": "apps.accounts.forms.SignupForm",
+    "reset_password": "apps.accounts.forms.ResetPasswordForm",
+}
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_PREVENT_ENUMERATION = True  # same answer whether or not an account exists
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Byte] "
+MFA_SUPPORTED_TYPES = ["totp", "recovery_codes"]
+MFA_TOTP_ISSUER = "Byte"
+USERSESSIONS_TRACK_ACTIVITY = True
+
+AXES_ENABLED = env.bool("AXES_ENABLED", default=True)
+AXES_VERBOSE = False  # our own JSON logs and security events cover it
+AXES_LOCKOUT_PARAMETERS = [["username", "ip_address"]]  # user + IP combination
+AXES_USERNAME_FORM_FIELD = "login"
+AXES_USERNAME_CALLABLE = "apps.accounts.security.axes_username"
+AXES_RESET_ON_SUCCESS = True
+AXES_LOCKOUT_TEMPLATE = "account/lockout.html"
+AXES_HTTP_RESPONSE_CODE = 429
+AXES_IPWARE_PROXY_COUNT = env.int("AXES_IPWARE_PROXY_COUNT", default=0)  # 1 behind Render's proxy
+AXES_IPWARE_META_PRECEDENCE_ORDER = ("HTTP_X_FORWARDED_FOR", "REMOTE_ADDR")
+# Progressive lockout (failures, minutes). Converted to axes.conf.LockoutTier in
+# AccountsConfig.ready(): axes.conf cannot be imported from settings.
+BYTE_LOCKOUT_TIERS = ((5, 5), (10, 30), (20, 24 * 60))
+
+# Cloudflare Turnstile. The defaults are Cloudflare's public *test* keys (always pass);
+# production must set real keys (deploy check byte.W003).
+BYTE_CAPTCHA_ENABLED = env.bool("BYTE_CAPTCHA_ENABLED", default=True)
+TURNSTILE_SITE_KEY = env.str("TURNSTILE_SITE_KEY", default="1x00000000000000000000AA")
+TURNSTILE_SECRET_KEY = env.str(
+    "TURNSTILE_SECRET_KEY", default="1x0000000000000000000000000000000AA"
+)
+BYTE_LOGIN_CAPTCHA_AFTER_FAILURES = env.int("BYTE_LOGIN_CAPTCHA_AFTER_FAILURES", default=3)
+# Breached-password check (Have I Been Pwned, k-anonymity).
+BYTE_HIBP_ENABLED = env.bool("BYTE_HIBP_ENABLED", default=True)
+
+# Staff hardening.
+BYTE_STAFF_IDLE_TIMEOUT_MINUTES = env.int("BYTE_STAFF_IDLE_TIMEOUT_MINUTES", default=15)
+BYTE_FORBIDDEN_BURST_THRESHOLD = 10
+BYTE_FORBIDDEN_BURST_WINDOW_SECONDS = 300
+
+# Field-level encryption (A04): comma-separated Fernet keys, newest first (rotation).
+BYTE_FIELD_ENCRYPTION_KEYS: list[str] = env.list("BYTE_FIELD_ENCRYPTION_KEYS", default=[])
+BYTE_BLIND_INDEX_KEY = env.str("BYTE_BLIND_INDEX_KEY", default="")
+# Password of the demo users (seed_demo_users). Development/demo only.
+BYTE_DEMO_PASSWORD = env.str("BYTE_DEMO_PASSWORD", default="")
 
 # ---------------------------------------------------------------------------
 # Tailwind CSS (ADR-0006): standalone CLI, pinned and checksum-verified.

@@ -15,6 +15,8 @@ os.environ.setdefault(
 )
 os.environ.setdefault("DATABASE_URL", "postgres://byte:byte@localhost:5432/byte")
 os.environ.setdefault("REDIS_URL", "redis://localhost:6379/15")
+os.environ.setdefault("BYTE_FIELD_ENCRYPTION_KEYS", "Ynl0ZS10ZXN0LW9ubHktZmVybmV0LWtleS0wMDAwMDE=")
+os.environ.setdefault("BYTE_BLIND_INDEX_KEY", "test-only-blind-index-key")
 
 from .base import *  # noqa: E402
 
@@ -32,6 +34,8 @@ STORAGES = {
     "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
 }
 CELERY_TASK_ALWAYS_EAGER = True
+BYTE_CAPTCHA_ENABLED = False  # enabled explicitly in captcha tests
+BYTE_HIBP_ENABLED = False  # network check mocked in validator tests
 CELERY_TASK_EAGER_PROPAGATES = True
 LOGGING = copy.deepcopy(LOGGING)
 LOGGING["root"]["level"] = "WARNING"

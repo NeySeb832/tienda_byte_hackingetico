@@ -2,7 +2,7 @@
 
 from django.core.exceptions import PermissionDenied, SuspiciousOperation
 from django.http import HttpRequest, HttpResponse
-from django.urls import include, path
+from django.urls import path
 
 
 def boom(request: HttpRequest) -> HttpResponse:
@@ -21,12 +21,14 @@ def form(request: HttpRequest) -> HttpResponse:
     return HttpResponse("ok")
 
 
+from config.urls import urlpatterns as project_urlpatterns  # noqa: E402 - pages link to them
+
 urlpatterns = [
-    path("", include("apps.core.urls")),  # error templates link back to core:home
     path("boom/", boom),
     path("forbidden/", forbidden),
     path("suspicious/", suspicious),
     path("form/", form),
+    *project_urlpatterns,
 ]
 
 handler400 = "apps.core.views.bad_request"

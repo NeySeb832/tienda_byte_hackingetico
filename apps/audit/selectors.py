@@ -1,4 +1,13 @@
-"""Read-side queries for the audit app.
+"""Read-side queries for the audit app."""
 
-Selectors return querysets already scoped to what the requesting user may see
-(deny by default) and use select_related/prefetch_related to avoid N+1 queries."""
+from django.db.models import QuerySet
+
+from apps.audit.models import AuditLog, SecurityEvent
+
+
+def audit_entries() -> QuerySet[AuditLog]:
+    return AuditLog.objects.select_related("actor").order_by("-id")
+
+
+def security_events() -> QuerySet[SecurityEvent]:
+    return SecurityEvent.objects.select_related("user").order_by("-created_at")

@@ -1,0 +1,9 @@
+{% for error in form.non_field_errors %}<p class="alert alert-error">{{ error }}</p>{% endfor %}
+{% for field in form %}
+  {% if field.is_hidden %}{{ field }}
+  {% elif field.name == "website" %}<div class="hp-field" aria-hidden="true">{{ field.label_tag }}{{ field }}</div>
+  {% elif field.name == "captcha" %}<div class="form-field">{{ field }}{% for error in field.errors %}<p class="form-error">{{ error }}</p>{% endfor %}</div>
+  {% elif field.widget_type == "checkbox" %}<div class="form-field"><label class="form-check" for="{{ field.id_for_label }}">{{ field }}<span>{% if field.name == "accept_privacy" %}{{ field.label }} (<a class="underline" href="{% url 'cms:privacy' %}" target="_blank" rel="noopener">leer política</a>){% else %}{{ field.label }}{% endif %}</span></label>{% for error in field.errors %}<p class="form-error">{{ error }}</p>{% endfor %}</div>
+  {% else %}<div class="form-field"><label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}<div class="form-help">{{ field.help_text|safe }}</div>{% endif %}{% for error in field.errors %}<p class="form-error">{{ error }}</p>{% endfor %}</div>
+  {% endif %}
+{% endfor %}

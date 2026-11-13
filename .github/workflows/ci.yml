@@ -44,6 +44,10 @@ jobs:
       - run: uv run ruff check .
       - run: uv run black --check .
       - run: uv run mypy .
+      - name: Migraciones al día
+        run: uv run python manage.py makemigrations --check --dry-run
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings.test
       - name: Integridad de librerías JS servidas localmente
         run: uv run python scripts/vendor_assets.py --check
 
@@ -76,6 +80,10 @@ jobs:
           enable-cache: true
       - name: Instalar dependencias (lock congelado)
         run: uv sync --frozen
+      - name: Matriz de permisos al día (docs/matriz-permisos.md)
+        run: uv run python manage.py export_permissions_matrix --check
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings.test
       - name: pytest (cobertura mínima 80 %)
         run: uv run pytest --cov --cov-report=term --cov-report=xml
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -115,7 +123,11 @@ jobs:
           DJANGO_ADMIN_URL: ci-hidden-admin-0f9a2c/
           DATABASE_URL: postgres://byte:unused@localhost:5432/byte
           REDIS_URL: redis://localhost:6379/0
+          TURNSTILE_SITE_KEY: ci-placeholder-site-key
+          TURNSTILE_SECRET_KEY: ci-placeholder-secret-key
+          BYTE_BLIND_INDEX_KEY: ci-placeholder-blind-index-key
         run: |
+          export BYTE_FIELD_ENCRYPTION_KEYS="$(python3 -c 'import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())')"
           DJANGO_SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_urlsafe(64))')" \
             uv run python manage.py check --deploy --fail-level WARNING
       - name: SBOM CycloneDX

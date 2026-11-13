@@ -20,6 +20,13 @@ PREDICTABLE_ADMIN_PATHS = frozenset(
     }
 )
 MIN_ADMIN_URL_LENGTH = 12
+TURNSTILE_TEST_SECRETS = frozenset(
+    {
+        "1x0000000000000000000000000000000AA",
+        "2x0000000000000000000000000000000AA",
+        "3x0000000000000000000000000000000AA",
+    }
+)
 
 
 @register(Tags.security)
@@ -51,3 +58,19 @@ def check_admin_url_unpredictable(app_configs: Any, **kwargs: Any) -> list[Check
             )
         ]
     return []
+
+
+@register(Tags.security, deploy=True)
+def check_production_secrets(app_configs: Any, **kwargs: Any) -> list[CheckMessage]:
+    messages: list[CheckMessage] = []
+    if not [key for key in settings.BYTE_FIELD_ENCRYPTION_KEYS if key]:
+        messages.append(
+            Error("BYTE_FIELD_ENCRYPTION_KEYS must be set in production.", id="byte.E002")
+        )
+    if not settings.BYTE_BLIND_INDEX_KEY:
+        messages.append(Error("BYTE_BLIND_INDEX_KEY must be set in production.", id="byte.E003"))
+    if settings.BYTE_CAPTCHA_ENABLED and settings.TURNSTILE_SECRET_KEY in TURNSTILE_TEST_SECRETS:
+        messages.append(
+            Warning("Turnstile is using Cloudflare's public test keys.", id="byte.W003")
+        )
+    return messages

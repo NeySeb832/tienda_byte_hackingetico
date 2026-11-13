@@ -1,0 +1,62 @@
+"""Field-level encryption at rest (OWASP A04) and blind indexes.
+
+* ``EncryptedTextField`` stores Fernet ciphertext; Python code always sees plaintext.
+* Keys come from ``BYTE_FIELD_ENCRYPTION_KEYS`` (newest first). ``MultiFernet``
+  decrypts with any key and encrypts with the first one, so keys can be rotated.
+* Ciphertext is randomised, so exact-match search uses ``blind_index`` (HMAC-SHA256).
+"""
+
+import hashlib
+import hmac
+from functools import cache
+from typing import Any
+
+from cryptography.fernet import Fernet, MultiFernet
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+from django.db import models
+
+
+@cache
+def _fernet() -> MultiFernet:
+    keys = [key for key in settings.BYTE_FIELD_ENCRYPTION_KEYS if key]
+    if not keys:
+        raise ImproperlyConfigured("BYTE_FIELD_ENCRYPTION_KEYS is not configured.")
+    return MultiFernet([Fernet(key.encode()) for key in keys])
+
+
+def reset_key_cache() -> None:
+    """Forget cached keys (tests and key rotation)."""
+    _fernet.cache_clear()
+
+
+def encrypt(value: str) -> str:
+    return _fernet().encrypt(value.encode()).decode()
+
+
+def decrypt(token: str) -> str:
+    return _fernet().decrypt(token.encode()).decode()
+
+
+def blind_index(value: str) -> str:
+    """Deterministic, keyed fingerprint of ``value`` for exact-match lookups."""
+    key = settings.BYTE_BLIND_INDEX_KEY
+    if not key:
+        raise ImproperlyConfigured("BYTE_BLIND_INDEX_KEY is not configured.")
+    normalized = "".join(value.split()).upper()
+    return hmac.new(key.encode(), normalized.encode(), hashlib.sha256).hexdigest()
+
+
+class EncryptedTextField(models.TextField):
+    """Text stored encrypted in the database (never filter on it: use a blind index)."""
+
+    def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
+        if value in (None, ""):
+            return value
+        return decrypt(value)
+
+    def get_prep_value(self, value: Any) -> Any:
+        value = super().get_prep_value(value)
+        if value in (None, ""):
+            return value
+        return encrypt(str(value))

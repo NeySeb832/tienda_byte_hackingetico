@@ -13,6 +13,10 @@ from dataclasses import dataclass
 from decimal import Decimal
 from functools import cache
 from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from apps.cms.models import LegalDocument
 
 DATA_DIR = Path(__file__).resolve().parent / "data"
 FREE_LICENSES = frozenset(
@@ -64,6 +68,19 @@ class CategoryTile:
     description: str
     image: ImageCredit
     theme: str
+
+
+def current_legal_document(kind: str) -> "LegalDocument | None":
+    """Latest published version of a legal document."""
+    from django.utils import timezone
+
+    from apps.cms.models import LegalDocument
+
+    return (
+        LegalDocument.objects.filter(kind=kind, published_at__lte=timezone.now())
+        .order_by("-published_at")
+        .first()
+    )
 
 
 @cache

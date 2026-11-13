@@ -40,6 +40,26 @@ También puedes levantar todo el stack en contenedores (web, worker, beat, db, r
 docker compose up --build
 ```
 
+Usuarios de demostración (solo desarrollo; la contraseña se define en `BYTE_DEMO_PASSWORD` de tu `.env`):
+
+```bash
+uv run python manage.py seed_demo_users
+```
+
+| Rol | Correo |
+|-----|--------|
+| Cliente | `cliente@byte.test` |
+| Vendedor / Cajero | `vendedor@byte.test` |
+| Bodeguero | `bodega@byte.test` |
+| Técnico de soporte | `tecnico@byte.test` |
+| Gerente de tienda | `gerente@byte.test` |
+| Analista de datos | `analista@byte.test` |
+| Administrador | `admin@byte.test` |
+| Superadmin | `superadmin@byte.test` |
+
+El personal entra con MFA. El secreto TOTP de demostración, que es público y solo para desarrollo,
+es `JBSWY3DPEHPK3PXP`: agrégalo a tu app de autenticación (Google Authenticator, Aegis, 1Password…).
+
 Pruebas y calidad:
 
 ```bash

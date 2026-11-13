@@ -108,6 +108,47 @@
   .footer-list { @apply mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-400; }
   .footer-list a { @apply transition hover:text-slate-900 dark:hover:text-white; }
 
+  /* --- Forms, account area, panel --- */
+  .auth-shell { @apply mx-auto flex max-w-7xl justify-center px-4 py-12 sm:px-6; }
+  .auth-card { @apply w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-xl sm:p-8 dark:border-white/10 dark:bg-ink-900; }
+  .auth-card a:not(.btn-primary):not(.btn-secondary) { @apply text-cyan-700 underline-offset-2 hover:underline dark:text-neon-cyan; }
+  .form-field { @apply space-y-1.5; }
+  .form-label { @apply block text-sm font-semibold text-slate-700 dark:text-slate-200; }
+  .form-field input:not([type="checkbox"]):not([type="radio"]), .form-field select, .form-field textarea {
+    @apply block w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-neon-violet focus:outline-none focus:ring-2 focus:ring-neon-violet/30 dark:border-white/15 dark:bg-ink-800 dark:text-white;
+  }
+  .form-check { @apply flex items-start gap-2.5 text-sm text-slate-700 dark:text-slate-200; }
+  .form-check input { @apply mt-0.5 size-4 rounded border-slate-300 accent-violet-600; }
+  .form-help { @apply text-xs text-slate-500 dark:text-slate-400; }
+  .form-help ul { @apply list-disc space-y-0.5 pl-4; }
+  .form-error { @apply text-xs font-semibold text-rose-600 dark:text-rose-400; }
+  .hp-field { @apply absolute -left-[9999px] h-0 w-0 overflow-hidden; }
+  .alert { @apply rounded-xl border px-4 py-3 text-sm; }
+  .alert-info, .alert-debug { @apply border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-400/30 dark:bg-sky-400/10 dark:text-sky-200; }
+  .alert-success { @apply border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-200; }
+  .alert-warning { @apply border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-400/30 dark:bg-amber-400/10 dark:text-amber-200; }
+  .alert-error { @apply border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-400/30 dark:bg-rose-400/10 dark:text-rose-200; }
+  .btn-secondary { @apply inline-flex items-center justify-center rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:border-neon-violet hover:text-slate-900 dark:border-white/15 dark:text-slate-200 dark:hover:text-white; }
+  .btn-danger { @apply inline-flex items-center justify-center rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-rose-500; }
+  .account-nav { @apply flex flex-col gap-1 self-start rounded-2xl border border-slate-200 bg-white p-3 text-sm dark:border-white/10 dark:bg-ink-900; }
+  .account-nav a { @apply rounded-lg px-3 py-2 font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-white/5; }
+  .tile-link { @apply flex flex-col gap-1 rounded-xl border border-slate-200 p-4 transition hover:border-neon-violet dark:border-white/10; }
+  .data-table { @apply min-w-full divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white text-left text-sm dark:divide-white/10 dark:border-white/10 dark:bg-ink-900; }
+  .data-table th { @apply px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500; }
+  .data-table td { @apply px-4 py-3 align-top text-slate-700 dark:text-slate-300; }
+  .panel-sidebar { @apply bg-ink-950 px-3 py-6 text-slate-200 lg:min-h-screen; }
+  .panel-link { @apply block rounded-lg px-3 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white; }
+  .panel-link-active { @apply bg-white/10 text-white; }
+  .stat-card { @apply rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-ink-900; }
+  .stat-label { @apply text-xs font-bold uppercase tracking-widest text-slate-500; }
+  .stat-value { @apply mt-2 font-display text-3xl font-black text-slate-900 dark:text-white; }
+  .severity { @apply rounded-full px-2 py-0.5 text-xs font-bold; }
+  .severity-low { @apply bg-slate-100 text-slate-700; }
+  .severity-medium { @apply bg-amber-100 text-amber-800; }
+  .severity-high { @apply bg-orange-100 text-orange-800; }
+  .severity-critical { @apply bg-rose-100 text-rose-800; }
+  .prose-legal p { @apply mt-4 leading-relaxed text-slate-700 dark:text-slate-300; }
+
   .htmx-indicator { @apply opacity-0 transition-opacity; }
   .htmx-request .htmx-indicator, .htmx-request.htmx-indicator { @apply opacity-100; }
 }
