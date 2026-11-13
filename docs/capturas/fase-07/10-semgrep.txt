@@ -1,0 +1,52 @@
+$ docker run --rm -v C:\Users\seb83\AppData\Local\Temp\claude\f3338bc0125f3f92\342e98da-2b40-40a0-9f49-b5f4968283a7\scratchpad\wt7:/src -w /src semgrep/semgrep:1.184.0@sha256:cc1b68266f267878b39739373ea9985b9a78e5d64497dd875c8de100b22695ed semgrep scan --config p/django --config p/python --error --metrics=off --exclude tests
+
+Semgrep failed to set the safe.directory Git config option. Git commands might fail: Command failed with exit code: 128
+-----
+Command failed with output:
+fatal: not a git repository: /src/C:/Users/seb83/Documentos/Universidad/Hacking etico/Tienda Videojuegos IA/.git/worktrees/wt7
+
+
+Failed to run 'git config --global --add safe.directory *'. Possible reasons:
+
+- the git binary is not available
+- the current working directory is not a git repository
+- the baseline commit is not a parent of the current commit
+    (if you are running through semgrep-app, check if you are setting `SEMGREP_BRANCH` or `SEMGREP_BASELINE_COMMIT` properly)
+- the current working directory is not marked as safe
+    (fix with `git config --global --add safe.directory $(pwd)`)
+
+Try running the command yourself to debug the issue.
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 907 files tracked by git with 152 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  python          151     318          Community     152                                                                
+  <multilang>       1      92                                                                                           
+                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 0 (0 blocking)
+ • Rules run: 152
+ • Targets scanned: 410
+ • Parsed lines: ~100.0%
+ • Scan skipped: 
+   ◦ Matching --exclude patterns: 22
+   ◦ Files larger than  files 1.0 MB: 24
+   ◦ Files matching .semgrepignore patterns: 13
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 152 rules on 410 files: 0 findings.
+(need more rules? `semgrep login` for additional free Semgrep Registry rules)
+
+If Semgrep missed a finding, please send us feedback to let us know!
+See https://semgrep.dev/docs/reporting-false-negatives/
+
+[OK en 595.2 s]

@@ -1,0 +1,15 @@
+$ python.exe -c import os, django;os.environ['DJANGO_SETTINGS_MODULE']='config.settings.test';django.setup();from django.test import Client;r = Client().get('/');print('GET / ->', r.status_code);[print(f'{h}: {r[h]}') for h in ('Content-Security-Policy','X-Frame-Options','X-Content-Type-Options','Referrer-Policy','Cross-Origin-Opener-Policy','Cross-Origin-Resource-Policy','Permissions-Policy','X-Request-ID')]
+
+GET / -> 200
+Content-Security-Policy: connect-src 'self'; manifest-src 'self'; default-src 'self'; style-src 'self'; script-src 'self' 'nonce-oqCK2+Ap0RaGwhsEYSpjyA==' https://challenges.cloudflare.com; frame-ancestors 'none'; base-uri 'self'; font-src 'self'; worker-src 'self'; frame-src https://challenges.cloudflare.com; form-action 'self'; img-src 'self' data:; object-src 'none'
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Resource-Policy: same-origin
+Permissions-Policy: accelerometer=(), autoplay=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(self), usb=(), browsing-topics=()
+X-Request-ID: 85b82c6383444e9a8e763fe803207345
+C:\Users\seb83\AppData\Local\Temp\claude\f3338bc0125f3f92\342e98da-2b40-40a0-9f49-b5f4968283a7\scratchpad\wt7\.venv\Lib\site-packages\django\core\handlers\base.py:61: UserWarning: No directory at: C:\Users\seb83\AppData\Local\Temp\claude\f3338bc0125f3f92\342e98da-2b40-40a0-9f49-b5f4968283a7\scratchpad\wt7\staticfiles\
+  mw_instance = middleware(adapted_handler)
+
+[OK en 9.5 s]
