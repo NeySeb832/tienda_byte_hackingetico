@@ -18,14 +18,14 @@ dependencies = [
     "django-celery-beat>=2.8,<3",
     "django-csp>=4.0,<4.1",
     "django-htmx>=1.23,<2",
-    "django-tailwind-cli>=4.2,<5",
+    "django-tailwind-cli>=4.9.0,<5",
     "django-storages[s3]>=1.14.6,<1.15",
     "whitenoise>=6.9,<7",
     "gunicorn>=23,<28",
     "django-anymail>=13,<16",
     "argon2-cffi>=25.1,<26",
     "python-json-logger>=3.3,<5",
-    "sentry-sdk>=2.30,<3",
+    "sentry-sdk>=2.75.0,<3",
     "pillow>=11.3,<14",
     "django-allauth[mfa]>=65.10,<66",
     "django-axes>=8,<10",
@@ -33,7 +33,7 @@ dependencies = [
     "cryptography>=45,<51",
     "httpx>=0.28,<0.29",
     "reportlab>=5.1,<6",
-    "duckdb>=2.0,<2.1",
+    "duckdb>=2.0.1,<2.1",
 ]
 
 [dependency-groups]
@@ -47,7 +47,7 @@ dev = [
     "rich>=14,<16",
     "django-debug-toolbar>=5,<9",
     "pre-commit>=4.2,<5",
-    "ruff>=0.12,<0.18",
+    "ruff>=0.17.6,<0.18",
     "black>=25,<27",
     "mypy>=1.16,<3",
     "django-stubs>=5.2,<5.3",
@@ -58,7 +58,7 @@ security = [
     "pip-audit>=2.9,<3",
     "cyclonedx-bom>=7,<9",
     # Semgrep only ships Linux/macOS wheels reliably; it runs in CI (Linux) and containers.
-    "semgrep>=1.130,<2; sys_platform != 'win32'",
+    "semgrep>=1.186.0,<2; sys_platform != 'win32'",
 ]
 
 [tool.uv]
